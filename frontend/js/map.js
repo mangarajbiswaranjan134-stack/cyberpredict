@@ -191,13 +191,13 @@ function renderMapLayers(hotspotData, targetMap = 'both') {
                             </span>
                             <span style="font-size: 10px; color: #F87171; font-weight: 600;">Prob: ${Math.round(hotspot.prediction_probability * 100)}%</span>
                         </div>
-                        <div style="font-weight: 700; font-size: 13px; color: #EF4444; margin-bottom: 2px;">
+                        <div style="font-weight: 700; font-size: 13px; color: #F8FAFC; margin-bottom: 2px;">
                             ${hotspot.name}
                         </div>
                         <div style="font-size: 11px; color: #F87171; margin-bottom: 8px;">
                             📍 ${hotspot.locality}, ${hotspot.district}
                         </div>
-                        <div style="background: #000000; border: 1px solid #330A0A; padding: 8px; border-radius: 6px; font-size: 11px; margin-bottom: 8px;">
+                        <div style="background: #111111; border: 1px solid #222222; padding: 8px; border-radius: 6px; font-size: 11px; margin-bottom: 8px;">
                             <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
                                 <span style="color: #F87171;">Forecast Window:</span>
                                 <span style="color: #EF4444; font-weight: 700;">${hotspot.forecast_window}</span>
@@ -216,7 +216,7 @@ function renderMapLayers(hotspotData, targetMap = 'both') {
                             Inspect Why This Location (XAI)
                         </button>
                         <button onclick="window.openStreetViewPanorama(${hotspot.lat}, ${hotspot.lng}, '${hotspot.name}')" 
-                            style="width: 100%; background: #0A0A0A; color: #EF4444; border: 1px solid #330A0A; padding: 5px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
+                            style="width: 100%; background: #111111; color: #EF4444; border: 1px solid #2A2A2A; padding: 5px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
                             🛰️ Google Satellite & Street View
                         </button>
                     </div>
@@ -253,7 +253,7 @@ function renderMapLayers(hotspotData, targetMap = 'both') {
                 const marker = L.marker([h.lat, h.lng], { icon: hIcon }).addTo(hLayer);
                 const hPopup = `
                     <div style="min-width: 220px; padding: 6px; font-size: 11px; font-family: 'Inter', sans-serif;">
-                        <span style="font-size: 9px; font-weight: bold; color: #CBD5E1; background: #0A0A0A; border: 1px solid #330A0A; padding: 1px 4px; border-radius: 3px;">
+                        <span style="font-size: 9px; font-weight: bold; color: #CBD5E1; background: #111111; border: 1px solid #2A2A2A; padding: 1px 4px; border-radius: 3px;">
                             📜 HISTORICAL WITHDRAWAL (PAST EVENT)
                         </span>
                         <div style="font-weight: 700; color: #EF4444; margin-top: 4px;">${h.cluster_name}</div>

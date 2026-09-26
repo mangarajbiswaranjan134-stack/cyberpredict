@@ -1,60 +1,60 @@
 /* =====================================================================
-   CYBERPREDICT: High-Tech Black & Red Intelligence Design System
+   CYBERPREDICT: Ultra-Pure Black & Laser Red Intelligence Design System
    Government / Defense-Grade Cybercrime Tactical Command Architecture
-   Strict Color Identity: Deep Stealth Black (#000000) + Laser Red (#DC2626 / #EF4444) + Crisp White Text
+   Strict Color Identity: Pitch Black (#000000) + Deep Obsidian Surfaces (#050505) + Laser Red (#EF4444) + Crisp White (#F8FAFC)
    ===================================================================== */
 
 :root {
-  /* Primary Stealth Surface & Backgrounds */
+  /* Ultra-Pure Pitch Black Surfaces */
   --bg-primary: #000000;
-  --bg-surface: #040404;
-  --bg-secondary: #080808;
-  --bg-tertiary: #0F0F0F;
+  --bg-surface: #050505;
+  --bg-secondary: #0A0A0A;
+  --bg-tertiary: #111111;
   
-  /* Card System */
-  --bg-card: #040404;
-  --bg-card-hover: #0C0C0C;
-  --border-subtle: #240808;
-  --border-strong: #3F0E0E;
+  /* Pure Black Card System */
+  --bg-card: #050505;
+  --bg-card-hover: #0E0E0E;
+  --border-subtle: #181818;
+  --border-strong: #2A2A2A;
   --border-focus: #EF4444;
 
-  /* High-Contrast Light & Crisp White Text */
-  --text-main: #EF4444;
-  --text-secondary: #F87171;
-  --text-muted: #DC2626;
-  --text-dim: #991B1B;
-  --text-light: #FCA5A5;
+  /* High-Contrast Crisp Typography */
+  --text-main: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --text-dim: #64748B;
+  --text-light: #FFFFFF;
 
   /* Laser Cyber Red Accents (Threats, Risk, Predictions, Actions) */
   --accent-red: #EF4444;
   --accent-red-hover: #DC2626;
-  --accent-red-dark: #B91C1C;
-  --accent-red-light: rgba(239, 68, 68, 0.15);
+  --accent-red-dark: #991B1B;
+  --accent-red-light: rgba(239, 68, 68, 0.12);
   --accent-red-border: rgba(239, 68, 68, 0.35);
-  --accent-red-glow: 0 0 15px rgba(239, 68, 68, 0.4);
+  --accent-red-glow: 0 0 16px rgba(239, 68, 68, 0.5);
 
   /* Tactical Operational Risk Badges */
   --risk-critical: #EF4444;
-  --risk-critical-bg: rgba(239, 68, 68, 0.2);
+  --risk-critical-bg: rgba(239, 68, 68, 0.18);
   --risk-critical-border: rgba(239, 68, 68, 0.5);
 
   --risk-high: #F97316;
-  --risk-high-bg: rgba(249, 115, 22, 0.2);
+  --risk-high-bg: rgba(249, 115, 22, 0.18);
   --risk-high-border: rgba(249, 115, 22, 0.5);
 
   --risk-medium: #F59E0B;
-  --risk-medium-bg: rgba(245, 158, 11, 0.2);
+  --risk-medium-bg: rgba(245, 158, 11, 0.18);
   --risk-medium-border: rgba(245, 158, 11, 0.5);
 
   --risk-low: #10B981;
-  --risk-low-bg: rgba(16, 185, 129, 0.2);
+  --risk-low-bg: rgba(16, 185, 129, 0.18);
   --risk-low-border: rgba(16, 185, 129, 0.5);
 
-  /* Elevation Shadows with Red Ambience */
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
-  --shadow-card: 0 2px 8px 0 rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
-  --shadow-hover: 0 6px 20px -2px rgba(0, 0, 0, 0.8), 0 0 12px rgba(239, 68, 68, 0.25);
-  --shadow-popup: 0 20px 30px -10px rgba(0, 0, 0, 0.9), 0 0 15px rgba(239, 68, 68, 0.35);
+  /* Elevation Shadows */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.7);
+  --shadow-card: 0 2px 8px 0 rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --shadow-hover: 0 6px 20px -2px rgba(0, 0, 0, 0.9), 0 0 12px rgba(239, 68, 68, 0.2);
+  --shadow-popup: 0 20px 30px -10px rgba(0, 0, 0, 0.95), 0 0 15px rgba(239, 68, 68, 0.35);
 }
 
 * {
@@ -769,6 +769,219 @@ input::placeholder, textarea::placeholder {
 }
 ::-webkit-scrollbar-thumb {
   background: #2B0606 !important;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #EF4444 !important;
+}
+
+
+/* =====================================================================
+   PURE BLACK (#000000) COMMAND CENTER ARCHITECTURE
+   Deep Jet-Black Base with Crisp White Text & Tactical Red Highlights
+   ===================================================================== */
+
+/* Global Base */
+body {
+  background-color: #000000 !important;
+  color: #F8FAFC !important;
+}
+
+/* Pure Black Cards & Containers */
+.command-card,
+.modal-card {
+  background-color: #050505 !important;
+  border-color: #1A1A1A !important;
+  color: #F8FAFC !important;
+}
+
+.command-card:hover {
+  border-color: #2D2D2D !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 0 10px rgba(239, 68, 68, 0.15) !important;
+}
+
+.command-header {
+  background-color: #000000 !important;
+  border-bottom: 1px solid #1A1A1A !important;
+}
+
+/* Force All Non-Black Backgrounds to Pure Black Surfaces */
+.bg-black,
+.bg-\[\#080C14\],
+.bg-\[\#0F172A\],
+.bg-\[\#182234\],
+.bg-\[\#131D31\],
+.bg-\[\#0A0F1D\],
+.bg-\[\#1E293B\],
+.bg-\[\#040404\],
+.bg-\[\#060606\],
+.bg-\[\#080808\],
+.bg-\[\#0D0D0D\],
+.bg-slate-900,
+.bg-slate-800,
+.bg-slate-950 {
+  background-color: #050505 !important;
+}
+
+/* Clean Dark Borders */
+.border-slate-800,
+.border-slate-700,
+.border-slate-900,
+.border-slate-600,
+.border-\[\#260808\],
+.border-\[\#330A0A\],
+.border-\[\#400E0E\] {
+  border-color: #1A1A1A !important;
+}
+
+/* High-Contrast Crisp Typography */
+.text-white,
+.text-slate-100,
+.text-slate-200 {
+  color: #F8FAFC !important;
+}
+
+.text-slate-300,
+.text-slate-400 {
+  color: #CBD5E1 !important;
+}
+
+.text-slate-500,
+.text-gray-400,
+.text-gray-500 {
+  color: #94A3B8 !important;
+}
+
+/* Red Accents & Threat Highlights */
+.text-red-500,
+.text-red-600,
+.text-red-400 {
+  color: #EF4444 !important;
+}
+
+/* Data Tables: Pure Black Surfaces with Crisp White Rows */
+.data-table {
+  background-color: #000000 !important;
+}
+
+.data-table th {
+  background-color: #0A0A0A !important;
+  color: #94A3B8 !important;
+  border-bottom: 1px solid #1A1A1A !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+}
+
+.data-table td {
+  background-color: #050505 !important;
+  color: #F8FAFC !important;
+  border-bottom: 1px solid #141414 !important;
+}
+
+.data-table tr:hover td {
+  background-color: #0E0E0E !important;
+  color: #FFFFFF !important;
+}
+
+/* Inputs & Form Controls */
+input, select, textarea {
+  background-color: #0A0A0A !important;
+  border: 1px solid #222222 !important;
+  color: #F8FAFC !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #EF4444 !important;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4) !important;
+  outline: none !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #64748B !important;
+}
+
+/* Navigation Tabs */
+.nav-tab {
+  color: #94A3B8 !important;
+}
+
+.nav-tab:hover {
+  color: #FFFFFF !important;
+  background-color: #0A0A0A !important;
+}
+
+.nav-tab.active {
+  color: #EF4444 !important;
+  border-bottom-color: #EF4444 !important;
+  background-color: rgba(239, 68, 68, 0.12) !important;
+  font-weight: 700 !important;
+}
+
+/* Horizon Pills */
+.horizon-pill {
+  color: #94A3B8 !important;
+  background-color: #000000 !important;
+  border-color: #1A1A1A !important;
+}
+
+.horizon-pill:hover:not(.active) {
+  background-color: #0D0D0D !important;
+  color: #FFFFFF !important;
+}
+
+.horizon-pill.active {
+  background-color: #EF4444 !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.4) !important;
+}
+
+/* Map Containers & Leaflet Popups */
+#gis-map, #full-gis-map, .leaflet-container {
+  background: #000000 !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #080808 !important;
+  color: #F8FAFC !important;
+  border: 1px solid #EF4444 !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.9), 0 0 15px rgba(239, 68, 68, 0.3) !important;
+}
+
+.leaflet-popup-tip {
+  background: #080808 !important;
+  border-color: #EF4444 !important;
+}
+
+/* Google Stitch Canvas */
+.stitch-canvas, #case-network-container, #stitch-network-container {
+  background-color: #000000 !important;
+  border-color: #1A1A1A !important;
+}
+
+.stitch-canvas::before {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px) !important;
+}
+
+/* Copilot Message Bubbles */
+.copilot-message-user {
+  background: #0D0D0D !important;
+  border-color: #222222 !important;
+  color: #F8FAFC !important;
+}
+
+.copilot-message-agent {
+  background: #050505 !important;
+  border-color: rgba(239, 68, 68, 0.35) !important;
+  color: #F8FAFC !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar-track {
+  background: #000000 !important;
+}
+::-webkit-scrollbar-thumb {
+  background: #1A1A1A !important;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #EF4444 !important;

@@ -33,7 +33,7 @@ function renderStitchCanvas(graphData) {
         },
         shape: n.shape || 'box',
         size: n.size || 24,
-        font: { color: '#EF4444', size: 11, face: 'Inter', strokeWidth: 2, strokeColor: '#000000' },
+        font: { color: '#F8FAFC', size: 11, face: 'Inter', strokeWidth: 2, strokeColor: '#000000' },
         rawDetails: n.details,
         stitchRole: n.stitch_role
     }));
@@ -46,7 +46,7 @@ function renderStitchCanvas(graphData) {
         width: e.width || 2,
         dashes: e.dashes || false,
         arrows: e.arrows ? { to: { enabled: true, scaleFactor: 0.8 } } : undefined,
-        font: { color: '#F87171', size: 9, face: 'JetBrains Mono', background: '#000000' }
+        font: { color: '#CBD5E1', size: 9, face: 'JetBrains Mono', background: '#000000' }
     }));
 
     const options = {

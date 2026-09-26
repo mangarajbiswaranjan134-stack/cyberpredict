@@ -5,9 +5,9 @@ let financialFlowChart = null;
 let featureImportanceChart = null;
 
 function initCharts() {
-    Chart.defaults.color = '#EF4444';
+    Chart.defaults.color = '#94A3B8';
     Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    Chart.defaults.borderColor = 'rgba(239, 68, 68, 0.15)';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.08)';
 }
 
 function renderTemporalChart(curveData) {
@@ -60,12 +60,12 @@ function renderTemporalChart(curveData) {
                     labels: { 
                         boxWidth: 12, 
                         font: { size: 11, weight: '500' },
-                        color: '#EF4444'
+                        color: '#F8FAFC'
                     } 
                 },
                 tooltip: {
                     backgroundColor: '#000000',
-                    titleColor: '#EF4444',
+                    titleColor: '#F8FAFC',
                     bodyColor: '#EF4444',
                     borderColor: '#DC2626',
                     borderWidth: 1,
@@ -130,12 +130,12 @@ function renderCrimeCategoryChart(categoryData) {
                     labels: { 
                         boxWidth: 10, 
                         font: { size: 10 },
-                        color: '#EF4444'
+                        color: '#F8FAFC'
                     } 
                 },
                 tooltip: {
                     backgroundColor: '#000000',
-                    titleColor: '#EF4444',
+                    titleColor: '#F8FAFC',
                     bodyColor: '#CBD5E1',
                     borderColor: '#DC2626',
                     borderWidth: 1,
@@ -182,7 +182,7 @@ function renderFinancialFlowChart(flowData) {
                 legend: { display: false },
                 tooltip: {
                     backgroundColor: '#000000',
-                    titleColor: '#EF4444',
+                    titleColor: '#F8FAFC',
                     bodyColor: '#EF4444',
                     borderColor: '#DC2626',
                     borderWidth: 1,
@@ -202,7 +202,7 @@ function renderFinancialFlowChart(flowData) {
                     grid: { display: false },
                     ticks: { 
                         font: { size: 10 },
-                        color: '#EF4444'
+                        color: '#F8FAFC'
                     }
                 }
             }
@@ -240,7 +240,7 @@ function renderFeatureImportanceChart(features) {
                 legend: { display: false },
                 tooltip: { 
                     backgroundColor: '#000000',
-                    titleColor: '#EF4444',
+                    titleColor: '#F8FAFC',
                     bodyColor: '#EF4444',
                     borderColor: '#DC2626',
                     borderWidth: 1,
@@ -261,7 +261,7 @@ function renderFeatureImportanceChart(features) {
                     grid: { display: false },
                     ticks: { 
                         font: { size: 11, weight: '500' }, 
-                        color: '#EF4444' 
+                        color: '#F8FAFC' 
                     }
                 }
             }

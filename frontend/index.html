@@ -52,7 +52,7 @@
     <!-- Custom Command Center Stylesheet -->
     <link rel="stylesheet" href="/static/css/command-center.css">
 </head>
-<body class="bg-black text-white min-h-screen flex flex-col font-['Inter']">
+<body class="bg-black text-[#F8FAFC] min-h-screen flex flex-col font-['Inter']">
 
     <!-- TOP COMMAND CENTER HEADER -->
     <header class="bg-black/95 backdrop-blur border-b border-[#260808] sticky top-0 z-50 px-4 py-2.5 shadow-sm">
@@ -69,20 +69,20 @@
                         
                         <!-- SYSTEM OPERATIONAL BADGE (MANDATORY REQUIREMENT) -->
                         <span class="bg-emerald-950/40 text-emerald-700 border border-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded flex items-center space-x-1.5 shadow-sm">
-                            <span class="w-2 h-2 rounded-full bg-emerald-950/400 animate-pulse"></span>
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                             <span>● SYSTEM OPERATIONAL</span>
                         </span>
 
                         <!-- DATA SOURCE INDICATOR BADGE -->
                         <div id="data-source-badge-container" onclick="window.switchTab('settings')" 
-                            class="flex items-center space-x-1.5 bg-[#080808] text-slate-200 border border-[#330A0A] text-[10px] font-bold px-2 py-0.5 rounded tracking-wide cursor-pointer hover:bg-slate-200 transition-all shadow-xs" title="Click to view/change Data Stream Mode in Settings">
-                            <span id="data-source-dot" class="w-1.5 h-1.5 rounded-full bg-amber-950/400"></span>
+                            class="flex items-center space-x-1.5 bg-[#080808] text-slate-200 border border-[#330A0A] text-[10px] font-bold px-2 py-0.5 rounded tracking-wide cursor-pointer hover:bg-[#1A1A1A] hover:border-red-600 transition-all shadow-xs" title="Click to view/change Data Stream Mode in Settings">
+                            <span id="data-source-dot" class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
                             <span id="data-source-label">DEMO / SYNTHETIC STREAM</span>
                         </div>
 
                         <!-- DATABASE INDICATOR -->
                         <span id="db-indicator-badge" class="bg-emerald-950/40 text-emerald-700 border border-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded flex items-center space-x-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-950/400"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                             <span id="db-indicator-label">POSTGRESQL (ONLINE)</span>
                         </span>
                     </div>
@@ -129,7 +129,7 @@
 
                 <!-- Live 15-Step Simulation Trigger -->
                 <button id="btn-simulate-event" onclick="window.triggerCybercrimeSurge()" 
-                    class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-md shadow-sm border border-slate-900 transition-all">
+                    class="bg-[#080808] hover:bg-[#1A1A1A] text-white text-xs font-bold px-3 py-1.5 rounded-md shadow-sm border border-[#1A1A1A] transition-all">
                     ⚡ Simulate Cybercrime Surge
                 </button>
 
@@ -225,7 +225,7 @@
         <section id="view-overview" class="tab-view space-y-4">
             
             <!-- ADVANCE FORECAST DISCLAIMER NOTICE -->
-            <div class="bg-red-950/40/60 border border-red-800/80 rounded-lg px-3 py-2 flex items-center justify-between text-xs text-slate-100 shadow-xs">
+            <div class="bg-red-950/50 border border-red-800/80 rounded-lg px-3 py-2 flex items-center justify-between text-xs text-slate-100 shadow-xs">
                 <div class="flex items-center space-x-2">
                     <span class="text-red-600 font-bold">🔮 ADVANCE WITHDRAWAL RISK FORECAST:</span>
                     <span class="text-slate-200">Active Horizon: <b id="current-horizon-label" class="text-red-400 font-mono font-bold">Next 24 Hours</b></span>
@@ -322,7 +322,7 @@
 
                         <!-- Street View Quick Trigger -->
                         <button onclick="window.openStreetViewPanorama(20.2648, 85.8394, 'Master Canteen Square ATM Cluster (OD-BBSR-27)')" 
-                            class="px-2 py-0.5 bg-[#080808] hover:bg-slate-200 text-slate-100 border border-[#330A0A] rounded text-[10px] font-mono font-bold transition-all flex items-center space-x-1 shadow-xs">
+                            class="px-2 py-0.5 bg-[#080808] hover:bg-[#1A1A1A] hover:border-red-600 text-slate-100 border border-[#330A0A] rounded text-[10px] font-mono font-bold transition-all flex items-center space-x-1 shadow-xs">
                             <span>📷</span>
                             <span>Google Street View Recon</span>
                         </button>
@@ -337,7 +337,7 @@
                             <div class="font-bold text-white mb-1 uppercase tracking-wide">GIS Risk Layers</div>
                             <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-red-600"></span><span class="text-slate-100 font-medium">Critical Predicted (90–100)</span></div>
                             <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span><span class="text-slate-200">High Predicted (75–89)</span></div>
-                            <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-950/400"></span><span class="text-slate-200">Medium Predicted (50–74)</span></div>
+                            <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span><span class="text-slate-200">Medium Predicted (50–74)</span></div>
                             <div class="flex items-center space-x-1.5"><span class="w-2 h-2 rounded-full border border-slate-400 bg-slate-600"></span><span class="text-slate-400">Historical Withdrawal Event</span></div>
                             <div class="flex items-center space-x-1.5"><span class="w-3 h-0.5 bg-red-600 border-dashed"></span><span class="text-slate-100 font-medium">Transit Corridor</span></div>
                         </div>
@@ -403,23 +403,23 @@
                             </div>
                             <div class="space-y-1.5 text-[11px]">
                                 <div class="flex items-center space-x-2 text-slate-100">
-                                    <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold">✓</span>
+                                    <span class="w-4 h-4 rounded-full bg-emerald-950/60 text-emerald-700 flex items-center justify-center text-[10px] font-bold">✓</span>
                                     <span class="font-medium">1. Ingesting complaint patterns from NCRP stream</span>
                                 </div>
                                 <div class="flex items-center space-x-2 text-slate-100">
-                                    <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold">✓</span>
+                                    <span class="w-4 h-4 rounded-full bg-emerald-950/60 text-emerald-700 flex items-center justify-center text-[10px] font-bold">✓</span>
                                     <span class="font-medium">2. Detecting geographic clusters & historical cashout drift</span>
                                 </div>
                                 <div class="flex items-center space-x-2 text-slate-100">
-                                    <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold">✓</span>
+                                    <span class="w-4 h-4 rounded-full bg-emerald-950/60 text-emerald-700 flex items-center justify-center text-[10px] font-bold">✓</span>
                                     <span class="font-medium">3. Mule account path & velocity analysis</span>
                                 </div>
                                 <div class="flex items-center space-x-2 text-slate-100">
-                                    <span class="w-4 h-4 rounded-full bg-red-100 text-red-400 flex items-center justify-center text-[10px] font-bold animate-pulse">4</span>
+                                    <span class="w-4 h-4 rounded-full bg-red-950/60 text-red-400 flex items-center justify-center text-[10px] font-bold animate-pulse">4</span>
                                     <span class="font-bold text-red-400">4. Withdrawal hotspot probability calculation (89%)</span>
                                 </div>
                                 <div class="flex items-center space-x-2 text-slate-400">
-                                    <span class="w-4 h-4 rounded-full bg-slate-200 text-slate-400 flex items-center justify-center text-[10px] font-bold">5</span>
+                                    <span class="w-4 h-4 rounded-full bg-[#151515] text-slate-400 flex items-center justify-center text-[10px] font-bold">5</span>
                                     <span>5. Generating actionable LEA & Bank dispatch directives</span>
                                 </div>
                             </div>
@@ -579,7 +579,7 @@
                             <button onclick="window.setMapBaseLayer('osm', 'full')" class="map-tile-btn px-1.5 py-0.5 rounded text-slate-200 bg-[#040404] hover:bg-[#060606] transition-all" data-layer="osm">🌐 OSM</button>
                         </div>
                         <button onclick="window.openStreetViewPanorama(20.2648, 85.8394, 'Master Canteen Square ATM Cluster (OD-BBSR-27)')" 
-                            class="px-2.5 py-1 bg-[#080808] hover:bg-slate-200 text-slate-100 border border-[#330A0A] rounded text-[11px] font-mono font-bold transition-all flex items-center space-x-1 shadow-xs">
+                            class="px-2.5 py-1 bg-[#080808] hover:bg-[#1A1A1A] hover:border-red-600 text-slate-100 border border-[#330A0A] rounded text-[11px] font-mono font-bold transition-all flex items-center space-x-1 shadow-xs">
                             <span>📷</span>
                             <span>Google Street View Recon</span>
                         </button>
@@ -622,7 +622,7 @@
 
         <!-- ================= VIEW 5: BANK / FI INTELLIGENCE ================= -->
         <section id="view-bank" class="tab-view hidden space-y-4">
-            <div class="bg-red-950/40/60 border border-red-800/80 rounded-lg p-3 text-xs flex justify-between items-center shadow-xs">
+            <div class="bg-red-950/50 border border-red-800/80 rounded-lg p-3 text-xs flex justify-between items-center shadow-xs">
                 <div>
                     <span class="text-red-400 font-bold uppercase">🏦 Citizen Financial Cyber Fraud Reporting Workflow:</span>
                     <span class="text-slate-200 ml-2">Dedicated Bank & FI Intelligence for Layer-2/3 Mule Account Freezing & ATM Geo-fence Controls.</span>
@@ -888,7 +888,7 @@
                     </div>
 
                     <!-- Row 3: Suspect / Mule Account & Real-time IFSC Verification -->
-                    <div class="p-3 bg-red-950/40/40 border border-red-800/80 rounded-lg space-y-3">
+                    <div class="p-3 bg-red-950/40 border border-red-800/80 rounded-lg space-y-3">
                         <div class="flex items-center justify-between">
                             <div class="font-bold text-red-400 text-[11px] uppercase tracking-wider flex items-center space-x-1.5">
                                 <span>🏦</span>
@@ -1189,7 +1189,7 @@
                                 <div class="font-bold text-slate-100">DEMO / SYNTHETIC DATA MODE</div>
                                 <div class="text-[11px] text-slate-500">Benchmark NCRP complaints & simulated mule graphs for SIH evaluation.</div>
                             </div>
-                            <span class="text-[10px] bg-slate-200 text-slate-100 font-bold px-2 py-0.5 rounded border border-[#330A0A]">ACTIVE</span>
+                            <span class="text-[10px] bg-[#151515] text-slate-100 font-bold px-2 py-0.5 rounded border border-[#330A0A]">ACTIVE</span>
                         </div>
                         <div class="p-2.5 rounded bg-[#060606] border border-[#260808] flex items-center justify-between">
                             <div>
@@ -1318,7 +1318,7 @@
                     </div>
 
                     <!-- Statutory Intervention Direct Action Card -->
-                    <div class="p-3 bg-red-950/40/50 rounded border border-red-800/80 space-y-2">
+                    <div class="p-3 bg-red-950/50 rounded border border-red-800/80 space-y-2">
                         <div class="text-xs font-bold text-white flex items-center space-x-1.5">
                             <span>⚖️</span>
                             <span>Statutory Rapid Action</span>
@@ -1333,7 +1333,7 @@
                                 <span>Sec 102 BNSS Debit Freeze Directive</span>
                             </button>
                             <button onclick="window.openInterventionModal('OD-BBSR-27', 'Master Canteen Square ATM Cluster')" 
-                                class="w-full py-1.5 px-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded text-xs font-bold transition-all shadow-xs flex items-center justify-center space-x-1.5">
+                                class="w-full py-1.5 px-2.5 bg-[#080808] hover:bg-[#1A1A1A] text-white rounded text-xs font-bold transition-all shadow-xs flex items-center justify-center space-x-1.5">
                                 <span>🚓</span>
                                 <span>Dispatch PCR Patrol (112 CAD)</span>
                             </button>
@@ -1391,7 +1391,7 @@
                     <div class="flex items-center space-x-2 text-xs">
                         <span class="text-slate-500 font-mono">Agent Status:</span>
                         <span class="text-emerald-700 font-mono font-bold flex items-center space-x-1">
-                            <span class="w-2 h-2 rounded-full bg-emerald-950/400 animate-pulse"></span>
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                             <span>ALL 5 AGENTS ONLINE</span>
                         </span>
                     </div>
