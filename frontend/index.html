@@ -312,11 +312,12 @@
                         <!-- Google Maps Tile Provider Selector -->
                         <div class="flex items-center space-x-1 bg-slate-100 p-0.5 rounded border border-slate-200 text-[10px] font-mono">
                             <span class="text-slate-600 px-1 font-bold">MAP:</span>
-                            <button onclick="window.setMapBaseLayer('carto_light')" class="map-tile-btn px-1.5 py-0.5 rounded bg-red-600 text-white font-bold transition-all shadow-xs" data-layer="carto_light">Positron Light</button>
-                            <button onclick="window.setMapBaseLayer('google_streets')" class="map-tile-btn px-1.5 py-0.5 rounded text-slate-700 bg-white hover:bg-slate-50 transition-all" data-layer="google_streets">🚦 Streets</button>
-                            <button onclick="window.setMapBaseLayer('google_satellite')" class="map-tile-btn px-1.5 py-0.5 rounded text-slate-700 bg-white hover:bg-slate-50 transition-all" data-layer="google_satellite">🛰️ Satellite</button>
+                            <button onclick="window.setMapBaseLayer('google_streets')" class="map-tile-btn px-1.5 py-0.5 rounded bg-red-600 text-white font-bold transition-all shadow-xs" data-layer="google_streets">🚦 Google Streets</button>
                             <button onclick="window.setMapBaseLayer('google_hybrid')" class="map-tile-btn px-1.5 py-0.5 rounded text-slate-700 bg-white hover:bg-slate-50 transition-all" data-layer="google_hybrid">🗺️ Hybrid</button>
+                            <button onclick="window.setMapBaseLayer('google_satellite')" class="map-tile-btn px-1.5 py-0.5 rounded text-slate-700 bg-white hover:bg-slate-50 transition-all" data-layer="google_satellite">🛰️ Satellite</button>
                             <button onclick="window.setMapBaseLayer('google_terrain')" class="map-tile-btn px-1.5 py-0.5 rounded text-slate-700 bg-white hover:bg-slate-50 transition-all" data-layer="google_terrain">🏔️ Terrain</button>
+                            <button onclick="window.setMapBaseLayer('esri_gray')" class="map-tile-btn px-1.5 py-0.5 rounded text-slate-700 bg-white hover:bg-slate-50 transition-all" data-layer="esri_gray">🏛️ Light Canvas</button>
+                            <button onclick="window.setMapBaseLayer('osm')" class="map-tile-btn px-1.5 py-0.5 rounded text-slate-700 bg-white hover:bg-slate-50 transition-all" data-layer="osm">🌐 OSM</button>
                         </div>
 
                         <!-- Street View Quick Trigger -->
@@ -570,11 +571,12 @@
                     <div class="flex items-center space-x-2">
                         <div class="flex items-center space-x-1 bg-slate-100 p-0.5 rounded border border-slate-200 text-[10px] font-mono">
                             <span class="text-slate-600 px-1 font-bold">MAP:</span>
-                            <button onclick="window.setMapBaseLayer('carto_light', 'full')" class="map-tile-btn px-1.5 py-0.5 rounded bg-red-600 text-white font-bold transition-all shadow-xs" data-layer="carto_light">Positron Light</button>
-                            <button onclick="window.setMapBaseLayer('google_streets', 'full')" class="map-tile-btn px-1.5 py-0.5 rounded text-slate-700 bg-white hover:bg-slate-50 transition-all" data-layer="google_streets">🚦 Streets</button>
-                            <button onclick="window.setMapBaseLayer('google_satellite', 'full')" class="map-tile-btn px-1.5 py-0.5 rounded text-slate-700 bg-white hover:bg-slate-50 transition-all" data-layer="google_satellite">🛰️ Satellite</button>
+                            <button onclick="window.setMapBaseLayer('google_streets', 'full')" class="map-tile-btn px-1.5 py-0.5 rounded bg-red-600 text-white font-bold transition-all shadow-xs" data-layer="google_streets">🚦 Google Streets</button>
                             <button onclick="window.setMapBaseLayer('google_hybrid', 'full')" class="map-tile-btn px-1.5 py-0.5 rounded text-slate-700 bg-white hover:bg-slate-50 transition-all" data-layer="google_hybrid">🗺️ Hybrid</button>
+                            <button onclick="window.setMapBaseLayer('google_satellite', 'full')" class="map-tile-btn px-1.5 py-0.5 rounded text-slate-700 bg-white hover:bg-slate-50 transition-all" data-layer="google_satellite">🛰️ Satellite</button>
                             <button onclick="window.setMapBaseLayer('google_terrain', 'full')" class="map-tile-btn px-1.5 py-0.5 rounded text-slate-700 bg-white hover:bg-slate-50 transition-all" data-layer="google_terrain">🏔️ Terrain</button>
+                            <button onclick="window.setMapBaseLayer('esri_gray', 'full')" class="map-tile-btn px-1.5 py-0.5 rounded text-slate-700 bg-white hover:bg-slate-50 transition-all" data-layer="esri_gray">🏛️ Light Canvas</button>
+                            <button onclick="window.setMapBaseLayer('osm', 'full')" class="map-tile-btn px-1.5 py-0.5 rounded text-slate-700 bg-white hover:bg-slate-50 transition-all" data-layer="osm">🌐 OSM</button>
                         </div>
                         <button onclick="window.openStreetViewPanorama(20.2648, 85.8394, 'Master Canteen Square ATM Cluster (OD-BBSR-27)')" 
                             class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 rounded text-[11px] font-mono font-bold transition-all flex items-center space-x-1 shadow-xs">

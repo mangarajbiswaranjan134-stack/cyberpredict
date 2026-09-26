@@ -16,35 +16,35 @@ let fullHistoricalLayer = null;
 let fullCorridorLayer = null;
 let fullHeatLayer = null;
 
-// Base Map Providers (Carto Light Default + Google Maps Platform)
+// Base Map Providers (Google Maps Platform Default + Esri & OSM)
 const MAP_PROVIDERS = {
-    carto_light: {
-        url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-        options: { subdomains: 'abcd', maxZoom: 19, attribution: '© CartoDB Positron' }
-    },
     google_streets: {
         url: `https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
         options: { maxZoom: 20, attribution: '© Google Maps' }
-    },
-    google_satellite: {
-        url: `https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
-        options: { maxZoom: 20, attribution: '© Google Satellite' }
     },
     google_hybrid: {
         url: `https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
         options: { maxZoom: 20, attribution: '© Google Hybrid' }
     },
+    google_satellite: {
+        url: `https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
+        options: { maxZoom: 20, attribution: '© Google Satellite' }
+    },
     google_terrain: {
         url: `https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
         options: { maxZoom: 20, attribution: '© Google Terrain' }
     },
-    carto_dark: {
-        url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-        options: { subdomains: 'abcd', maxZoom: 19, attribution: 'CartoDB Dark Slate' }
+    esri_gray: {
+        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+        options: { maxZoom: 16, attribution: '© Esri Light Gray Canvas' }
+    },
+    osm: {
+        url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        options: { maxZoom: 19, attribution: '© OpenStreetMap contributors' }
     }
 };
 
-let currentBaseLayerKey = 'carto_light';
+let currentBaseLayerKey = 'google_streets';
 let overviewBaseLayer = null;
 let fullGisBaseLayer = null;
 
@@ -69,7 +69,8 @@ function initGisMaps() {
             attributionControl: false
         });
 
-        overviewBaseLayer = L.tileLayer(MAP_PROVIDERS.carto_light.url, MAP_PROVIDERS.carto_light.options).addTo(gisMap);
+        const defaultProvider = MAP_PROVIDERS[currentBaseLayerKey];
+        overviewBaseLayer = L.tileLayer(defaultProvider.url, defaultProvider.options).addTo(gisMap);
         predictedLayer = L.layerGroup().addTo(gisMap);
         historicalLayer = L.layerGroup().addTo(gisMap);
         corridorLayer = L.layerGroup().addTo(gisMap);
@@ -87,7 +88,8 @@ function initGisMaps() {
             attributionControl: false
         });
 
-        fullGisBaseLayer = L.tileLayer(MAP_PROVIDERS.carto_light.url, MAP_PROVIDERS.carto_light.options).addTo(fullGisMap);
+        const defaultProvider = MAP_PROVIDERS[currentBaseLayerKey];
+        fullGisBaseLayer = L.tileLayer(defaultProvider.url, defaultProvider.options).addTo(fullGisMap);
         fullPredictedLayer = L.layerGroup().addTo(fullGisMap);
         fullHistoricalLayer = L.layerGroup().addTo(fullGisMap);
         fullCorridorLayer = L.layerGroup().addTo(fullGisMap);
