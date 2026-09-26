@@ -1,4 +1,5 @@
 import os
+import shutil
 import logging
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import declarative_base, sessionmaker
@@ -7,7 +8,18 @@ logger = logging.getLogger("cyberpredict.database")
 
 # Primary Database URL: PostgreSQL
 PG_URL = os.getenv("DATABASE_URL", "postgresql://postgres@localhost:5432/cyberpredict")
-SQLITE_URL = "sqlite:///./cyberpredict.db"
+
+if os.getenv("VERCEL"):
+    db_source = os.path.join(os.getcwd(), "cyberpredict.db")
+    tmp_db = "/tmp/cyberpredict.db"
+    if os.path.exists(db_source) and not os.path.exists(tmp_db):
+        try:
+            shutil.copy2(db_source, tmp_db)
+        except Exception:
+            pass
+    SQLITE_URL = f"sqlite:///{tmp_db}"
+else:
+    SQLITE_URL = "sqlite:///./cyberpredict.db"
 
 Base = declarative_base()
 
