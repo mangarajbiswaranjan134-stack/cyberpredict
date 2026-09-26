@@ -1,27 +1,60 @@
-/* CYBERPREDICT: Tactical Command Center Dark Theme Stylesheet (Google Stitch Design System) */
-/* ZERO PURPLE POLICY: Clean Obsidian, Slate, Electric Cyan, Cobalt Blue, Signal Amber, Alert Crimson, Emerald */
+/* =====================================================================
+   CYBERPREDICT: White + Red + Dark Text Intelligence Design System
+   Government / Intelligence-Grade Operational Command Architecture
+   Strict Color Identity: Clean White/Off-White + Professional Red + Charcoal
+   ===================================================================== */
+
 :root {
-  --bg-primary: #060B13;
-  --bg-secondary: #0A1220;
-  --bg-tertiary: #0F1A2E;
-  --bg-card: rgba(13, 22, 38, 0.90);
-  --bg-card-hover: rgba(18, 30, 52, 0.95);
-  --border-subtle: rgba(51, 65, 85, 0.45);
-  --border-glow: rgba(6, 182, 212, 0.45);
-  --text-main: #F8FAFC;
-  --text-muted: #94A3B8;
-  --text-dim: #64748B;
+  /* Primary Surface & Backgrounds */
+  --bg-primary: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-secondary: #F1F5F9;
+  --bg-tertiary: #E2E8F0;
   
-  --accent-cyan: #06B6D4;
-  --accent-blue: #3B82F6;
-  --accent-teal: #14B8A6;
-  --accent-cobalt: #2563EB;
-  --accent-sky: #0EA5E9;
-  
-  --risk-critical: #EF4444;
-  --risk-high: #F97316;
-  --risk-medium: #F59E0B;
-  --risk-low: #10B981;
+  /* Card System */
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FAFAFA;
+  --border-subtle: #E2E8F0;
+  --border-strong: #CBD5E1;
+  --border-focus: #DC2626;
+
+  /* High-Contrast Charcoal & Dark Text */
+  --text-main: #0F172A;
+  --text-secondary: #334155;
+  --text-muted: #64748B;
+  --text-dim: #94A3B8;
+  --text-light: #FFFFFF;
+
+  /* Strategic Professional Red Accents (Threats, Risk, Predictions, Actions) */
+  --accent-red: #DC2626;
+  --accent-red-hover: #B91C1C;
+  --accent-red-dark: #991B1B;
+  --accent-red-light: #FEF2F2;
+  --accent-red-border: #FECACA;
+  --accent-red-glow: rgba(220, 38, 38, 0.15);
+
+  /* Tactical Operational Risk Badges */
+  --risk-critical: #DC2626;
+  --risk-critical-bg: #FEF2F2;
+  --risk-critical-border: #FECACA;
+
+  --risk-high: #EA580C;
+  --risk-high-bg: #FFF7ED;
+  --risk-high-border: #FFEDD5;
+
+  --risk-medium: #D97706;
+  --risk-medium-bg: #FFFBEB;
+  --risk-medium-border: #FEF3C7;
+
+  --risk-low: #059669;
+  --risk-low-bg: #ECFDF5;
+  --risk-low-border: #D1FAE5;
+
+  /* Elevation Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 4px 14px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -2px rgba(220, 38, 38, 0.06);
+  --shadow-popup: 0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.08);
 }
 
 * {
@@ -36,9 +69,10 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Custom Scrollbars */
+/* Light Slate Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -47,33 +81,144 @@ body {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #CBD5E1;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #94A3B8;
 }
 
-/* Command Center Glass Cards (Google Stitch Clean Component Standard) */
+/* =====================================================================
+   ENTERPRISE MOTION & ANIMATION SYSTEM
+   Purposeful, subtle transitions (200-350ms)
+   ===================================================================== */
+
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Hotspot Subtle Red Pulse (No blinding neon, government precision) */
+@keyframes pulseRedSubtle {
+  0% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+  }
+}
+
+.pulse-critical {
+  animation: pulseRedSubtle 2.2s infinite ease-out;
+}
+
+/* Contextual Skeleton Loader Pulse */
+@keyframes skeletonPulse {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-loading {
+  background: linear-gradient(90deg, #F1F5F9 25%, #E2E8F0 50%, #F1F5F9 75%);
+  background-size: 200% 100%;
+  animation: skeletonPulse 1.6s infinite ease-in-out;
+  border-radius: 4px;
+}
+
+/* Respect Accessibility Preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =====================================================================
+   WHITE CARDS & COMPONENT CONTAINERS
+   ===================================================================== */
+
 .command-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 10px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+  box-shadow: var(--shadow-card);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .command-card:hover {
-  border-color: var(--border-glow);
-  box-shadow: 0 4px 20px -2px rgba(6, 182, 212, 0.15);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-hover);
 }
 
-/* Stitch Canvas Design System */
+/* Red Threat Card Accent */
+.command-card-threat {
+  border-left: 4px solid var(--accent-red) !important;
+}
+
+/* Top Intelligence Command Header */
+.command-header {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+}
+
+/* Red Threat & Status Badges */
+.badge-critical {
+  background: var(--risk-critical-bg);
+  color: var(--risk-critical);
+  border: 1px solid var(--risk-critical-border);
+  font-weight: 700;
+}
+
+.badge-high {
+  background: var(--risk-high-bg);
+  color: var(--risk-high);
+  border: 1px solid var(--risk-high-border);
+  font-weight: 700;
+}
+
+.badge-medium {
+  background: var(--risk-medium-bg);
+  color: var(--risk-medium);
+  border: 1px solid var(--risk-medium-border);
+  font-weight: 700;
+}
+
+.badge-low {
+  background: var(--risk-low-bg);
+  color: var(--risk-low);
+  border: 1px solid var(--risk-low-border);
+  font-weight: 700;
+}
+
+/* Stitch White & Red Canvas */
 .stitch-canvas {
-  background: radial-gradient(circle at 50% 50%, #0d1a30 0%, #060b13 100%);
-  border: 1px solid rgba(56, 189, 248, 0.2);
-  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
   position: relative;
   overflow: hidden;
 }
@@ -82,9 +227,9 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
-  background-size: 32px 32px;
+  background-image: linear-gradient(rgba(226, 232, 240, 0.6) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(226, 232, 240, 0.6) 1px, transparent 1px);
+  background-size: 28px 28px;
   pointer-events: none;
 }
 
@@ -92,235 +237,324 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.2rem 0.6rem;
-  border-radius: 6px;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
   font-size: 11px;
   font-weight: 700;
   font-family: 'JetBrains Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
 }
 
-.stitch-badge-cyan {
-  background: rgba(6, 182, 212, 0.12);
-  color: #38BDF8;
-  border: 1px solid rgba(6, 182, 212, 0.35);
+.stitch-badge-red {
+  background: var(--accent-red-light);
+  color: var(--accent-red);
+  border: 1px solid var(--accent-red-border);
 }
 
-.stitch-badge-emerald {
-  background: rgba(16, 185, 129, 0.12);
-  color: #34D399;
-  border: 1px solid rgba(16, 185, 129, 0.35);
+.stitch-badge-charcoal {
+  background: #F1F5F9;
+  color: #1E293B;
+  border: 1px solid #CBD5E1;
 }
 
-.stitch-badge-amber {
-  background: rgba(245, 158, 11, 0.12);
-  color: #FBBF24;
-  border: 1px solid rgba(245, 158, 11, 0.35);
+/* =====================================================================
+   HOTSPOT FACTOR METERS (EXPLAINABLE AI)
+   Smooth animated factor bars (Complaint Density, Recent Activity, etc.)
+   ===================================================================== */
+
+.xai-meter-bg {
+  background: #F1F5F9;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 4px;
 }
 
-.stitch-badge-crimson {
-  background: rgba(239, 68, 68, 0.12);
-  color: #F87171;
-  border: 1px solid rgba(239, 68, 68, 0.35);
+.xai-meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #DC2626, #EF4444);
+  border-radius: 3px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Glowing Risk Accents */
-.badge-critical {
-  background: rgba(239, 68, 68, 0.15);
-  color: #F87171;
-  border: 1px solid rgba(239, 68, 68, 0.4);
-}
-
-.badge-high {
-  background: rgba(249, 115, 22, 0.15);
-  color: #FB923C;
-  border: 1px solid rgba(249, 115, 22, 0.4);
-}
-
-.badge-medium {
-  background: rgba(245, 158, 11, 0.15);
-  color: #FBBF24;
-  border: 1px solid rgba(245, 158, 11, 0.4);
-}
-
-.badge-low {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34D399;
-  border: 1px solid rgba(16, 185, 129, 0.4);
-}
-
-/* Radar & Pulse Animations */
-@keyframes pulse-ring {
-  0% { transform: scale(0.95); opacity: 0.9; }
-  50% { transform: scale(1.35); opacity: 0.2; }
-  100% { transform: scale(1.6); opacity: 0; }
-}
-
-.pulse-critical {
+/* Step-by-Step AI Prediction Workflow Widget */
+.ai-step-item {
   position: relative;
+  padding-left: 1.75rem;
+  padding-bottom: 0.75rem;
+  border-left: 2px solid #E2E8F0;
 }
 
-.pulse-critical::before {
-  content: '';
+.ai-step-item:last-child {
+  border-left: 2px solid transparent;
+  padding-bottom: 0;
+}
+
+.ai-step-dot {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  border-radius: 9999px;
-  background-color: var(--risk-critical);
-  animation: pulse-ring 1.8s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
-  z-index: 0;
+  left: -7px;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid #CBD5E1;
 }
 
-/* Map Container Styling */
+.ai-step-item.active .ai-step-dot {
+  background: #DC2626;
+  border-color: #FECACA;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+}
+
+.ai-step-item.completed .ai-step-dot {
+  background: #059669;
+  border-color: #D1FAE5;
+}
+
+/* =====================================================================
+   CLEAN LIGHT MAP & PIN STYLES (GOOGLE MAPS & LEAFLET)
+   ===================================================================== */
+
 #gis-map, #full-gis-map {
   width: 100%;
   height: 100%;
   min-height: 480px;
-  background: #0A1220;
-  border-radius: 8px;
+  background: #F1F5F9;
+  border-radius: 6px;
   z-index: 10;
 }
 
 .leaflet-container {
-  background-color: #060B13 !important;
+  background-color: #F8FAFC !important;
   font-family: inherit !important;
 }
 
 .leaflet-popup-content-wrapper {
-  background: rgba(13, 22, 38, 0.96) !important;
-  color: #F8FAFC !important;
-  border: 1px solid rgba(56, 189, 248, 0.4) !important;
-  backdrop-filter: blur(12px) !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.8) !important;
+  background: #FFFFFF !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border-subtle) !important;
   border-radius: 8px !important;
+  box-shadow: var(--shadow-popup) !important;
+  padding: 2px !important;
 }
 
 .leaflet-popup-tip {
-  background: rgba(13, 22, 38, 0.96) !important;
+  background: #FFFFFF !important;
+  border-color: var(--border-subtle) !important;
 }
 
-/* Custom Marker Styles */
+/* Map Markers */
 .custom-pin-critical {
-  background: rgba(239, 68, 68, 0.9);
+  background: #DC2626;
   border: 2px solid #FFFFFF;
-  box-shadow: 0 0 16px #EF4444;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.45);
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 11px;
   font-weight: 800;
-  animation: pulse-ring 2s infinite ease-out;
+  animation: pulseRedSubtle 2.2s infinite ease-out;
+  cursor: pointer;
 }
 
 .custom-pin-high {
-  background: rgba(249, 115, 22, 0.9);
+  background: #EA580C;
   border: 2px solid #FFFFFF;
-  box-shadow: 0 0 12px #F97316;
+  box-shadow: 0 2px 6px rgba(234, 88, 12, 0.4);
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 10px;
   font-weight: 700;
+  cursor: pointer;
 }
 
 .custom-pin-historical {
-  background: rgba(51, 65, 85, 0.85);
-  border: 1.5px solid #94A3B8;
+  background: #475569;
+  border: 1.5px solid #FFFFFF;
   border-radius: 50%;
   width: 14px;
   height: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #94A3B8;
-  font-size: 8px;
-  opacity: 0.8;
-}
-
-/* Horizontal Explainability Progress Bars */
-.xai-meter-bg {
-  background: #1A263D;
-  height: 6px;
-  border-radius: 3px;
-  overflow: hidden;
-  margin-top: 3px;
-}
-
-.xai-meter-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #06B6D4, #3B82F6);
-  border-radius: 3px;
-}
-
-/* Navigation active tab style */
-.nav-tab.active {
-  background: rgba(6, 182, 212, 0.15);
-  color: #38BDF8;
-  border-left: 3px solid #06B6D4;
-}
-
-.nav-tab:hover:not(.active) {
-  background: rgba(30, 41, 59, 0.6);
-  color: #F1F5F9;
-}
-
-/* Horizon Pill Active Styles */
-.horizon-pill.active {
-  background: #0284C7;
   color: #FFFFFF;
-  border-color: #38BDF8;
+  font-size: 8px;
+  font-weight: bold;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+/* =====================================================================
+   NAVIGATION TABS & ACTION BUTTONS
+   ===================================================================== */
+
+.nav-tab {
+  color: var(--text-secondary);
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+.nav-tab:hover {
+  color: var(--accent-red);
+  background-color: var(--bg-secondary);
+}
+
+.nav-tab.active {
+  color: var(--accent-red) !important;
+  border-bottom-color: var(--accent-red) !important;
+  background-color: var(--accent-red-light);
   font-weight: 700;
 }
 
-.horizon-pill:hover:not(.active) {
-  background: #1A263D;
-  color: #E2E8F0;
+/* Advance Horizon Selector Pills */
+.horizon-pill {
+  color: var(--text-secondary);
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  font-weight: 500;
+  transition: all 0.15s ease;
 }
 
-/* Modal Overlay */
+.horizon-pill:hover:not(.active) {
+  background: var(--bg-secondary);
+  color: var(--text-main);
+}
+
+.horizon-pill.active {
+  background: var(--accent-red) !important;
+  color: #FFFFFF !important;
+  border-color: var(--accent-red) !important;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Red Emergency & Action Buttons */
+.btn-primary-red {
+  background-color: var(--accent-red);
+  color: #FFFFFF;
+  font-weight: 600;
+  border: 1px solid #B91C1C;
+  border-radius: 6px;
+  transition: all 0.18s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary-red:hover {
+  background-color: var(--accent-red-hover);
+  box-shadow: 0 4px 10px -1px rgba(220, 38, 38, 0.25);
+}
+
+.btn-secondary-light {
+  background-color: #FFFFFF;
+  color: var(--text-secondary);
+  font-weight: 500;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  transition: all 0.18s ease;
+}
+
+.btn-secondary-light:hover {
+  background-color: var(--bg-secondary);
+  color: var(--text-main);
+  border-color: var(--border-strong);
+}
+
+/* =====================================================================
+   TABLES & DATA GRIDS (CLEAR CONTRAST)
+   ===================================================================== */
+
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 12px;
+}
+
+.data-table th {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: left;
+}
+
+.data-table td {
+  padding: 10px 12px;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-subtle);
+  background: #FFFFFF;
+}
+
+.data-table tr:hover td {
+  background: #FEF2F2 !important;
+}
+
+/* =====================================================================
+   MODAL DIALOGS (CLEAN WHITE INTERFACE)
+   ===================================================================== */
+
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(2, 6, 15, 0.86);
-  backdrop-filter: blur(8px);
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Stitch Graph & Case Network Containers */
+.modal-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Stitch Graph & Case Network */
 #case-network-container, #stitch-network-container {
   width: 100%;
   height: 520px;
-  background: #070D18;
-  border: 1px solid #1E293B;
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
   border-radius: 8px;
 }
 
-/* Agentic AI Copilot Chat Styles */
+/* Copilot Messages in White Theme */
 .copilot-message-user {
-  background: rgba(30, 58, 95, 0.6);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  border-radius: 10px 10px 2px 10px;
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  color: #0F172A;
+  border-radius: 8px 8px 2px 8px;
 }
 
 .copilot-message-agent {
-  background: rgba(15, 26, 46, 0.85);
-  border: 1px solid rgba(6, 182, 212, 0.35);
-  border-radius: 10px 10px 10px 2px;
+  background: #FFFFFF;
+  border: 1px solid var(--accent-red-border);
+  color: #0F172A;
+  border-radius: 8px 8px 8px 2px;
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.04);
 }
 
 .agentic-step {
-  border-left: 2px solid #06B6D4;
+  border-left: 2px solid var(--accent-red);
   padding-left: 8px;
   margin-top: 6px;
   margin-bottom: 6px;

@@ -1,13 +1,13 @@
-// CYBERPREDICT: Chart.js Visualizations & Intelligence Analytics
+// CYBERPREDICT: Chart.js Visualizations & Intelligence Analytics (White + Red + Dark Text Theme)
 let temporalChart = null;
 let crimeCategoryChart = null;
 let financialFlowChart = null;
 let featureImportanceChart = null;
 
 function initCharts() {
-    Chart.defaults.color = '#94A3B8';
-    Chart.defaults.font.family = "'Inter', sans-serif";
-    Chart.defaults.borderColor = '#1E293B';
+    Chart.defaults.color = '#334155';
+    Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    Chart.defaults.borderColor = '#E2E8F0';
 }
 
 function renderTemporalChart(curveData) {
@@ -28,21 +28,23 @@ function renderTemporalChart(curveData) {
                 {
                     label: 'Predicted Withdrawal Risk Level',
                     data: predicted,
-                    borderColor: '#06B6D4',
-                    backgroundColor: 'rgba(6, 182, 212, 0.15)',
-                    borderWidth: 3,
+                    borderColor: '#DC2626',
+                    backgroundColor: 'rgba(220, 38, 38, 0.08)',
+                    borderWidth: 2.5,
                     fill: true,
                     tension: 0.35,
-                    pointBackgroundColor: '#06B6D4',
+                    pointBackgroundColor: '#DC2626',
+                    pointBorderColor: '#FFFFFF',
+                    pointBorderWidth: 1.5,
                     pointRadius: 4,
                     pointHoverRadius: 7
                 },
                 {
                     label: 'Historical Baseline Activity',
                     data: baseline,
-                    borderColor: '#64748B',
+                    borderColor: '#94A3B8',
                     borderDash: [5, 5],
-                    borderWidth: 2,
+                    borderWidth: 1.75,
                     fill: false,
                     tension: 0.35,
                     pointRadius: 0
@@ -53,24 +55,43 @@ function renderTemporalChart(curveData) {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } },
+                legend: { 
+                    position: 'top', 
+                    labels: { 
+                        boxWidth: 12, 
+                        font: { size: 11, weight: '500' },
+                        color: '#0F172A'
+                    } 
+                },
                 tooltip: {
-                    backgroundColor: 'rgba(15, 23, 42, 0.95)',
-                    titleColor: '#F8FAFC',
-                    bodyColor: '#38BDF8',
-                    borderColor: '#334155',
-                    borderWidth: 1
+                    backgroundColor: '#FFFFFF',
+                    titleColor: '#0F172A',
+                    bodyColor: '#DC2626',
+                    borderColor: '#CBD5E1',
+                    borderWidth: 1,
+                    padding: 10,
+                    boxPadding: 4,
+                    usePointStyle: true,
+                    titleFont: { weight: 'bold' }
                 }
             },
             scales: {
                 y: {
                     min: 0,
                     max: 100,
-                    grid: { color: 'rgba(30, 41, 59, 0.5)' },
-                    ticks: { callback: v => `${v}%` }
+                    grid: { color: '#F1F5F9' },
+                    ticks: { 
+                        callback: v => `${v}%`,
+                        color: '#64748B',
+                        font: { size: 10 }
+                    }
                 },
                 x: {
-                    grid: { color: 'rgba(30, 41, 59, 0.3)' }
+                    grid: { color: '#F8FAFC' },
+                    ticks: { 
+                        color: '#64748B',
+                        font: { size: 10 }
+                    }
                 }
             }
         }
@@ -93,18 +114,33 @@ function renderCrimeCategoryChart(categoryData) {
             datasets: [{
                 data: values,
                 backgroundColor: [
-                    '#06B6D4', '#3B82F6', '#0284C7', '#0EA5E9', 
-                    '#F59E0B', '#10B981', '#F43F5E', '#14B8A6'
+                    '#DC2626', '#EA580C', '#D97706', '#0F172A', 
+                    '#334155', '#059669', '#2563EB', '#475569'
                 ],
                 borderWidth: 2,
-                borderColor: '#0F172A'
+                borderColor: '#FFFFFF'
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10 } } }
+                legend: { 
+                    position: 'right', 
+                    labels: { 
+                        boxWidth: 10, 
+                        font: { size: 10 },
+                        color: '#0F172A'
+                    } 
+                },
+                tooltip: {
+                    backgroundColor: '#FFFFFF',
+                    titleColor: '#0F172A',
+                    bodyColor: '#334155',
+                    borderColor: '#CBD5E1',
+                    borderWidth: 1,
+                    padding: 8
+                }
             },
             cutout: '68%'
         }
@@ -128,13 +164,13 @@ function renderFinancialFlowChart(flowData) {
                 label: 'Volume (₹ Crores)',
                 data: values,
                 backgroundColor: [
-                    'rgba(59, 130, 246, 0.75)',
-                    'rgba(14, 165, 233, 0.75)',
-                    'rgba(245, 158, 11, 0.75)',
-                    'rgba(16, 185, 129, 0.75)',
-                    'rgba(239, 68, 68, 0.75)'
+                    'rgba(15, 23, 42, 0.85)',
+                    'rgba(51, 65, 85, 0.85)',
+                    'rgba(217, 119, 6, 0.85)',
+                    'rgba(5, 150, 105, 0.85)',
+                    'rgba(220, 38, 38, 0.85)'
                 ],
-                borderColor: ['#3B82F6', '#0EA5E9', '#F59E0B', '#10B981', '#EF4444'],
+                borderColor: ['#0F172A', '#334155', '#D97706', '#059669', '#DC2626'],
                 borderWidth: 1,
                 borderRadius: 4
             }]
@@ -145,17 +181,29 @@ function renderFinancialFlowChart(flowData) {
             plugins: {
                 legend: { display: false },
                 tooltip: {
+                    backgroundColor: '#FFFFFF',
+                    titleColor: '#0F172A',
+                    bodyColor: '#DC2626',
+                    borderColor: '#CBD5E1',
+                    borderWidth: 1,
                     callbacks: { label: ctx => ` ₹${ctx.raw} Crores` }
                 }
             },
             scales: {
                 y: {
-                    grid: { color: 'rgba(30, 41, 59, 0.5)' },
-                    ticks: { callback: v => `₹${v} Cr` }
+                    grid: { color: '#F1F5F9' },
+                    ticks: { 
+                        callback: v => `₹${v} Cr`,
+                        color: '#64748B',
+                        font: { size: 10 }
+                    }
                 },
                 x: {
                     grid: { display: false },
-                    ticks: { font: { size: 10 } }
+                    ticks: { 
+                        font: { size: 10 },
+                        color: '#0F172A'
+                    }
                 }
             }
         }
@@ -179,8 +227,8 @@ function renderFeatureImportanceChart(features) {
             datasets: [{
                 label: 'Predictive Feature Weight (%)',
                 data: values,
-                backgroundColor: 'rgba(6, 182, 212, 0.65)',
-                borderColor: '#06B6D4',
+                backgroundColor: 'rgba(220, 38, 38, 0.85)',
+                borderColor: '#DC2626',
                 borderWidth: 1,
                 borderRadius: 4
             }]
@@ -190,17 +238,31 @@ function renderFeatureImportanceChart(features) {
             maintainAspectRatio: false,
             plugins: {
                 legend: { display: false },
-                tooltip: { callbacks: { label: ctx => ` Weight: ${ctx.raw}%` } }
+                tooltip: { 
+                    backgroundColor: '#FFFFFF',
+                    titleColor: '#0F172A',
+                    bodyColor: '#DC2626',
+                    borderColor: '#CBD5E1',
+                    borderWidth: 1,
+                    callbacks: { label: ctx => ` Weight: ${ctx.raw}%` } 
+                }
             },
             scales: {
                 x: {
                     max: 35,
-                    ticks: { callback: v => `${v}%` },
-                    grid: { color: 'rgba(30, 41, 59, 0.5)' }
+                    ticks: { 
+                        callback: v => `${v}%`,
+                        color: '#64748B',
+                        font: { size: 10 }
+                    },
+                    grid: { color: '#F1F5F9' }
                 },
                 y: {
                     grid: { display: false },
-                    ticks: { font: { size: 11 }, color: '#F1F5F9' }
+                    ticks: { 
+                        font: { size: 11, weight: '500' }, 
+                        color: '#0F172A' 
+                    }
                 }
             }
         }
