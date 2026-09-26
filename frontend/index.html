@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBERPREDICT — National Cybercrime Predictive Intelligence & Proactive Intervention Platform</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            bg: '#070B14',
+                            card: '#0D1527',
+                            border: '#1E293B',
+                            cyan: '#06B6D4',
+                            blue: '#3B82F6',
+                            red: '#EF4444',
+                            orange: '#F97316',
+                            amber: '#F59E0B',
+                            green: '#10B981'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <!-- Vis.js Network CDN -->
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Command Center Stylesheet -->
+    <link rel="stylesheet" href="/static/css/command-center.css">
+</head>
+<body class="bg-[#070B14] text-slate-100 min-h-screen flex flex-col font-['Inter']">
+
+    <!-- TOP COMMAND CENTER HEADER -->
+    <header class="bg-[#0A101F]/95 backdrop-blur border-b border-slate-800 sticky top-0 z-50 px-4 py-2.5">
+        <div class="max-w-[1920px] mx-auto flex flex-wrap items-center justify-between gap-3">
+            
+            <!-- Branding & Operational Status -->
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center font-black text-white text-base shadow-lg shadow-cyan-500/20">
+                    CP
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-extrabold tracking-wider text-white text-lg font-mono">CYBERPREDICT</span>
+                        
+                        <!-- DATA SOURCE INDICATOR BADGE (MANDATORY REQUIREMENT) -->
+                        <div id="data-source-badge-container" onclick="window.switchTab('settings')" 
+                            class="flex items-center space-x-1.5 bg-amber-950/90 text-amber-300 border border-amber-500/80 text-[10px] font-extrabold px-2.5 py-0.5 rounded tracking-wide cursor-pointer hover:bg-amber-900 transition-all shadow-sm" title="Click to view/change Data Stream Mode in Settings">
+                            <span id="data-source-dot" class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                            <span id="data-source-label">DEMO / SYNTHETIC DATA</span>
+                        </div>
+
+                        <!-- POSTGRESQL DATABASE INDICATOR -->
+                        <span id="db-indicator-badge" class="bg-emerald-950/90 text-emerald-300 border border-emerald-600/70 text-[10px] font-bold px-2 py-0.5 rounded flex items-center space-x-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                            <span id="db-indicator-label">POSTGRESQL 16 (ONLINE)</span>
+                        </span>
+                    </div>
+                    <div class="text-[11px] text-slate-400">
+                        National Cybercrime Predictive Intelligence & Proactive Intervention Platform
+                    </div>
+                </div>
+            </div>
+
+            <!-- Global Search -->
+            <div class="flex-1 max-w-sm hidden md:block">
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500 text-xs">🔍</span>
+                    <input type="text" id="global-search-input" 
+                        placeholder="Search Complaint ID, Account, ATM, District..."
+                        class="w-full pl-8 pr-4 py-1.5 bg-slate-900/90 border border-slate-700/70 rounded-md text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500" />
+                </div>
+            </div>
+
+            <!-- Action Controls & Advance Horizon Selector -->
+            <div class="flex items-center space-x-2">
+                <!-- Advance Forecast Horizon Toggle Pill -->
+                <div class="flex items-center space-x-1 bg-slate-900/90 border border-slate-800 p-0.5 rounded-lg text-[11px]">
+                    <span class="text-slate-500 text-[10px] font-mono px-1.5 uppercase">Horizon:</span>
+                    <button class="horizon-pill px-2 py-1 rounded text-[11px] transition-all" data-horizon="1h">1h</button>
+                    <button class="horizon-pill px-2 py-1 rounded text-[11px] transition-all" data-horizon="6h">6h</button>
+                    <button class="horizon-pill px-2 py-1 rounded text-[11px] transition-all" data-horizon="12h">12h</button>
+                    <button class="horizon-pill active bg-cyan-600 text-white font-bold px-2 py-1 rounded text-[11px] transition-all" data-horizon="24h">24h</button>
+                </div>
+
+                <!-- Agentic AI Copilot Quick Trigger -->
+                <button onclick="window.switchTab('copilot')" 
+                    class="bg-cyan-700 hover:bg-cyan-600 text-white text-xs font-bold px-3 py-1.5 rounded-md flex items-center space-x-1.5 shadow-lg shadow-cyan-950/40 border border-cyan-400 transition-all">
+                    <span>🤖</span>
+                    <span>AAI Copilot</span>
+                </button>
+
+                <!-- 112 Emergency Button -->
+                <button onclick="window.openEmergency112Modal()" 
+                    class="bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-md flex items-center space-x-1 shadow-lg shadow-red-900/40 border border-red-400 transition-all">
+                    <span>🚨</span>
+                    <span>112</span>
+                </button>
+
+                <!-- Live 15-Step Simulation Trigger -->
+                <button id="btn-simulate-event" onclick="window.triggerCybercrimeSurge()" 
+                    class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-md shadow-lg shadow-orange-950/40 border border-amber-400 transition-all">
+                    ⚡ Simulate Cybercrime Event
+                </button>
+
+                <!-- Authenticated Officer / Login Modal Trigger -->
+                <button onclick="window.openLoginModal()" 
+                    class="flex items-center space-x-1.5 bg-slate-900 hover:bg-slate-800 border border-cyan-800/80 px-2.5 py-1.5 rounded-md text-xs transition-all shadow-sm">
+                    <span class="text-cyan-400">👤</span>
+                    <span id="header-officer-name" class="font-semibold text-slate-200">Insp. Gen. Rajesh Sharma</span>
+                    <span class="text-[9px] bg-cyan-950 text-cyan-300 font-mono px-1 py-0.5 rounded border border-cyan-700">JWT AUTH</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 30-SECOND SIH JUDGE IMPACT HEADER STRIP -->
+        <div class="max-w-[1920px] mx-auto mt-2 pt-2 border-t border-slate-800/80 bg-slate-950/60 rounded px-3 py-1.5 flex flex-wrap items-center justify-between gap-y-1 text-[11px]">
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                <span class="text-cyan-400 font-bold uppercase tracking-wider font-mono">SIH 2026 Core Loop:</span>
+                <span><b class="text-slate-300">WHAT:</b> Forecast future cashout locations</span>
+                <span class="text-slate-600">•</span>
+                <span><b class="text-slate-300">WHY:</b> Proactive cybercrime intervention</span>
+                <span class="text-slate-600">•</span>
+                <span><b class="text-slate-300">HOW:</b> AI/ML + temporal + geospatial modelling</span>
+                <span class="text-slate-600">•</span>
+                <span><b class="text-slate-300">ACTION:</b> Alert LEAs & Banks/FIs</span>
+                <span class="text-slate-600">•</span>
+                <span><b class="text-slate-300">RESULT:</b> Intercept funds before physical cashout</span>
+            </div>
+            <div class="text-[10px] text-amber-400/90 font-mono flex items-center space-x-1">
+                <span>🛡️</span>
+                <span>Decision Support Only • Human Verification Required</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVIGATION TAB BAR -->
+    <nav class="bg-[#0A101F] border-b border-slate-800 px-4">
+        <div class="max-w-[1920px] mx-auto flex items-center space-x-1 overflow-x-auto py-1 text-xs">
+            <button class="nav-tab active px-3 py-1.5 rounded font-medium transition-all" data-tab="overview">
+                📊 Command Overview
+            </button>
+            <button class="nav-tab px-3 py-1.5 rounded font-medium text-emerald-400 hover:text-white transition-all bg-emerald-950/40 border border-emerald-800/60 font-bold" data-tab="complaint-entry">
+                📝 File Complaint
+            </button>
+            <button class="nav-tab px-3 py-1.5 rounded font-medium text-slate-400 hover:text-white transition-all" data-tab="complaints">
+                📋 Complaints Registry
+            </button>
+            <button class="nav-tab px-3 py-1.5 rounded font-medium text-slate-400 hover:text-white transition-all" data-tab="predictions">
+                🔮 Advance Forecast
+            </button>
+            <button class="nav-tab px-3 py-1.5 rounded font-medium text-slate-400 hover:text-white transition-all" data-tab="gis">
+                🗺️ Geospatial Risk Map
+            </button>
+            <button class="nav-tab px-3 py-1.5 rounded font-medium text-slate-400 hover:text-white transition-all" data-tab="alerts">
+                🚨 Alerts & Interventions
+            </button>
+            <button class="nav-tab px-3 py-1.5 rounded font-medium text-cyan-400 hover:text-white transition-all bg-cyan-950/40 border border-cyan-800/60 font-bold" data-tab="stitch">
+                🧵 Stitch Flow Canvas
+            </button>
+            <button class="nav-tab px-3 py-1.5 rounded font-medium text-sky-400 hover:text-white transition-all bg-sky-950/40 border border-sky-800/60 font-bold" data-tab="copilot">
+                🤖 AAI Copilot & Reasoning
+            </button>
+            <button class="nav-tab px-3 py-1.5 rounded font-medium text-slate-400 hover:text-white transition-all" data-tab="bank">
+                🏦 Bank / FI Intelligence
+            </button>
+            <button class="nav-tab px-3 py-1.5 rounded font-medium text-slate-400 hover:text-white transition-all" data-tab="investigations">
+                🕵️ Investigator Workspace
+            </button>
+            <button class="nav-tab px-3 py-1.5 rounded font-medium text-slate-400 hover:text-white transition-all" data-tab="audit">
+                📜 Global Audit Trail
+            </button>
+            <button class="nav-tab px-3 py-1.5 rounded font-medium text-slate-400 hover:text-white transition-all" data-tab="financial">
+                💰 Financial Flow
+            </button>
+            <button class="nav-tab px-3 py-1.5 rounded font-medium text-slate-400 hover:text-white transition-all" data-tab="emergency">
+                🚨 112 Emergency Hub
+            </button>
+            <button class="nav-tab px-3 py-1.5 rounded font-medium text-slate-400 hover:text-white transition-all" data-tab="reports">
+                📄 Intelligence Brief
+            </button>
+            <button class="nav-tab px-3 py-1.5 rounded font-medium text-slate-400 hover:text-white transition-all" data-tab="users">
+                👥 User Directory
+            </button>
+            <button class="nav-tab px-3 py-1.5 rounded font-medium text-slate-400 hover:text-white transition-all" data-tab="settings">
+                ⚙️ Platform Settings
+            </button>
+        </div>
+    </nav>
+
+    <!-- MAIN DASHBOARD CONTENT AREA -->
+    <main class="flex-1 max-w-[1920px] w-full mx-auto p-4">
+
+        <!-- ================= VIEW 1: OVERVIEW ================= -->
+        <section id="view-overview" class="tab-view space-y-4">
+            
+            <!-- ADVANCE FORECAST DISCLAIMER NOTICE -->
+            <div class="bg-cyan-950/40 border border-cyan-500/40 rounded-lg px-3 py-1.5 flex items-center justify-between text-xs">
+                <div class="flex items-center space-x-2">
+                    <span class="text-cyan-400 font-bold">🔮 ADVANCE WITHDRAWAL RISK FORECAST:</span>
+                    <span class="text-slate-300">Active Horizon: <b id="current-horizon-label" class="text-cyan-300 font-mono">Next 24 Hours</b></span>
+                    <span class="text-slate-500">•</span>
+                    <span class="text-slate-400 italic">"This is an advance predictive forecast of future risk, not a report of an event that has already occurred."</span>
+                </div>
+                <div class="text-[10px] text-slate-400 font-mono">Confidence Level: 91.4%</div>
+            </div>
+
+            <!-- KPI CARDS DECK -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-8 gap-3">
+                <div class="command-card p-3 border-l-4 border-l-cyan-500">
+                    <div class="text-[10px] text-slate-400 uppercase font-semibold">Total Complaints</div>
+                    <div id="kpi-total-complaints" class="text-xl font-black text-slate-100 font-mono mt-0.5">5,200</div>
+                    <div class="text-[10px] text-emerald-400 mt-0.5">NCRP Real-time Stream</div>
+                </div>
+                <div class="command-card p-3 border-l-4 border-l-red-500">
+                    <div class="text-[10px] text-slate-400 uppercase font-semibold">High-Risk Complaints</div>
+                    <div id="kpi-high-risk" class="text-xl font-black text-red-400 font-mono mt-0.5">2,840</div>
+                    <div class="text-[10px] text-slate-400 mt-0.5">Under forensic triage</div>
+                </div>
+                <div class="command-card p-3 border-l-4 border-l-amber-500">
+                    <div class="text-[10px] text-slate-400 uppercase font-semibold">Predicted Hotspots</div>
+                    <div id="kpi-predicted-hotspots" class="text-xl font-black text-amber-400 font-mono mt-0.5">12</div>
+                    <div class="text-[10px] text-cyan-400 mt-0.5">Future cashout clusters</div>
+                </div>
+                <div class="command-card p-3 border-l-4 border-l-red-600">
+                    <div class="text-[10px] text-slate-400 uppercase font-semibold">Potential Exposure</div>
+                    <div id="kpi-potential-exposure" class="text-xl font-black text-red-400 font-mono mt-0.5">₹18.7 Cr</div>
+                    <div class="text-[10px] text-slate-400 mt-0.5">Unwithdrawn balance</div>
+                </div>
+                <div class="command-card p-3 border-l-4 border-l-teal-500">
+                    <div class="text-[10px] text-slate-400 uppercase font-semibold">Forecasted Txns</div>
+                    <div id="kpi-forecasted-txns" class="text-xl font-black text-teal-400 font-mono mt-0.5">164 Txns</div>
+                    <div class="text-[10px] text-teal-300 mt-0.5">Predicted cashout volume</div>
+                </div>
+                <div class="command-card p-3 border-l-4 border-l-orange-500">
+                    <div class="text-[10px] text-slate-400 uppercase font-semibold">Alerts Generated</div>
+                    <div id="kpi-alerts-generated" class="text-xl font-black text-orange-400 font-mono mt-0.5">12</div>
+                    <div class="text-[10px] text-orange-300 mt-0.5">7-Status Lifecycle</div>
+                </div>
+                <div class="command-card p-3 border-l-4 border-l-emerald-500">
+                    <div class="text-[10px] text-slate-400 uppercase font-semibold">Interventions</div>
+                    <div id="kpi-interventions" class="text-xl font-black text-emerald-400 font-mono mt-0.5">8 Active</div>
+                    <div class="text-[10px] text-emerald-300 mt-0.5">LEA + Bank patrols</div>
+                </div>
+                <div class="command-card p-3 border-l-4 border-l-blue-500">
+                    <div class="text-[10px] text-slate-400 uppercase font-semibold">Prevention Opp.</div>
+                    <div id="kpi-prevention-opp" class="text-xl font-black text-cyan-300 font-mono mt-0.5">₹8.4 Cr</div>
+                    <div class="text-[10px] text-slate-400 mt-0.5">High recovery chance</div>
+                </div>
+            </div>
+
+            <!-- CENTRAL COMMAND SPLIT: GIS HEATMAP + EXPLAINABLE AI PANEL -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                
+                <!-- Left: GIS Geospatial Risk Modelling (7 Cols) -->
+                <div class="lg:col-span-7 command-card p-3 flex flex-col">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                            <span class="font-bold text-sm text-slate-100">National Geospatial Cashout Risk Modelling</span>
+                        </div>
+
+                        <!-- Map Layer Toggles -->
+                        <div class="flex items-center space-x-3 text-[11px]">
+                            <label class="flex items-center space-x-1 cursor-pointer text-cyan-300">
+                                <input type="checkbox" id="toggle-layer-predicted" checked class="rounded bg-slate-900 border-slate-700 text-cyan-500 focus:ring-0">
+                                <span>🔮 Predicted Hotspots</span>
+                            </label>
+                            <label class="flex items-center space-x-1 cursor-pointer text-slate-400">
+                                <input type="checkbox" id="toggle-layer-historical" checked class="rounded bg-slate-900 border-slate-700 text-slate-400 focus:ring-0">
+                                <span>📜 Historical (7d)</span>
+                            </label>
+                            <label class="flex items-center space-x-1 cursor-pointer text-orange-400">
+                                <input type="checkbox" id="toggle-layer-corridors" checked class="rounded bg-slate-900 border-slate-700 text-orange-500 focus:ring-0">
+                                <span>Transit Corridors</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- GIS Map Element -->
+                    <div class="relative flex-1 min-h-[480px] rounded-lg overflow-hidden border border-slate-800">
+                        <div id="gis-map"></div>
+                        
+                        <!-- Floating Legend -->
+                        <div class="absolute bottom-3 left-3 bg-slate-950/95 border border-slate-800 rounded p-2 text-[10px] z-[500] backdrop-blur space-y-1">
+                            <div class="font-bold text-slate-300 mb-1">GIS RISK LAYERS</div>
+                            <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-red-500"></span><span class="text-slate-300">Critical Predicted (90–100)</span></div>
+                            <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span><span class="text-slate-300">High Predicted (75–89)</span></div>
+                            <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span><span class="text-slate-300">Medium Predicted (50–74)</span></div>
+                            <div class="flex items-center space-x-1.5"><span class="w-2 h-2 rounded-full border border-slate-400 bg-slate-900"></span><span class="text-slate-400">Historical Withdrawal Event</span></div>
+                            <div class="flex items-center space-x-1.5"><span class="w-3 h-0.5 bg-red-500 border-dashed"></span><span class="text-slate-300">Inter-State Corridor</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Hotspot Intelligence & Explainable AI Drawer (5 Cols) -->
+                <div class="lg:col-span-5 command-card p-4 flex flex-col justify-between">
+                    <div>
+                        <!-- Title & Risk Header -->
+                        <div class="flex items-start justify-between border-b border-slate-800 pb-3 mb-3">
+                            <div>
+                                <span class="text-[10px] text-cyan-400 font-bold uppercase tracking-wider font-mono">HOTSPOT INTELLIGENCE PROFILE</span>
+                                <h3 id="xai-hotspot-name" class="text-base font-bold text-slate-100">Bhubaneswar — ATM Cluster #27</h3>
+                                <p id="xai-hotspot-locality" class="text-xs text-slate-400">📍 Chandrasekharpur / Patia Corridor, Khordha, Odisha</p>
+                            </div>
+                            <div class="text-right">
+                                <div id="xai-risk-score" class="text-xl font-black text-red-400 font-mono">94/100</div>
+                                <div class="text-[10px] text-slate-400">Prob: <b id="xai-probability" class="text-slate-200">89%</b></div>
+                            </div>
+                        </div>
+
+                        <!-- Forecast Timeline & Horizon Strip -->
+                        <div class="grid grid-cols-2 gap-2 bg-slate-900/80 p-2.5 rounded border border-slate-800 mb-3 text-xs">
+                            <div>
+                                <div class="text-[10px] text-slate-400">Forecast Cashout Window:</div>
+                                <div id="xai-window" class="font-mono text-cyan-300 font-bold">18:00–21:00</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-slate-400">Advance Horizon:</div>
+                                <div id="xai-horizon" class="font-mono text-cyan-300 font-bold">Horizon: NEXT 24H</div>
+                            </div>
+                        </div>
+
+                        <!-- Supporting Evidence Grid -->
+                        <div id="xai-evidence-container" class="grid grid-cols-3 gap-1.5 mb-3">
+                            <!-- Populated by JS -->
+                        </div>
+
+                        <!-- WHY THIS LOCATION (Exact 7-Factor Model with Visual Progress Bars) -->
+                        <div class="mb-3">
+                            <div class="flex items-center justify-between mb-1">
+                                <h4 class="text-xs font-bold text-slate-200 flex items-center space-x-1">
+                                    <span>🧠</span>
+                                    <span>WHY THIS LOCATION? (7-Factor Explainable AI)</span>
+                                </h4>
+                                <span class="text-[10px] text-cyan-400 font-mono">SHAP Weights</span>
+                            </div>
+                            <p id="xai-rationale-summary" class="text-[11px] text-slate-300 mb-2 leading-relaxed bg-slate-900/50 p-2 rounded border border-slate-800/70"></p>
+                            <div id="xai-factors-container" class="space-y-1.5 max-h-[170px] overflow-y-auto pr-1">
+                                <!-- Factors populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Recommended Actions Checklist -->
+                        <div class="mb-3">
+                            <h4 class="text-xs font-bold text-slate-200 mb-1 flex items-center space-x-1">
+                                <span>🛡️</span>
+                                <span>RECOMMENDED PROACTIVE ACTIONS</span>
+                            </h4>
+                            <ul id="xai-recommended-interventions" class="space-y-1 bg-slate-900/60 p-2 rounded border border-slate-800/80"></ul>
+                        </div>
+                    </div>
+
+                    <!-- Action Controls -->
+                    <div class="pt-3 border-t border-slate-800 flex items-center space-x-2">
+                        <button id="btn-xai-dispatch-intervention" 
+                            class="flex-1 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold py-2 rounded shadow-lg shadow-cyan-950/40 border border-cyan-400 transition-all">
+                            Initiate Proactive Intervention
+                        </button>
+                        <button id="btn-xai-112-escalate" 
+                            class="bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-3 py-2 rounded shadow-lg shadow-red-950/40 border border-red-400 transition-all">
+                            🚨 112 Rapid Escalation
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOWER ROW: NEXT 24-HOUR FORECAST LIST + INTERVAL RISK CURVE + LIVE ALERTS FEED -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                
+                <!-- Col 1: Top Hotspots List (4 Cols) -->
+                <div class="lg:col-span-4 command-card p-3 flex flex-col">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="font-bold text-xs text-slate-200 uppercase tracking-wide">Top Predicted Hotspots</div>
+                        <span class="text-[10px] text-cyan-400">Click to Inspect</span>
+                    </div>
+                    <div id="top-hotspots-container" class="flex-1 overflow-y-auto max-h-[300px] pr-1"></div>
+                </div>
+
+                <!-- Col 2: 24-Hour Advance Risk Curve (5 Cols) -->
+                <div class="lg:col-span-5 command-card p-3 flex flex-col">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="font-bold text-xs text-slate-200 uppercase tracking-wide">Next 24 Hours Withdrawal Risk Forecast</div>
+                        <span class="text-[10px] text-red-400 font-mono font-bold">18:00–21:00 Peak Alert</span>
+                    </div>
+                    <div class="flex-1 min-h-[260px] relative">
+                        <canvas id="temporal-risk-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Col 3: Live Actionable Alerts (3 Cols) -->
+                <div class="lg:col-span-3 command-card p-3 flex flex-col">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="font-bold text-xs text-slate-200 uppercase tracking-wide">Actionable Alerts</div>
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                    </div>
+                    <div id="overview-alerts-feed" class="flex-1 overflow-y-auto max-h-[300px] pr-1"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 2: PREDICTIVE INTELLIGENCE ================= -->
+        <section id="view-predictions" class="tab-view hidden space-y-4">
+            <div class="command-card p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div>
+                        <h2 class="text-base font-bold text-slate-100">Advance Cash Withdrawal Predictive Intelligence Engine</h2>
+                        <p class="text-xs text-slate-400">Forward cash extraction forecasting using Random Forest + Geospatial Clustering. Select advance horizon to evaluate shift-level risk.</p>
+                    </div>
+                    <a href="/api/reports/export/csv" class="bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs px-3 py-1.5 rounded border border-slate-700 font-medium">
+                        📥 Export Forecast CSV
+                    </a>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-[11px] text-slate-400 uppercase bg-slate-900/60 font-mono">
+                                <th class="p-3">Hotspot Name</th>
+                                <th class="p-3">District & State</th>
+                                <th class="p-3">Risk Score</th>
+                                <th class="p-3">Forecast Window</th>
+                                <th class="p-3">Est. Exposure</th>
+                                <th class="p-3">Model Probability</th>
+                                <th class="p-3">Primary Fraud Modus</th>
+                                <th class="p-3">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="predictions-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Model Evaluation & Feature Importance Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div class="command-card p-4">
+                    <h3 class="text-xs font-bold text-slate-200 uppercase mb-3">Exact 7-Factor Feature Importance Weights (SHAP)</h3>
+                    <div class="h-[250px] relative">
+                        <canvas id="feature-importance-chart"></canvas>
+                    </div>
+                </div>
+                <div class="command-card p-4">
+                    <h3 class="text-xs font-bold text-slate-200 uppercase mb-3">Prototype ML Model Evaluation (Synthetic Benchmark)</h3>
+                    <div class="grid grid-cols-3 gap-3 text-center mb-4">
+                        <div class="bg-slate-900 p-2.5 rounded border border-slate-800">
+                            <div class="text-[10px] text-slate-400">Accuracy</div>
+                            <div class="text-lg font-black text-cyan-400 font-mono">94.2%</div>
+                        </div>
+                        <div class="bg-slate-900 p-2.5 rounded border border-slate-800">
+                            <div class="text-[10px] text-slate-400">Precision</div>
+                            <div class="text-lg font-black text-emerald-400 font-mono">91.8%</div>
+                        </div>
+                        <div class="bg-slate-900 p-2.5 rounded border border-slate-800">
+                            <div class="text-[10px] text-slate-400">Recall</div>
+                            <div class="text-lg font-black text-amber-400 font-mono">89.4%</div>
+                        </div>
+                        <div class="bg-slate-900 p-2.5 rounded border border-slate-800">
+                            <div class="text-[10px] text-slate-400">F1 Score</div>
+                            <div class="text-lg font-black text-teal-400 font-mono">90.6%</div>
+                        </div>
+                        <div class="bg-slate-900 p-2.5 rounded border border-slate-800">
+                            <div class="text-[10px] text-slate-400">ROC-AUC</div>
+                            <div class="text-lg font-black text-blue-400 font-mono">0.963</div>
+                        </div>
+                        <div class="bg-slate-900 p-2.5 rounded border border-slate-800">
+                            <div class="text-[10px] text-slate-400">False Positive Rate</div>
+                            <div class="text-lg font-black text-red-400 font-mono">4.8%</div>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-slate-400 bg-slate-900/60 p-2 rounded border border-slate-800">
+                        <b>Closed-Loop Feedback:</b> As field outcomes are submitted (`INTERCEPTED_CONFIRMED` or `FALSE_POSITIVE`), weights and FPR adjust dynamically in the running session.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 3: FULL GIS HEATMAP ================= -->
+        <section id="view-gis" class="tab-view hidden space-y-4">
+            <div class="command-card p-3 flex flex-col h-[780px]">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+                        <h2 class="text-sm font-bold text-slate-100">National Cybercrime Geospatial Intelligence Command (GIS)</h2>
+                    </div>
+                </div>
+                <div class="flex-1 rounded-lg overflow-hidden border border-slate-800 relative">
+                    <div id="full-gis-map"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 4: ALERTS & INTERVENTIONS ================= -->
+        <section id="view-alerts" class="tab-view hidden space-y-4">
+            <div class="command-card p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div>
+                        <h2 class="text-base font-bold text-slate-100">Actionable Intelligence Alert Center</h2>
+                        <p class="text-xs text-slate-400">Real-time alerts with full 7-status lifecycle: NEW ➔ UNDER REVIEW ➔ ACKNOWLEDGED ➔ ESCALATED ➔ INTERVENTION ACTIVE ➔ RESOLVED ➔ FALSE POSITIVE.</p>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-[11px] text-slate-400 uppercase bg-slate-900/60 font-mono">
+                                <th class="p-3">Alert ID</th>
+                                <th class="p-3">Timestamp</th>
+                                <th class="p-3">Risk Level</th>
+                                <th class="p-3">Threat Description</th>
+                                <th class="p-3">Location</th>
+                                <th class="p-3">Est. Exposure</th>
+                                <th class="p-3">Status</th>
+                                <th class="p-3">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="alerts-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 5: BANK / FI INTELLIGENCE (NEW) ================= -->
+        <section id="view-bank" class="tab-view hidden space-y-4">
+            <div class="bg-cyan-950/40 border border-cyan-500/40 rounded-lg p-3 text-xs flex justify-between items-center">
+                <div>
+                    <span class="text-cyan-400 font-bold uppercase">🏦 Citizen Financial Cyber Fraud Reporting Workflow:</span>
+                    <span class="text-slate-300 ml-2">Dedicated Bank & FI Intelligence for Layer-2/3 Mule Account Freezing & ATM Geo-fence Controls.</span>
+                </div>
+                <span class="text-[10px] text-amber-400 font-mono">Prototype / Simulated Core Banking Integration</span>
+            </div>
+
+            <!-- Partner Banks Hotspot Risk Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3" id="bank-partners-container"></div>
+
+            <!-- Flagged Mule Accounts Table -->
+            <div class="command-card p-4">
+                <h3 class="text-xs font-bold text-slate-200 uppercase mb-3">Flagged Mule Accounts in Forecasted Withdrawal Corridors</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-[10px] text-slate-400 uppercase border-b border-slate-800 font-mono">
+                                <th class="p-2.5">Beneficiary Account</th>
+                                <th class="p-2.5">Bank</th>
+                                <th class="p-2.5">Mule Layer</th>
+                                <th class="p-2.5">Target Cluster</th>
+                                <th class="p-2.5">Inflow Volume</th>
+                                <th class="p-2.5">Hold Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bank-flagged-accounts-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 6: INVESTIGATOR CASE GRAPH ================= -->
+        <section id="view-investigations" class="tab-view hidden space-y-4">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                <div class="lg:col-span-12 command-card p-4 flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                        <span class="text-[10px] text-cyan-400 font-bold font-mono">CASE INTELLIGENCE WORKSPACE</span>
+                        <h2 id="case-title" class="text-base font-bold text-slate-100">CYB-2026-004821 — Operation Chhaya</h2>
+                        <div class="text-xs text-slate-400">Lead Investigator: <span id="case-lead-inv" class="text-slate-200">DSP Manas Behera</span> • Priority: <span class="text-red-400 font-bold">CRITICAL</span></div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-[10px] text-slate-400">Total Siphoned Amount:</div>
+                        <div id="case-total-fraud" class="text-lg font-black text-red-400 font-mono">₹7.35 Lakhs</div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-8 command-card p-3 flex flex-col">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="text-xs font-bold text-slate-200 uppercase">Multi-Hop Entity Link Analysis Graph</div>
+                        <span class="text-[10px] text-slate-400">Victim ➔ Mule Mobile ➔ Bank Mule ➔ Target ATM ➔ Hotspot</span>
+                    </div>
+                    <div id="case-network-container"></div>
+                    <div id="node-inspector-panel" class="mt-2 hidden"></div>
+                </div>
+
+                <div class="lg:col-span-4 command-card p-4 flex flex-col">
+                    <div class="text-xs font-bold text-slate-200 uppercase mb-3">Forensic Case Timeline</div>
+                    <div id="case-timeline-container" class="flex-1 overflow-y-auto max-h-[500px]"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 7: GLOBAL AUDIT TRAIL (NEW) ================= -->
+        <section id="view-audit" class="tab-view hidden space-y-4">
+            <div class="command-card p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div>
+                        <h2 class="text-base font-bold text-slate-100">Global Operational Audit Trail</h2>
+                        <p class="text-xs text-slate-400">Immutable chronological log tracking every prediction, alert acknowledgment, bank advisory, intervention, and incident feedback.</p>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-[11px] text-slate-400 uppercase bg-slate-900/60 font-mono">
+                                <th class="p-2.5">Log ID</th>
+                                <th class="p-2.5">Timestamp</th>
+                                <th class="p-2.5">Operator / Actor</th>
+                                <th class="p-2.5">Action Executed</th>
+                                <th class="p-2.5">Target Entity</th>
+                                <th class="p-2.5">Operational Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-logs-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 8: FINANCIAL INTELLIGENCE ================= -->
+        <section id="view-financial" class="tab-view hidden space-y-4">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div class="command-card p-3">
+                    <div class="text-[10px] text-slate-400 uppercase">Total Amount Reported</div>
+                    <div id="fin-total-reported" class="text-xl font-black text-slate-100 font-mono">₹18.7 Cr</div>
+                </div>
+                <div class="command-card p-3">
+                    <div class="text-[10px] text-slate-400 uppercase">Potentially Recoverable</div>
+                    <div id="fin-recoverable" class="text-xl font-black text-cyan-400 font-mono">₹7.8 Cr</div>
+                </div>
+                <div class="command-card p-3">
+                    <div class="text-[10px] text-slate-400 uppercase">Amount Blocked in Transit</div>
+                    <div id="fin-blocked" class="text-xl font-black text-emerald-400 font-mono">₹5.2 Cr</div>
+                </div>
+                <div class="command-card p-3">
+                    <div class="text-[10px] text-slate-400 uppercase">Successfully Recovered</div>
+                    <div id="fin-recovered" class="text-xl font-black text-blue-400 font-mono">₹3.0 Cr</div>
+                </div>
+            </div>
+
+            <div class="command-card p-4">
+                <h3 class="text-xs font-bold text-slate-200 uppercase mb-3">Multi-Stage Cyber Money Flow Stages</h3>
+                <div class="h-[280px] relative">
+                    <canvas id="financial-flow-chart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 9: EMERGENCY 112 HUB ================= -->
+        <section id="view-emergency" class="tab-view hidden space-y-4">
+            <div class="command-card p-4 border-l-4 border-l-red-500">
+                <div class="flex items-center justify-between mb-3">
+                    <div>
+                        <div class="text-[10px] text-red-400 font-bold uppercase">RAPID ESCALATION & EMERGENCY RESPONSE</div>
+                        <h2 class="text-base font-bold text-slate-100">112 Emergency Response Support System (ERSS) Integration</h2>
+                        <p class="text-xs text-slate-400">Direct escalation link to National 112 Emergency Dispatch and District Police Quick Response Teams.</p>
+                    </div>
+                    <button onclick="window.openEmergency112Modal()" class="bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-4 py-2 rounded">
+                        🚨 Initiate 112 Emergency Escalation
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div class="command-card p-4">
+                    <h3 class="text-xs font-bold text-slate-200 uppercase mb-3">Emergency Response Directory & Jurisdictions</h3>
+                    <div id="emergency-directory-container" class="space-y-2"></div>
+                </div>
+                <div class="command-card p-4">
+                    <h3 class="text-xs font-bold text-slate-200 uppercase mb-3">Active Emergency Escalation Incidents Log</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="text-[10px] text-slate-400 uppercase border-b border-slate-800">
+                                    <th class="p-2">Incident ID</th>
+                                    <th class="p-2">Time</th>
+                                    <th class="p-2">Location</th>
+                                    <th class="p-2">Jurisdiction</th>
+                                    <th class="p-2">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="emergency-incidents-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 10: REPORTS ================= -->
+        <section id="view-reports" class="tab-view hidden space-y-4">
+            <div class="command-card p-6 max-w-4xl mx-auto">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                    <div>
+                        <span class="text-[10px] text-cyan-400 font-bold uppercase font-mono">OFFICIAL INTELLIGENCE BRIEF — CP-2026-0142</span>
+                        <h2 class="text-lg font-bold text-slate-100">National Cybercrime Cashout Predictive Intelligence Brief</h2>
+                        <div class="text-xs text-slate-400">Generated: <span id="report-generated-at" class="text-slate-200 font-mono"></span></div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3 py-1.5 rounded border border-slate-700">
+                            🖨️ Print Report
+                        </button>
+                        <a href="/api/reports/export/csv" class="bg-cyan-700 hover:bg-cyan-600 text-white text-xs px-3 py-1.5 rounded">
+                            Export CSV
+                        </a>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-xs">
+                    <div>
+                        <h3 class="font-bold text-slate-200 uppercase mb-1">Threat Description & Predictive Forecast</h3>
+                        <p id="report-exec-summary" class="text-slate-300 leading-relaxed bg-slate-900/70 p-3 rounded border border-slate-800"></p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-200 uppercase mb-2">Recommended Multi-Agency Strategic Actions</h3>
+                        <ul id="report-actions-list" class="space-y-1.5 bg-slate-900/70 p-3 rounded border border-slate-800"></ul>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-800 text-[11px] text-slate-500 text-center font-mono">
+                        DEMONSTRATION SYSTEM — PRODUCED FOR SMART INDIA HACKATHON 2026 EVALUATION
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 11: SYSTEM TELEMETRY ================= -->
+        <section id="view-system" class="tab-view hidden space-y-4">
+            <div class="command-card p-4">
+                <h2 class="text-base font-bold text-slate-100 mb-1">System Pipeline Telemetry & Health Monitoring</h2>
+                <p class="text-xs text-slate-400 mb-4">Real-time status of data ingestion, ML model inference latency, and inter-agency APIs.</p>
+
+                <div id="system-services-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 12: COMPLAINT ENTRY ================= -->
+        <section id="view-complaint-entry" class="tab-view hidden space-y-4">
+            <div class="command-card p-6 max-w-4xl mx-auto border-t-4 border-t-emerald-500">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-emerald-400 font-bold text-xs uppercase font-mono tracking-wider">LIVE DATA INGESTION ENGINE</span>
+                            <span class="bg-emerald-950 text-emerald-300 border border-emerald-700/80 text-[10px] font-bold px-2 py-0.5 rounded">POSTGRESQL SYNC</span>
+                        </div>
+                        <h2 class="text-xl font-black text-slate-100 mt-1">Lodge Cybercrime Complaint & Trigger Predictive Pipeline</h2>
+                        <p class="text-xs text-slate-400">Submitting a complaint stores it immediately in PostgreSQL, executes ML risk scoring, updates future cashout predictions, and dispatches real-time WebSocket alerts.</p>
+                    </div>
+                    <button onclick="window.populateSampleComplaint()" class="bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs px-3 py-1.5 rounded border border-slate-700 font-medium">
+                        ⚡ Fill Sample Incident
+                    </button>
+                </div>
+
+                <form id="complaint-form" onsubmit="window.handleComplaintSubmit(event)" class="space-y-4 text-xs">
+                    <!-- Row 1: Crime Category & Loss Amount -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-slate-300 font-semibold block mb-1">Crime Category *</label>
+                            <select id="inp-crime-category" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-slate-100 focus:border-cyan-500 focus:outline-none" required>
+                                <option value="UPI Fraud">UPI Fraud / QR Code Scam</option>
+                                <option value="Investment Scam">Part-Time / Fake Investment Scam</option>
+                                <option value="SIM Swap & Banking">SIM Swap & Unauthorized NetBanking</option>
+                                <option value="ATM Card Cloning">ATM Skimming / Card Cloning</option>
+                                <option value="Loan App Extortion">Instant Loan App Blackmail / Extortion</option>
+                                <option value="Phishing & Impersonation">Govt / Police Impersonation Phishing</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-slate-300 font-semibold block mb-1">Total Loss Amount (₹ INR) *</label>
+                            <input type="number" id="inp-loss-amount" step="100" min="1000" placeholder="e.g. 185000" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-slate-100 font-mono font-bold focus:border-cyan-500 focus:outline-none" required />
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Victim Information -->
+                    <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg space-y-3">
+                        <div class="font-bold text-slate-300 text-[11px] uppercase tracking-wider flex items-center space-x-1.5">
+                            <span>👤</span>
+                            <span>Victim Identity & Source Account</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div>
+                                <label class="text-slate-400 block mb-1">Victim Full Name *</label>
+                                <input type="text" id="inp-victim-name" placeholder="e.g. Sunil K. Patnaik" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-100 focus:border-cyan-500 focus:outline-none" required />
+                            </div>
+                            <div>
+                                <label class="text-slate-400 block mb-1">Victim Contact Mobile *</label>
+                                <input type="text" id="inp-victim-mobile" placeholder="+91 9437128910" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-100 focus:border-cyan-500 focus:outline-none" required />
+                            </div>
+                            <div>
+                                <label class="text-slate-400 block mb-1">Victim Bank & Account</label>
+                                <input type="text" id="inp-victim-bank" placeholder="State Bank of India (SBINXXXXXX9921)" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-100 focus:border-cyan-500 focus:outline-none" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Suspect / Mule Account & Real-time IFSC Verification -->
+                    <div class="p-3 bg-cyan-950/20 border border-cyan-800/40 rounded-lg space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="font-bold text-cyan-300 text-[11px] uppercase tracking-wider flex items-center space-x-1.5">
+                                <span>🏦</span>
+                                <span>Beneficiary Mule Destination & Real Banking Verification</span>
+                            </div>
+                            <span class="text-[10px] text-cyan-400 font-mono">PUBLIC REAL DATA GATEWAY</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div>
+                                <label class="text-slate-400 block mb-1">Beneficiary Account / Card</label>
+                                <input type="text" id="inp-beneficiary-account" placeholder="HDFCXXXXXX4198" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-100 font-mono focus:border-cyan-500 focus:outline-none" />
+                            </div>
+                            <div>
+                                <label class="text-slate-400 block mb-1">Beneficiary UPI ID</label>
+                                <input type="text" id="inp-beneficiary-upi" placeholder="instant.mule27@hdfc" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-100 font-mono focus:border-cyan-500 focus:outline-none" />
+                            </div>
+                            <div>
+                                <label class="text-slate-400 block mb-1">Beneficiary Branch IFSC *</label>
+                                <div class="flex space-x-1.5">
+                                    <input type="text" id="inp-beneficiary-ifsc" maxlength="11" placeholder="SBIN0010232" class="flex-1 bg-slate-950 border border-slate-700 rounded p-2 text-slate-100 font-mono uppercase focus:border-cyan-500 focus:outline-none" required />
+                                    <button type="button" onclick="window.verifyIFSCCode()" class="bg-cyan-700 hover:bg-cyan-600 text-white font-bold px-3 rounded text-[11px] transition-all whitespace-nowrap">
+                                        Verify IFSC
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live IFSC Verification Outcome Card -->
+                        <div id="ifsc-verified-box" class="hidden p-2.5 bg-slate-950 border border-cyan-500/50 rounded text-xs space-y-1">
+                            <div class="flex items-center justify-between text-cyan-400 font-bold">
+                                <span id="ifsc-bank-name"></span>
+                                <span class="text-[10px] bg-cyan-950 text-cyan-300 px-1.5 py-0.5 rounded border border-cyan-800">PUBLIC REAL DATA</span>
+                            </div>
+                            <div class="text-slate-300 text-[11px]"><b>Branch:</b> <span id="ifsc-branch"></span> • <b>District:</b> <span id="ifsc-district"></span>, <span id="ifsc-state"></span></div>
+                            <div class="text-slate-400 text-[10px]"><b>Address:</b> <span id="ifsc-address"></span></div>
+                            <div id="ifsc-rails" class="flex space-x-2 text-[10px] text-emerald-400 font-mono pt-0.5"></div>
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Geographical Coordinates & Target Hotspot Correlation -->
+                    <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg space-y-3">
+                        <div class="font-bold text-slate-300 text-[11px] uppercase tracking-wider flex items-center space-x-1.5">
+                            <span>📍</span>
+                            <span>Incident Geography & Proximity Clustering</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+                            <div>
+                                <label class="text-slate-400 block mb-1">State *</label>
+                                <select id="inp-state" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-100" onchange="window.updateDistrictOptions()">
+                                    <option value="Odisha">Odisha</option>
+                                    <option value="Jharkhand">Jharkhand</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Telangana">Telangana</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-slate-400 block mb-1">District / Cyber Cell *</label>
+                                <select id="inp-district" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-100" onchange="window.updateCoordinatesFromDistrict()">
+                                    <option value="Khordha">Khordha (Bhubaneswar)</option>
+                                    <option value="Cuttack">Cuttack</option>
+                                    <option value="Deoghar">Deoghar</option>
+                                    <option value="Nuh">Nuh (Mewat)</option>
+                                    <option value="Surat">Surat</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-slate-400 block mb-1">GPS Latitude *</label>
+                                <input type="number" step="0.0001" id="inp-lat" value="20.3533" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-100 font-mono" required />
+                            </div>
+                            <div>
+                                <label class="text-slate-400 block mb-1">GPS Longitude *</label>
+                                <input type="number" step="0.0001" id="inp-lng" value="85.8266" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-100 font-mono" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 5: Data Stream Selection -->
+                    <div class="flex items-center justify-between bg-slate-950/70 p-3 rounded border border-slate-800">
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="inp-is-synthetic" class="rounded bg-slate-900 border-slate-700 text-cyan-600 focus:ring-0">
+                            <label for="inp-is-synthetic" class="text-slate-300 text-xs cursor-pointer">
+                                Mark as Synthetic Demonstration Data (Leave unchecked for legitimate citizen reporting)
+                            </label>
+                        </div>
+                        <div class="text-[10px] text-slate-400">
+                            Guaranteed PostgreSQL persistence & instant AI recalculation
+                        </div>
+                    </div>
+
+                    <!-- Submit & Feedback -->
+                    <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+                        <span id="complaint-submit-status" class="text-xs font-semibold"></span>
+                        <button type="submit" id="btn-submit-complaint" class="bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white text-xs font-bold px-6 py-2.5 rounded-lg shadow-lg shadow-cyan-950/50 flex items-center space-x-2 transition-all">
+                            <span>⚡</span>
+                            <span>Submit Complaint to PostgreSQL & Recalculate Risk</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Post-Submission Pipeline Outcome Banner -->
+                <div id="complaint-outcome-panel" class="hidden mt-4 p-4 bg-slate-900 border border-cyan-500/60 rounded-xl space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span class="font-bold text-sm text-emerald-400">Closed-Loop End-to-End Execution Complete</span>
+                        </div>
+                        <span id="outcome-complaint-id" class="font-mono text-cyan-300 font-bold"></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
+                        <div class="bg-slate-950 p-2.5 rounded border border-slate-800">
+                            <div class="text-[10px] text-slate-400">PostgreSQL Status:</div>
+                            <div class="text-emerald-400 font-bold mt-0.5">STORED (1 Row Added)</div>
+                        </div>
+                        <div class="bg-slate-950 p-2.5 rounded border border-slate-800">
+                            <div class="text-[10px] text-slate-400">Recalculated Hotspot:</div>
+                            <div id="outcome-hotspot-name" class="text-slate-100 font-bold mt-0.5"></div>
+                        </div>
+                        <div class="bg-slate-950 p-2.5 rounded border border-slate-800">
+                            <div class="text-[10px] text-slate-400">Updated Risk Score:</div>
+                            <div id="outcome-risk-score" class="text-xl font-black text-red-400 font-mono mt-0.5"></div>
+                        </div>
+                        <div class="bg-slate-950 p-2.5 rounded border border-slate-800">
+                            <div class="text-[10px] text-slate-400">WebSocket Broadcast:</div>
+                            <div class="text-cyan-400 font-bold mt-0.5">EVENT DISPATCHED</div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-2 pt-1">
+                        <button onclick="window.switchTab('overview')" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded">
+                            View on Live Map & Dashboard ➔
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 13: COMPLAINT REGISTRY (MANAGEMENT) ================= -->
+        <section id="view-complaints" class="tab-view hidden space-y-4">
+            <div class="command-card p-4">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-3 border-b border-slate-800 pb-3">
+                    <div>
+                        <h2 class="text-base font-bold text-slate-100">National Cybercrime Complaints Registry</h2>
+                        <p class="text-xs text-slate-400">Directly backed by PostgreSQL database with search, category filtering, and risk classification.</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="window.switchTab('complaint-entry')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded flex items-center space-x-1">
+                            <span>+</span>
+                            <span>New Complaint</span>
+                        </button>
+                        <button onclick="window.loadComplaintsTab(1)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded border border-slate-700">
+                            ↺ Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filter Controls -->
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-3 text-xs">
+                    <input type="text" id="comp-filter-search" placeholder="Search by ID, victim, account..." 
+                        class="bg-slate-900 border border-slate-700 rounded p-2 text-slate-200" onkeyup="window.debounceComplaintSearch()" />
+                    <select id="comp-filter-category" class="bg-slate-900 border border-slate-700 rounded p-2 text-slate-200" onchange="window.loadComplaintsTab(1)">
+                        <option value="All">All Categories</option>
+                        <option value="UPI Fraud">UPI Fraud</option>
+                        <option value="Investment Scam">Investment Scam</option>
+                        <option value="SIM Swap">SIM Swap</option>
+                        <option value="ATM Skimming">ATM Skimming</option>
+                    </select>
+                    <select id="comp-filter-risk" class="bg-slate-900 border border-slate-700 rounded p-2 text-slate-200" onchange="window.loadComplaintsTab(1)">
+                        <option value="All">All Risk Levels</option>
+                        <option value="CRITICAL">CRITICAL</option>
+                        <option value="HIGH">HIGH</option>
+                        <option value="MEDIUM">MEDIUM</option>
+                        <option value="LOW">LOW</option>
+                    </select>
+                    <div class="flex items-center justify-end text-[11px] text-slate-400" id="comp-table-total-count">
+                        Loading complaints...
+                    </div>
+                </div>
+
+                <!-- Complaints Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-[11px] text-slate-400 uppercase bg-slate-900/60 font-mono">
+                                <th class="p-2.5">Complaint ID</th>
+                                <th class="p-2.5">Timestamp</th>
+                                <th class="p-2.5">Category</th>
+                                <th class="p-2.5">Victim & Account</th>
+                                <th class="p-2.5">Loss (₹ INR)</th>
+                                <th class="p-2.5">Beneficiary Mule</th>
+                                <th class="p-2.5">Risk</th>
+                                <th class="p-2.5">Data Origin</th>
+                            </tr>
+                        </thead>
+                        <tbody id="complaints-registry-body"></tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-800 text-xs">
+                    <button id="btn-prev-complaints" onclick="window.prevComplaintsPage()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded disabled:opacity-40">Previous</button>
+                    <span id="complaints-page-indicator" class="text-slate-400 font-mono">Page 1</span>
+                    <button id="btn-next-complaints" onclick="window.nextComplaintsPage()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded disabled:opacity-40">Next</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 14: USER DIRECTORY & RBAC ================= -->
+        <section id="view-users" class="tab-view hidden space-y-4">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <!-- Active User Session Card -->
+                <div class="command-card p-4 border-l-4 border-l-cyan-500">
+                    <h3 class="text-xs font-bold text-slate-200 uppercase mb-3">Active Authenticated Session (JWT)</h3>
+                    <div class="space-y-2 text-xs">
+                        <div>
+                            <span class="text-[10px] text-slate-400 uppercase">Officer Name:</span>
+                            <div id="session-user-name" class="text-sm font-bold text-slate-100"></div>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 uppercase">Role ID & Title:</span>
+                            <div id="session-user-role" class="text-cyan-400 font-mono font-semibold"></div>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 uppercase">Jurisdiction & Badge:</span>
+                            <div id="session-user-jurisdiction" class="text-slate-300 font-mono"></div>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 uppercase">JWT Signature:</span>
+                            <div id="session-jwt-preview" class="text-[10px] text-slate-400 font-mono break-all bg-slate-950 p-2 rounded border border-slate-800"></div>
+                        </div>
+                        <button onclick="window.openLoginModal()" class="w-full bg-cyan-700 hover:bg-cyan-600 text-white font-bold py-2 rounded text-xs mt-2">
+                            Switch Authenticated User / Login
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Role Permissions Matrix (2 Cols) -->
+                <div class="lg:col-span-2 command-card p-4">
+                    <h3 class="text-xs font-bold text-slate-200 uppercase mb-3">Multi-Agency Role-Based Access Control (RBAC) Matrix</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="text-[10px] text-slate-400 uppercase border-b border-slate-800 font-mono">
+                                    <th class="p-2">Role ID</th>
+                                    <th class="p-2">Role Title</th>
+                                    <th class="p-2">Jurisdiction</th>
+                                    <th class="p-2">Complaint Ingestion</th>
+                                    <th class="p-2">Bank Freeze</th>
+                                    <th class="p-2">112 Dispatch</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-rbac-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 15: PLATFORM SETTINGS ================= -->
+        <section id="view-settings" class="tab-view hidden space-y-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <!-- PostgreSQL Live Telemetry -->
+                <div class="command-card p-4 border-l-4 border-l-emerald-500">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-xs font-bold text-slate-200 uppercase flex items-center space-x-1.5">
+                            <span>🐘</span>
+                            <span>PostgreSQL 16 Database Telemetry</span>
+                        </h3>
+                        <span id="settings-db-status-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-700">ONLINE</span>
+                    </div>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between border-b border-slate-800/80 pb-1.5">
+                            <span class="text-slate-400">Database Engine:</span>
+                            <span id="settings-db-type" class="font-mono text-emerald-400 font-bold">PostgreSQL 16.15 (Standalone User-Space)</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800/80 pb-1.5">
+                            <span class="text-slate-400">Host & Port:</span>
+                            <span class="font-mono text-slate-200">127.0.0.1:5432</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800/80 pb-1.5">
+                            <span class="text-slate-400">Database Name:</span>
+                            <span class="font-mono text-cyan-300">cyberpredict</span>
+                        </div>
+                        <div class="pt-2">
+                            <span class="text-[10px] text-slate-400 uppercase font-semibold">PostgreSQL Synchronized Tables:</span>
+                            <div id="settings-db-tables" class="grid grid-cols-3 gap-2 mt-1.5 text-center"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Source Indicator & Stream Mode -->
+                <div class="command-card p-4 border-l-4 border-l-amber-500">
+                    <h3 class="text-xs font-bold text-slate-200 uppercase mb-2">Data Source Stream Mode Configuration</h3>
+                    <p class="text-xs text-slate-400 mb-3">Strict separation of data streams. Synthetic hackathon data is always labeled; real public APIs are highlighted.</p>
+                    
+                    <div class="space-y-2.5 text-xs">
+                        <div class="p-2.5 rounded bg-slate-900 border border-slate-800 flex items-center justify-between">
+                            <div>
+                                <div class="font-bold text-amber-400">DEMO / SYNTHETIC DATA MODE</div>
+                                <div class="text-[11px] text-slate-400">Benchmark NCRP complaints & simulated mule graphs for SIH evaluation.</div>
+                            </div>
+                            <span class="text-[10px] bg-amber-950 text-amber-300 font-bold px-2 py-0.5 rounded border border-amber-700">ACTIVE</span>
+                        </div>
+                        <div class="p-2.5 rounded bg-slate-900 border border-slate-800 flex items-center justify-between">
+                            <div>
+                                <div class="font-bold text-cyan-400">PUBLIC REAL DATA GATEWAY</div>
+                                <div class="text-[11px] text-slate-400">Razorpay Open National Banking IFSC API & Real coordinates.</div>
+                            </div>
+                            <span class="text-[10px] bg-cyan-950 text-cyan-300 font-bold px-2 py-0.5 rounded border border-cyan-700">CONNECTED</span>
+                        </div>
+                        <div class="p-2.5 rounded bg-slate-900 border border-slate-800 flex items-center justify-between">
+                            <div>
+                                <div class="font-bold text-slate-400">AUTHORIZED LIVE DATA GATEWAY</div>
+                                <div class="text-[11px] text-slate-500">Production NCRP 1930 / I4C API integration (Requires clearance).</div>
+                            </div>
+                            <span class="text-[10px] bg-slate-800 text-slate-400 font-bold px-2 py-0.5 rounded">STANDBY</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW: GOOGLE STITCH CANVAS ================= -->
+        <section id="view-stitch" class="tab-view hidden space-y-4">
+            
+            <!-- STITCH CANVAS IMPACT BANNER -->
+            <div class="stitch-canvas p-4 rounded-xl border border-cyan-500/30">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="stitch-badge stitch-badge-cyan">GOOGLE STITCH SYSTEM</span>
+                            <span class="stitch-badge stitch-badge-emerald">ZERO PURPLE HUD</span>
+                            <span class="stitch-badge stitch-badge-amber">MULTI-HOP RESOLUTION</span>
+                        </div>
+                        <h2 class="text-lg font-black text-white tracking-wide mt-1.5 flex items-center space-x-2">
+                            <span>🧵 Stitch Entity & Cashout Flow Canvas</span>
+                        </h2>
+                        <p class="text-xs text-slate-300 mt-0.5">
+                            Dynamically stitches victim reports, UPI transaction trails, multi-layer mule accounts, and forecasted ATM cash withdrawal clusters into an end-to-end proactive intercept diagram.
+                        </p>
+                    </div>
+
+                    <!-- Stitch Control Bar -->
+                    <div class="flex items-center space-x-2">
+                        <select id="stitch-case-selector" onchange="window.loadStitchGraph(this.value)" 
+                            class="bg-slate-900 border border-slate-700 rounded px-2.5 py-1 text-xs text-cyan-300 font-mono focus:outline-none focus:border-cyan-500">
+                            <option value="CYB-2026-004821">Case CYB-2026-004821 (₹4.85L Electricity Fraud)</option>
+                            <option value="CYB-2026-004822">Case CYB-2026-004822 (₹8.20L Part-Time Job Scam)</option>
+                            <option value="CYB-2026-004823">Case CYB-2026-004823 (₹14.50L Digital Arrest Impersonation)</option>
+                        </select>
+                        <button onclick="window.loadStitchGraph(document.getElementById('stitch-case-selector').value)" 
+                            class="px-3 py-1 bg-cyan-700 hover:bg-cyan-600 text-white rounded text-xs font-bold transition-all shadow-sm">
+                            🔄 Re-Stitch Graph
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stitch Telemetry Cards -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-3 border-t border-slate-800/80">
+                    <div class="bg-slate-900/80 p-2.5 rounded border border-slate-800">
+                        <div class="text-[10px] text-slate-400 uppercase font-semibold">Fund Amount at Risk</div>
+                        <div id="stitch-amount-at-risk" class="text-lg font-black text-red-400 font-mono mt-0.5">₹3.60 L</div>
+                        <div class="text-[10px] text-red-300">Unwithdrawn Layer-2 balance</div>
+                    </div>
+                    <div class="bg-slate-900/80 p-2.5 rounded border border-slate-800">
+                        <div class="text-[10px] text-slate-400 uppercase font-semibold">Predicted Cashout ATM</div>
+                        <div id="stitch-predicted-atm" class="text-sm font-black text-cyan-300 font-mono mt-0.5 truncate">Axis Bank Master Canteen</div>
+                        <div class="text-[10px] text-cyan-400">Cluster OD-BBSR-27</div>
+                    </div>
+                    <div class="bg-slate-900/80 p-2.5 rounded border border-slate-800">
+                        <div class="text-[10px] text-slate-400 uppercase font-semibold">AI Forecaster Confidence</div>
+                        <div id="stitch-confidence-badge" class="text-lg font-black text-emerald-400 font-mono mt-0.5">94.2% ML CONFIDENCE</div>
+                        <div class="text-[10px] text-emerald-300">RandomForest + Spatial KDE</div>
+                    </div>
+                    <div class="bg-slate-900/80 p-2.5 rounded border border-slate-800">
+                        <div class="text-[10px] text-slate-400 uppercase font-semibold">Proactive Intercept Window</div>
+                        <div id="stitch-intercept-window" class="text-base font-black text-amber-400 font-mono mt-0.5">18:00 - 21:00 IST</div>
+                        <div class="text-[10px] text-amber-300">48 Mins Remaining to Dispatch</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STITCH CANVAS VISUALIZER & INSPECTOR DUAL LAYOUT -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                
+                <!-- Main Interactive Stitch Canvas (2 Cols) -->
+                <div class="lg:col-span-2 command-card p-3 flex flex-col">
+                    <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800 text-xs">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-cyan-400 font-bold font-mono">STITCH GRAPH CANVAS</span>
+                            <span class="text-slate-500">•</span>
+                            <span class="text-slate-400 text-[11px]">Interactive Node Physics (Click nodes to inspect)</span>
+                        </div>
+                        <div class="flex items-center space-x-3 text-[11px] text-slate-400">
+                            <span class="flex items-center space-x-1"><span class="w-2 h-2 rounded-full bg-[#38BDF8]"></span><span>Victim</span></span>
+                            <span class="flex items-center space-x-1"><span class="w-2 h-2 rounded-full bg-[#0284C7]"></span><span>Mule L1</span></span>
+                            <span class="flex items-center space-x-1"><span class="w-2 h-2 rounded-full bg-[#06B6D4]"></span><span>Mule L2</span></span>
+                            <span class="flex items-center space-x-1"><span class="w-2 h-2 rounded bg-[#EF4444]"></span><span>ATM Target</span></span>
+                            <span class="flex items-center space-x-1"><span class="w-2 h-2 rounded-full bg-[#10B981]"></span><span>PCR Patrol</span></span>
+                        </div>
+                    </div>
+
+                    <div id="stitch-network-container" class="w-full flex-1 min-h-[460px] rounded bg-[#070D18] border border-slate-800"></div>
+
+                    <!-- Canvas Bottom Toolstrip -->
+                    <div class="flex items-center justify-between pt-2 mt-2 border-t border-slate-800 text-[11px] text-slate-400">
+                        <span>Drag nodes to re-layout • Scroll to zoom • Dashed red vector = Predicted Cashout Hop</span>
+                        <div class="flex space-x-2">
+                            <button onclick="window.loadStitchGraph('CYB-2026-004821')" class="text-cyan-400 hover:underline">Reset View</button>
+                            <span>•</span>
+                            <button onclick="window.switchTab('gis')" class="text-cyan-400 hover:underline">View on GIS Map</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stitch Node Inspector & Quick Execution Pod (1 Col) -->
+                <div class="command-card p-3 flex flex-col space-y-3">
+                    <div class="border-b border-slate-800 pb-2 flex items-center justify-between">
+                        <span class="text-xs font-bold text-white uppercase font-mono">Node Inspector</span>
+                        <span class="text-[10px] text-cyan-400 font-mono">Live Telemetry</span>
+                    </div>
+
+                    <!-- Dynamic Node Detail Panel (Updated on click) -->
+                    <div id="stitch-node-detail-panel" class="space-y-2">
+                        <div class="p-3 bg-slate-900/90 rounded border border-slate-800 text-xs text-slate-400">
+                            Select any entity node on the canvas (Victim, Mule Account, ATM, or Patrol unit) to view forensic details and trigger targeted proactive intervention actions.
+                        </div>
+                    </div>
+
+                    <!-- Statutory Intervention Direct Action Card -->
+                    <div class="p-3 bg-slate-900/90 rounded border border-slate-800 space-y-2">
+                        <div class="text-xs font-bold text-white flex items-center space-x-1.5">
+                            <span>⚖️</span>
+                            <span>Statutory Rapid Action</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400">
+                            Issue legally binding digital directives to target banking nodal desks and emergency response units.
+                        </p>
+                        <div class="space-y-1.5 pt-1">
+                            <button onclick="executeBankFreezeAdvisory('9182374619')" 
+                                class="w-full py-1.5 px-2.5 bg-red-600 hover:bg-red-500 text-white rounded text-xs font-bold transition-all shadow-md flex items-center justify-center space-x-1.5">
+                                <span>🛑</span>
+                                <span>Sec 102 BNSS Debit Freeze Directive</span>
+                            </button>
+                            <button onclick="window.openInterventionModal('OD-BBSR-27', 'Master Canteen Square ATM Cluster')" 
+                                class="w-full py-1.5 px-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-bold transition-all shadow-md flex items-center justify-center space-x-1.5">
+                                <span>🚓</span>
+                                <span>Dispatch PCR Patrol (112 CAD)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Forensic Money Flow Timeline -->
+                    <div class="p-3 bg-slate-900/90 rounded border border-slate-800 space-y-2">
+                        <div class="text-xs font-bold text-white flex items-center justify-between">
+                            <span>⏱️ Forensic Hop Velocity</span>
+                            <span class="text-[10px] text-amber-400 font-mono">Avg 4.2 min/hop</span>
+                        </div>
+                        <div class="space-y-1.5 text-[11px]">
+                            <div class="flex items-center justify-between text-slate-300">
+                                <span>1. Citizen Victim $\to$ L1 Axis Bank</span>
+                                <span class="font-mono text-cyan-400">T + 00:00 (IMPS)</span>
+                            </div>
+                            <div class="flex items-center justify-between text-slate-300">
+                                <span>2. L1 Axis Bank $\to$ L2 HDFC Mule</span>
+                                <span class="font-mono text-cyan-400">T + 00:04 (Split)</span>
+                            </div>
+                            <div class="flex items-center justify-between text-amber-300 font-semibold">
+                                <span>3. L2 Mule $\to$ Master Canteen ATM</span>
+                                <span class="font-mono text-amber-400">T + 00:48 (PREDICTED)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= VIEW: AGENTIC AI (AAI) COPILOT ================= -->
+        <section id="view-copilot" class="tab-view hidden space-y-4">
+            
+            <!-- COPILOT HEADER BANNER -->
+            <div class="command-card p-4 border border-cyan-500/30">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="stitch-badge stitch-badge-cyan">AGENTIC AI ENGINE v3.0</span>
+                            <span class="stitch-badge stitch-badge-emerald">ZERO PURPLE</span>
+                            <span class="stitch-badge stitch-badge-amber">5 AUTONOMOUS AGENTS</span>
+                        </div>
+                        <h2 class="text-lg font-black text-white tracking-wide mt-1.5 flex items-center space-x-2">
+                            <span>🤖 CYBERPREDICT Agentic AI Copilot & Reasoning Lab</span>
+                        </h2>
+                        <p class="text-xs text-slate-300 mt-0.5">
+                            Conversational autonomous agent capable of case synthesis, spatio-temporal cashout prediction, multi-hop entity stitching, and statutory intervention advisory drafting.
+                        </p>
+                    </div>
+
+                    <div class="flex items-center space-x-2 text-xs">
+                        <span class="text-slate-400 font-mono">Agent Status:</span>
+                        <span class="text-emerald-400 font-mono font-bold flex items-center space-x-1">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span>ALL 5 AGENTS ONLINE</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 1-Click Quick Prompts Deck (Tailored for SIH Judges) -->
+                <div class="mt-3 pt-3 border-t border-slate-800/80">
+                    <div class="text-[10px] text-slate-400 font-mono uppercase mb-2">⚡ 1-Click Autonomous Prompts (SIH Demonstration):</div>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="sendCopilotMessage('Autonomous Investigation: Analyze high-risk cashout cluster OD-BBSR-27 and generate proactive intervention plan')" 
+                            class="px-2.5 py-1.5 bg-slate-900 hover:bg-cyan-950 border border-slate-700 hover:border-cyan-500 rounded text-xs text-cyan-300 font-medium transition-all shadow-sm">
+                            🔍 1. Autonomous Cluster #27 Investigation
+                        </button>
+                        <button onclick="sendCopilotMessage('Stitch multi-hop mule transaction trail for Case CYB-2026-004821 and locate target ATM node')" 
+                            class="px-2.5 py-1.5 bg-slate-900 hover:bg-cyan-950 border border-slate-700 hover:border-cyan-500 rounded text-xs text-cyan-300 font-medium transition-all shadow-sm">
+                            🧵 2. Stitch 4-Hop Transaction Trail
+                        </button>
+                        <button onclick="sendCopilotMessage('Advance Cashout Forecast: Rank high-risk ATM corridors across Odisha for the next 6 hours')" 
+                            class="px-2.5 py-1.5 bg-slate-900 hover:bg-cyan-950 border border-slate-700 hover:border-cyan-500 rounded text-xs text-cyan-300 font-medium transition-all shadow-sm">
+                            🔮 3. Advance Horizon 6H Forecast
+                        </button>
+                        <button onclick="sendCopilotMessage('Draft statutory Section 102 BNSS emergency debit freeze directive for Axis Bank mule account 9182374619')" 
+                            class="px-2.5 py-1.5 bg-slate-900 hover:bg-cyan-950 border border-slate-700 hover:border-cyan-500 rounded text-xs text-cyan-300 font-medium transition-all shadow-sm">
+                            ⚖️ 4. Draft Sec 102 BNSS Freeze Order
+                        </button>
+                        <button onclick="sendCopilotMessage('Coordinate rapid PCR patrol interception at Master Canteen Square ATM node with 112 Hub')" 
+                            class="px-2.5 py-1.5 bg-slate-900 hover:bg-cyan-950 border border-slate-700 hover:border-cyan-500 rounded text-xs text-cyan-300 font-medium transition-all shadow-sm">
+                            🚓 5. 112 Tactical Interception Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COPILOT INTERACTIVE CHAT FEED & INPUT AREA -->
+            <div class="command-card p-4 flex flex-col h-[600px]">
+                
+                <!-- Chat Message Feed -->
+                <div id="copilot-chat-feed" class="flex-1 overflow-y-auto space-y-3 pr-2 mb-3">
+                    
+                    <!-- Welcome Agent Message -->
+                    <div class="copilot-message-agent p-3.5 max-w-[90%] text-xs text-slate-100 shadow-md">
+                        <div class="flex items-center justify-between text-cyan-400 font-mono text-[10px] mb-2 pb-1 border-b border-slate-800">
+                            <div class="flex items-center space-x-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                                <span class="font-bold tracking-wider">CYBERPREDICT AAI COPILOT</span>
+                            </div>
+                            <span class="text-slate-500 font-mono">SYSTEM READY</span>
+                        </div>
+                        <div class="text-slate-200 leading-relaxed">
+                            Welcome, Investigator. I am the <b>CYBERPREDICT Agentic AI Copilot</b> powered by multi-agent reasoning, the <b>Google Stitch Canvas</b> entity stitcher, and real-time spatio-temporal predictive modeling.
+                            <br><br>
+                            Select one of the <b>1-Click Autonomous Prompts</b> above or enter any natural language question below to forecast cashout nodes, resolve mule chains, or draft statutory intervention notices.
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Input Controls -->
+                <div class="pt-3 border-t border-slate-800 flex items-center space-x-2">
+                    <input type="text" id="copilot-chat-input" 
+                        placeholder="Ask the Agentic AI Copilot (e.g. 'Analyze Bhubaneswar Cluster #27 and draft Section 102 BNSS order')..."
+                        onkeydown="if (event.key === 'Enter') sendCopilotMessage()"
+                        class="flex-1 px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 font-sans" />
+                    
+                    <button onclick="sendCopilotMessage()" 
+                        class="px-5 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-xs font-bold transition-all shadow-lg shadow-cyan-950/40 flex items-center space-x-1.5">
+                        <span>Send Query</span>
+                        <span>⚡</span>
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- AUTHENTICATION & LOGIN MODAL -->
+    <div id="login-modal" class="modal-overlay hidden">
+        <div class="bg-slate-900 border border-cyan-500/60 rounded-xl p-5 max-w-md w-full mx-4 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+                <div class="flex items-center space-x-2">
+                    <span class="text-cyan-400 text-base">🛡️</span>
+                    <h3 class="text-sm font-bold text-slate-100">Officer Authentication & JWT Login</h3>
+                </div>
+                <button onclick="window.closeLoginModal()" class="text-slate-400 hover:text-white text-base">✕</button>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div>
+                    <span class="text-[11px] text-slate-400">Quick Select Preconfigured Demo Officer:</span>
+                    <div id="demo-officers-picker" class="grid grid-cols-1 gap-1.5 mt-1"></div>
+                </div>
+
+                <div class="border-t border-slate-800 pt-2">
+                    <label class="text-slate-300 block mb-1">Username / Email:</label>
+                    <input type="text" id="login-username" value="admin@i4c.gov.in" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-100" />
+                </div>
+
+                <div>
+                    <label class="text-slate-300 block mb-1">Password:</label>
+                    <input type="password" id="login-password" value="Admin@2026" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-100" />
+                </div>
+
+                <div id="login-error-msg" class="hidden text-red-400 text-[11px] bg-red-950/40 p-2 rounded border border-red-800"></div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-800 flex justify-end space-x-2">
+                <button onclick="window.closeLoginModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs rounded">Cancel</button>
+                <button onclick="window.submitOfficerLogin()" class="px-4 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded shadow">Sign In & Generate JWT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROACTIVE INTERVENTION DISPATCH MODAL -->
+    <div id="intervention-dispatch-modal" class="modal-overlay hidden">
+        <div class="bg-slate-900 border border-cyan-500/50 rounded-xl p-5 max-w-lg w-full mx-4 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+                <h3 class="text-sm font-bold text-slate-100 flex items-center space-x-1.5">
+                    <span>🛡️</span>
+                    <span>Dispatch Proactive Cyber Intervention</span>
+                </h3>
+                <button onclick="window.closeInterventionModal()" class="text-slate-400 hover:text-white text-base">✕</button>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div class="bg-cyan-950/40 border border-cyan-800/80 p-2.5 rounded text-cyan-200 text-[11px]">
+                    <b>Human-in-the-Loop Safeguard:</b> AI predictions serve as decision support. Human authorization is mandatory before field dispatch or banking holds.
+                </div>
+
+                <div>
+                    <span class="text-slate-400">Target Threat Cluster:</span>
+                    <div id="modal-intervention-target" class="font-bold text-cyan-400 text-sm mt-0.5"></div>
+                </div>
+
+                <div>
+                    <label class="text-slate-400 font-semibold block mb-1">Intervention Protocol:</label>
+                    <select id="intervention-type-select" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-200">
+                        <option value="LEA_PATROL">LEA Quick Response Patrol Dispatch (Local Cyber Police)</option>
+                        <option value="BANK_FREEZE_NOTICE">Automated Core Banking Layer-2 Mule Freeze Advisory</option>
+                        <option value="ATM_GEO_FENCE">ATM Cluster Geofenced Withdrawal Volume Limit</option>
+                        <option value="I4C_COORDINATION">I4C Inter-State Command Advisory Broadcast</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="text-slate-400 font-semibold block mb-1">Operator Tactical Directives:</label>
+                    <textarea id="intervention-operator-notes" rows="2" 
+                        class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-200">Priority staging around ATM terminals. Coordinate with local Cyber Cell.</textarea>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-800 flex justify-end space-x-2">
+                <button onclick="window.closeInterventionModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs rounded">
+                    Cancel
+                </button>
+                <button onclick="window.submitProactiveIntervention()" class="px-4 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded shadow-lg shadow-cyan-950/40">
+                    Authorize & Dispatch
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- INCIDENT OUTCOME & FEEDBACK MODAL (NEW) -->
+    <div id="feedback-outcome-modal" class="modal-overlay hidden">
+        <div class="bg-slate-900 border border-emerald-500/60 rounded-xl p-5 max-w-md w-full mx-4 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+                <h3 class="text-sm font-bold text-emerald-400 flex items-center space-x-1.5">
+                    <span>🔄</span>
+                    <span>Incident Resolution & Model Feedback</span>
+                </h3>
+                <button onclick="window.closeFeedbackModal()" class="text-slate-400 hover:text-white text-base">✕</button>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div>
+                    <span class="text-slate-400">Target Alert ID:</span>
+                    <div id="modal-feedback-alert-id" class="font-bold text-slate-100 font-mono"></div>
+                </div>
+
+                <div>
+                    <label class="text-slate-400 font-semibold block mb-1">Actual Field Outcome:</label>
+                    <select id="feedback-outcome-type" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-200">
+                        <option value="INTERCEPTED_CONFIRMED">✅ Predicted Correctly — Cashout Intercepted / Funds Protected</option>
+                        <option value="PARTIAL_RECOVERY">⚠️ Partial Recovery — Layer-2 Freeze Successful, Some ATM Outflow</option>
+                        <option value="FALSE_POSITIVE">❌ False Positive — No Suspicious Withdrawal Observed</option>
+                        <option value="LOCATION_SHIFTED">🔄 Location Shifted — Cashout Occurred at Adjacent ATM Node</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="text-slate-400 font-semibold block mb-1">Amount Prevented / Saved (₹ INR):</label>
+                    <input type="number" id="feedback-recovered-amount" value="1840000" 
+                        class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-200 font-mono" />
+                </div>
+
+                <div>
+                    <label class="text-slate-400 font-semibold block mb-1">Officer Resolution Notes:</label>
+                    <textarea id="feedback-officer-notes" rows="2" 
+                        class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-200">QRT patrol presence prevented cash extraction. Mule card discarded.</textarea>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-800 flex justify-end space-x-2">
+                <button onclick="window.closeFeedbackModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs rounded">
+                    Cancel
+                </button>
+                <button onclick="window.submitIncidentFeedback()" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded shadow-lg shadow-emerald-950/40">
+                    Record Outcome & Feed Model
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- EMERGENCY 112 ESCALATION MODAL -->
+    <div id="emergency-112-modal" class="modal-overlay hidden">
+        <div class="bg-slate-900 border border-red-500/70 rounded-xl p-5 max-w-lg w-full mx-4 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+                <h3 class="text-sm font-bold text-red-400 flex items-center space-x-1.5">
+                    <span>🚨</span>
+                    <span>112 ERSS Emergency Rapid Escalation</span>
+                </h3>
+                <button onclick="window.closeEmergency112Modal()" class="text-slate-400 hover:text-white text-base">✕</button>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div class="bg-red-950/40 border border-red-800/80 p-3 rounded text-red-200">
+                    <b>Human-in-the-Loop Safeguard:</b> AI predictions assist decision-making but NEVER trigger autonomous emergency dispatches. You are authorizing official 112 ERSS CAD generation.
+                </div>
+
+                <div>
+                    <span class="text-slate-400">Target Threat Cluster:</span>
+                    <div id="modal-emergency-alert-id" class="font-bold text-red-400 text-sm mt-0.5"></div>
+                </div>
+
+                <div>
+                    <label class="text-slate-400 font-semibold block mb-1">Reason for Emergency Escalation:</label>
+                    <textarea id="emergency-operator-notes" rows="2" 
+                        class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-200">Imminent high-value coordinated cash extraction detected across multiple terminals. Field interception required.</textarea>
+                </div>
+
+                <div class="flex items-start space-x-2 pt-1">
+                    <input type="checkbox" id="emergency-confirm-checkbox" class="mt-0.5 rounded bg-slate-950 border-slate-700 text-red-600 focus:ring-red-500" />
+                    <label for="emergency-confirm-checkbox" class="text-slate-300 font-medium">
+                        I verify this intelligence and authorize official escalation to the 112 Emergency CAD & jurisdiction QRT.
+                    </label>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-800 flex justify-end space-x-2">
+                <button onclick="window.closeEmergency112Modal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs rounded">
+                    Cancel
+                </button>
+                <button onclick="window.submitEmergency112Escalation()" class="px-4 py-1.5 bg-red-600 hover:bg-red-500 text-white text-xs font-bold rounded shadow-lg shadow-red-950/40">
+                    Confirm & Call 112 ERSS
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-[9999] max-w-sm w-full pointer-events-none space-y-2"></div>
+
+    <!-- SCRIPT MODULES -->
+    <script src="/static/js/map.js"></script>
+    <script src="/static/js/charts.js"></script>
+    <script src="/static/js/network.js"></script>
+    <script src="/static/js/simulation.js"></script>
+    <script src="/static/js/emergency.js"></script>
+    <script src="/static/js/stitch.js"></script>
+    <script src="/static/js/copilot.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
