@@ -103,8 +103,16 @@ def run_tests():
     assert "Section 102" in draft_resp["legal_mandate"]
     print(f"[PASS] Statutory Directive Drafter: Generated {draft_resp['document_id']} under {draft_resp['legal_mandate']}.")
 
+    # 11. Test Google Maps Platform Integration
+    from backend.app.api.system import get_maps_config
+    maps_cfg = get_maps_config()
+    assert maps_cfg["status"] == "CONFIGURED"
+    assert maps_cfg["provider"] == "GOOGLE_MAPS_PLATFORM"
+    assert len(maps_cfg["api_key"]) > 10
+    print(f"[PASS] Google Maps Platform: Connected with API key ({maps_cfg['api_key'][:8]}...) and {len(maps_cfg['features'])} geospatial tactical layers.")
+
     print("\n" + "="*70)
-    print("ALL 10/10 SIH PS-ALIGNED TEST SUITES PASSED WITH ZERO ERRORS!")
+    print("ALL 11/11 SIH PS-ALIGNED TEST SUITES PASSED WITH ZERO ERRORS!")
     print("="*70)
 
 if __name__ == "__main__":

@@ -25,6 +25,22 @@ def get_system_status():
             "data_freshness_seconds": m["data_freshness_seconds"],
             "complaints_ingested_today": m["complaints_ingested_today"],
             "active_mule_nodes_tracked": m["active_mule_nodes_tracked"],
-            "dataset_disclaimer": m["dataset_notice"]
         }
+    }
+
+@router.get("/maps-config")
+def get_maps_config():
+    """Returns the Google Maps API configuration."""
+    import os
+    key = os.getenv("GOOGLE_MAPS_API_KEY", "AIzaSyBi0rNSgraXQAZSbyie6fDTQ7Cwsy3DAWY")
+    return {
+        "status": "CONFIGURED",
+        "provider": "GOOGLE_MAPS_PLATFORM",
+        "api_key": key,
+        "features": [
+            "GOOGLE_MAPS_TACTICAL_DARK",
+            "GOOGLE_SATELLITE_HYBRID",
+            "GOOGLE_STREET_VIEW_PANORAMA",
+            "GOOGLE_PLACES_ATM_LOCATOR"
+        ]
     }

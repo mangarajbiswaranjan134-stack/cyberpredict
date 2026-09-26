@@ -1,4 +1,7 @@
-// CYBERPREDICT: Advanced GIS Risk Heatmap & Multi-Layer Controller
+// CYBERPREDICT: Advanced GIS Risk Heatmap & Google Maps Platform Controller
+// Google Maps API Key Integrated: AIzaSyBi0rNSgraXQAZSbyie6fDTQ7Cwsy3DAWY
+const GOOGLE_MAPS_KEY = 'AIzaSyBi0rNSgraXQAZSbyie6fDTQ7Cwsy3DAWY';
+
 let gisMap = null;
 let fullGisMap = null;
 
@@ -13,6 +16,34 @@ let fullHistoricalLayer = null;
 let fullCorridorLayer = null;
 let fullHeatLayer = null;
 
+// Base Map Providers (Carto Dark Zero-Purple + Google Maps Platform)
+const MAP_PROVIDERS = {
+    carto_dark: {
+        url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+        options: { subdomains: 'abcd', maxZoom: 19, attribution: 'CartoDB Dark Slate' }
+    },
+    google_satellite: {
+        url: `https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
+        options: { maxZoom: 20, attribution: '© Google Satellite' }
+    },
+    google_hybrid: {
+        url: `https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
+        options: { maxZoom: 20, attribution: '© Google Hybrid' }
+    },
+    google_streets: {
+        url: `https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
+        options: { maxZoom: 20, attribution: '© Google Maps' }
+    },
+    google_terrain: {
+        url: `https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
+        options: { maxZoom: 20, attribution: '© Google Terrain' }
+    }
+};
+
+let currentBaseLayerKey = 'carto_dark';
+let overviewBaseLayer = null;
+let fullGisBaseLayer = null;
+
 // Layer visibility states
 const layerVisibility = {
     predicted: true,
@@ -20,8 +51,6 @@ const layerVisibility = {
     corridors: true,
     heat: true
 };
-
-const MAP_TILES = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
 
 function initGisMaps() {
     // 1. Overview Map (Command Center)
@@ -31,12 +60,12 @@ function initGisMaps() {
             center: [21.5, 82.0],
             zoom: 5,
             minZoom: 4,
-            maxZoom: 14,
+            maxZoom: 18,
             zoomControl: true,
             attributionControl: false
         });
 
-        L.tileLayer(MAP_TILES, { subdomains: 'abcd', maxZoom: 19 }).addTo(gisMap);
+        overviewBaseLayer = L.tileLayer(MAP_PROVIDERS.carto_dark.url, MAP_PROVIDERS.carto_dark.options).addTo(gisMap);
         predictedLayer = L.layerGroup().addTo(gisMap);
         historicalLayer = L.layerGroup().addTo(gisMap);
         corridorLayer = L.layerGroup().addTo(gisMap);
@@ -49,16 +78,45 @@ function initGisMaps() {
             center: [21.5, 82.0],
             zoom: 5,
             minZoom: 4,
-            maxZoom: 15,
+            maxZoom: 18,
             zoomControl: true,
             attributionControl: false
         });
 
-        L.tileLayer(MAP_TILES, { subdomains: 'abcd', maxZoom: 19 }).addTo(fullGisMap);
+        fullGisBaseLayer = L.tileLayer(MAP_PROVIDERS.carto_dark.url, MAP_PROVIDERS.carto_dark.options).addTo(fullGisMap);
         fullPredictedLayer = L.layerGroup().addTo(fullGisMap);
         fullHistoricalLayer = L.layerGroup().addTo(fullGisMap);
         fullCorridorLayer = L.layerGroup().addTo(fullGisMap);
     }
+}
+
+function setMapBaseLayer(layerKey, targetMap = 'both') {
+    if (!MAP_PROVIDERS[layerKey]) return;
+    currentBaseLayerKey = layerKey;
+    const provider = MAP_PROVIDERS[layerKey];
+
+    if (gisMap && (targetMap === 'both' || targetMap === 'overview')) {
+        if (overviewBaseLayer) gisMap.removeLayer(overviewBaseLayer);
+        overviewBaseLayer = L.tileLayer(provider.url, provider.options).addTo(gisMap);
+        overviewBaseLayer.bringToBack();
+    }
+
+    if (fullGisMap && (targetMap === 'both' || targetMap === 'full')) {
+        if (fullGisBaseLayer) fullGisMap.removeLayer(fullGisBaseLayer);
+        fullGisBaseLayer = L.tileLayer(provider.url, provider.options).addTo(fullGisMap);
+        fullGisBaseLayer.bringToBack();
+    }
+
+    // Update active button state
+    document.querySelectorAll('.map-tile-btn').forEach(btn => {
+        if (btn.getAttribute('data-layer') === layerKey) {
+            btn.classList.add('bg-cyan-900', 'text-cyan-200', 'font-bold');
+            btn.classList.remove('text-slate-400');
+        } else {
+            btn.classList.remove('bg-cyan-900', 'text-cyan-200', 'font-bold');
+            btn.classList.add('text-slate-400');
+        }
+    });
 }
 
 function renderMapLayers(hotspotData, targetMap = 'both') {
@@ -120,7 +178,7 @@ function renderMapLayers(hotspotData, targetMap = 'both') {
                 const marker = L.marker([hotspot.lat, hotspot.lng], { icon: icon }).addTo(pLayer);
 
                 const popupHtml = `
-                    <div style="min-width: 250px; padding: 4px;">
+                    <div style="min-width: 260px; padding: 4px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                             <span style="font-size: 10px; font-weight: 800; color: ${pinColor}; border: 1px solid ${pinColor}; padding: 1px 6px; border-radius: 4px;">
                                 🔮 PREDICTED FUTURE RISK: ${hotspot.risk_score}/100
@@ -148,8 +206,12 @@ function renderMapLayers(hotspotData, targetMap = 'both') {
                             </div>
                         </div>
                         <button onclick="window.selectHotspotById('${hotspot.cluster_id}')" 
-                            style="width: 100%; background: #0284C7; color: white; border: none; padding: 6px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
+                            style="width: 100%; background: #0284C7; color: white; border: none; padding: 6px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; margin-bottom: 4px;">
                             Inspect Why This Location (XAI)
+                        </button>
+                        <button onclick="window.openStreetViewPanorama(${hotspot.lat}, ${hotspot.lng}, '${hotspot.name}')" 
+                            style="width: 100%; background: #0F766E; color: white; border: none; padding: 5px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
+                            🛰️ Google Satellite & Street View
                         </button>
                     </div>
                 `;
@@ -246,8 +308,75 @@ function updateHotspotMarker(pred) {
     }
 }
 
+// Google Street View & Satellite Tactical Panorama Controller
+let streetViewPanoramaInstance = null;
+
+function openStreetViewPanorama(lat = 20.2648, lng = 85.8394, title = "Master Canteen Square ATM Cluster (OD-BBSR-27)") {
+    const modal = document.getElementById('streetview-modal');
+    const container = document.getElementById('streetview-pano-container');
+    const titleEl = document.getElementById('streetview-title');
+    const coordsEl = document.getElementById('streetview-coords');
+
+    if (!modal || !container) return;
+
+    if (titleEl) titleEl.innerText = `🛰️ ${title}`;
+    if (coordsEl) coordsEl.innerText = `GPS: Lat ${parseFloat(lat).toFixed(5)}, Lng ${parseFloat(lng).toFixed(5)} • Google Maps Platform Satellite & Street View`;
+
+    modal.classList.remove('hidden');
+
+    if (typeof google !== 'undefined' && google.maps) {
+        const targetPos = { lat: parseFloat(lat), lng: parseFloat(lng) };
+        const svService = new google.maps.StreetViewService();
+
+        svService.getPanorama({ location: targetPos, radius: 250 }, (data, status) => {
+            if (status === google.maps.StreetViewStatus.OK && data && data.location) {
+                streetViewPanoramaInstance = new google.maps.StreetViewPanorama(container, {
+                    position: data.location.latLng,
+                    pov: { heading: 165, pitch: 0 },
+                    zoom: 1,
+                    addressControl: true,
+                    linksControl: true,
+                    panControl: true,
+                    enableCloseButton: false
+                });
+            } else {
+                // If 360 Street View imagery is unavailable, render Google 3D Hybrid Satellite view with markers
+                const satMap = new google.maps.Map(container, {
+                    center: targetPos,
+                    zoom: 18,
+                    mapTypeId: 'hybrid',
+                    tilt: 45,
+                    mapTypeControl: true,
+                    streetViewControl: true,
+                    fullscreenControl: true
+                });
+                new google.maps.Marker({
+                    position: targetPos,
+                    map: satMap,
+                    title: title,
+                    animation: google.maps.Animation.DROP
+                });
+            }
+        });
+    } else {
+        container.innerHTML = `
+            <div class="flex items-center justify-center h-full text-slate-400 text-xs">
+                Google Maps Platform SDK initializing...
+            </div>
+        `;
+    }
+}
+
+function closeStreetViewModal() {
+    const modal = document.getElementById('streetview-modal');
+    if (modal) modal.classList.add('hidden');
+}
+
 window.initGisMaps = initGisMaps;
 window.renderMapLayers = renderMapLayers;
 window.toggleMapLayer = toggleMapLayer;
 window.zoomToHotspot = zoomToHotspot;
 window.updateHotspotMarker = updateHotspotMarker;
+window.setMapBaseLayer = setMapBaseLayer;
+window.openStreetViewPanorama = openStreetViewPanorama;
+window.closeStreetViewModal = closeStreetViewModal;
