@@ -1,60 +1,27 @@
-/* =====================================================================
-   CYBERPREDICT: Ultra-Pure Black & Laser Red Intelligence Design System
-   Government / Defense-Grade Cybercrime Tactical Command Architecture
-   Strict Color Identity: Pitch Black (#000000) + Deep Obsidian Surfaces (#050505) + Laser Red (#EF4444) + Crisp White (#F8FAFC)
-   ===================================================================== */
-
+/* CYBERPREDICT: Tactical Command Center Dark Theme Stylesheet (Google Stitch Design System) */
+/* ZERO PURPLE POLICY: Clean Obsidian, Slate, Electric Cyan, Cobalt Blue, Signal Amber, Alert Crimson, Emerald */
 :root {
-  /* Ultra-Pure Pitch Black Surfaces */
-  --bg-primary: #000000;
-  --bg-surface: #050505;
-  --bg-secondary: #0A0A0A;
-  --bg-tertiary: #111111;
-  
-  /* Pure Black Card System */
-  --bg-card: #050505;
-  --bg-card-hover: #0E0E0E;
-  --border-subtle: #181818;
-  --border-strong: #2A2A2A;
-  --border-focus: #EF4444;
-
-  /* High-Contrast Crisp Typography */
+  --bg-primary: #060B13;
+  --bg-secondary: #0A1220;
+  --bg-tertiary: #0F1A2E;
+  --bg-card: rgba(13, 22, 38, 0.90);
+  --bg-card-hover: rgba(18, 30, 52, 0.95);
+  --border-subtle: rgba(51, 65, 85, 0.45);
+  --border-glow: rgba(6, 182, 212, 0.45);
   --text-main: #F8FAFC;
-  --text-secondary: #CBD5E1;
   --text-muted: #94A3B8;
   --text-dim: #64748B;
-  --text-light: #FFFFFF;
-
-  /* Laser Cyber Red Accents (Threats, Risk, Predictions, Actions) */
-  --accent-red: #EF4444;
-  --accent-red-hover: #DC2626;
-  --accent-red-dark: #991B1B;
-  --accent-red-light: rgba(239, 68, 68, 0.12);
-  --accent-red-border: rgba(239, 68, 68, 0.35);
-  --accent-red-glow: 0 0 16px rgba(239, 68, 68, 0.5);
-
-  /* Tactical Operational Risk Badges */
+  
+  --accent-cyan: #06B6D4;
+  --accent-blue: #3B82F6;
+  --accent-teal: #14B8A6;
+  --accent-cobalt: #2563EB;
+  --accent-sky: #0EA5E9;
+  
   --risk-critical: #EF4444;
-  --risk-critical-bg: rgba(239, 68, 68, 0.18);
-  --risk-critical-border: rgba(239, 68, 68, 0.5);
-
   --risk-high: #F97316;
-  --risk-high-bg: rgba(249, 115, 22, 0.18);
-  --risk-high-border: rgba(249, 115, 22, 0.5);
-
   --risk-medium: #F59E0B;
-  --risk-medium-bg: rgba(245, 158, 11, 0.18);
-  --risk-medium-border: rgba(245, 158, 11, 0.5);
-
   --risk-low: #10B981;
-  --risk-low-bg: rgba(16, 185, 129, 0.18);
-  --risk-low-border: rgba(16, 185, 129, 0.5);
-
-  /* Elevation Shadows */
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.7);
-  --shadow-card: 0 2px 8px 0 rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.04);
-  --shadow-hover: 0 6px 20px -2px rgba(0, 0, 0, 0.9), 0 0 12px rgba(239, 68, 68, 0.2);
-  --shadow-popup: 0 20px 30px -10px rgba(0, 0, 0, 0.95), 0 0 15px rgba(239, 68, 68, 0.35);
 }
 
 * {
@@ -69,10 +36,9 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
   line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
 }
 
-/* Dark Stealth Scrollbars with Red Accent */
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -81,143 +47,33 @@ body {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: #120404;
+  background: #334155;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-red);
+  background: #475569;
 }
 
-/* =====================================================================
-   ENTERPRISE MOTION & ANIMATION SYSTEM
-   ===================================================================== */
-
-@keyframes fadeInSlideUp {
-  0% {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeInSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Radar Threat Red Pulse */
-@keyframes pulseRedGlow {
-  0% {
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
-  }
-}
-
-.pulse-critical {
-  animation: pulseRedGlow 2.2s infinite ease-out;
-}
-
-/* Stealth Skeleton Loader Pulse */
-@keyframes skeletonPulse {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-.skeleton-loading {
-  background: linear-gradient(90deg, #040404 25%, #120404 50%, #040404 75%);
-  background-size: 200% 100%;
-  animation: skeletonPulse 1.6s infinite ease-in-out;
-  border-radius: 4px;
-}
-
-/* Accessibility Preferences */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* =====================================================================
-   DARK CARDS & COMPONENT CONTAINERS
-   ===================================================================== */
-
+/* Command Center Glass Cards (Google Stitch Clean Component Standard) */
 .command-card {
-  background: var(--bg-surface);
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  box-shadow: var(--shadow-card);
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 10px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .command-card:hover {
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-hover);
+  border-color: var(--border-glow);
+  box-shadow: 0 4px 20px -2px rgba(6, 182, 212, 0.15);
 }
 
-/* Red Threat Card Accent */
-.command-card-threat {
-  border-left: 4px solid var(--accent-red) !important;
-}
-
-/* Top Intelligence Command Header */
-.command-header {
-  background: rgba(10, 14, 23, 0.96);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-subtle);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
-}
-
-/* Red Threat & Status Badges */
-.badge-critical {
-  background: var(--risk-critical-bg);
-  color: var(--risk-critical);
-  border: 1px solid var(--risk-critical-border);
-  font-weight: 700;
-}
-
-.badge-high {
-  background: var(--risk-high-bg);
-  color: var(--risk-high);
-  border: 1px solid var(--risk-high-border);
-  font-weight: 700;
-}
-
-.badge-medium {
-  background: var(--risk-medium-bg);
-  color: var(--risk-medium);
-  border: 1px solid var(--risk-medium-border);
-  font-weight: 700;
-}
-
-.badge-low {
-  background: var(--risk-low-bg);
-  color: var(--risk-low);
-  border: 1px solid var(--risk-low-border);
-  font-weight: 700;
-}
-
-/* Stitch Dark Canvas */
+/* Stitch Canvas Design System */
 .stitch-canvas {
-  background: #000000;
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
+  background: radial-gradient(circle at 50% 50%, #0d1a30 0%, #060b13 100%);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 12px;
   position: relative;
   overflow: hidden;
 }
@@ -226,9 +82,9 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(30, 41, 59, 0.4) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(30, 41, 59, 0.4) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background-image: linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
   pointer-events: none;
 }
 
@@ -236,166 +92,147 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.2rem 0.55rem;
-  border-radius: 4px;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
   font-size: 11px;
   font-weight: 700;
   font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.stitch-badge-red {
-  background: var(--accent-red-light);
-  color: var(--accent-red);
-  border: 1px solid var(--accent-red-border);
+.stitch-badge-cyan {
+  background: rgba(6, 182, 212, 0.12);
+  color: #38BDF8;
+  border: 1px solid rgba(6, 182, 212, 0.35);
 }
 
-/* =====================================================================
-   EXPLAINABLE AI (XAI) FACTOR METERS
-   ===================================================================== */
+.stitch-badge-emerald {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34D399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
 
-.xai-meter-bg {
-  background: #080808;
-  height: 6px;
-  border-radius: 9999px;
-  overflow: hidden;
+.stitch-badge-amber {
+  background: rgba(245, 158, 11, 0.12);
+  color: #FBBF24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.stitch-badge-crimson {
+  background: rgba(239, 68, 68, 0.12);
+  color: #F87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+/* Glowing Risk Accents */
+.badge-critical {
+  background: rgba(239, 68, 68, 0.15);
+  color: #F87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.badge-high {
+  background: rgba(249, 115, 22, 0.15);
+  color: #FB923C;
+  border: 1px solid rgba(249, 115, 22, 0.4);
+}
+
+.badge-medium {
+  background: rgba(245, 158, 11, 0.15);
+  color: #FBBF24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.badge-low {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34D399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+/* Radar & Pulse Animations */
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.9; }
+  50% { transform: scale(1.35); opacity: 0.2; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.pulse-critical {
   position: relative;
 }
 
-.xai-meter-fill {
-  background: linear-gradient(90deg, #DC2626, #EF4444);
-  height: 100%;
-  border-radius: 9999px;
-  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
-}
-
-/* 5-Step Prediction Sequence */
-.ai-step-track {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  margin: 1rem 0;
-}
-
-.ai-step-track::before {
-  content: "";
+.pulse-critical::before {
+  content: '';
   position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #120404;
-  transform: translateY(-50%);
-  z-index: 1;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 9999px;
+  background-color: var(--risk-critical);
+  animation: pulse-ring 1.8s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+  z-index: 0;
 }
 
-.ai-step-item {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.ai-step-dot {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: 800;
-  transition: all 0.25s ease;
-  background: #040404;
-  border: 2px solid #334155;
-  color: #94A3B8;
-}
-
-.ai-step-item.active .ai-step-dot {
-  background: #EF4444;
-  border-color: #F87171;
-  color: #FFFFFF;
-  box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
-}
-
-.ai-step-item.completed .ai-step-dot {
-  background: #10B981;
-  border-color: #6EE7B7;
-  color: #FFFFFF;
-}
-
-/* =====================================================================
-   GIS MAP & PIN STYLES (LEAFLET & GOOGLE MAPS)
-   ===================================================================== */
-
+/* Map Container Styling */
 #gis-map, #full-gis-map {
   width: 100%;
   height: 100%;
   min-height: 480px;
-  background: #000000;
-  border-radius: 6px;
+  background: #0A1220;
+  border-radius: 8px;
   z-index: 10;
 }
 
 .leaflet-container {
-  background-color: #000000 !important;
+  background-color: #060B13 !important;
   font-family: inherit !important;
 }
 
 .leaflet-popup-content-wrapper {
-  background: #040404 !important;
+  background: rgba(13, 22, 38, 0.96) !important;
   color: #F8FAFC !important;
-  border: 1px solid #DC2626 !important;
+  border: 1px solid rgba(56, 189, 248, 0.4) !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.8) !important;
   border-radius: 8px !important;
-  box-shadow: var(--shadow-popup) !important;
-  padding: 2px !important;
 }
 
 .leaflet-popup-tip {
-  background: #040404 !important;
-  border-color: #DC2626 !important;
+  background: rgba(13, 22, 38, 0.96) !important;
 }
 
-/* Map Markers */
+/* Custom Marker Styles */
 .custom-pin-critical {
-  background: #EF4444;
+  background: rgba(239, 68, 68, 0.9);
   border: 2px solid #FFFFFF;
-  box-shadow: 0 0 12px rgba(239, 68, 68, 0.8);
+  box-shadow: 0 0 16px #EF4444;
   border-radius: 50%;
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 11px;
   font-weight: 800;
-  animation: pulseRedGlow 2.2s infinite ease-out;
-  cursor: pointer;
+  animation: pulse-ring 2s infinite ease-out;
 }
 
 .custom-pin-high {
-  background: #F97316;
+  background: rgba(249, 115, 22, 0.9);
   border: 2px solid #FFFFFF;
-  box-shadow: 0 0 10px rgba(249, 115, 22, 0.6);
+  box-shadow: 0 0 12px #F97316;
   border-radius: 50%;
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 10px;
   font-weight: 700;
-  cursor: pointer;
 }
 
 .custom-pin-historical {
-  background: #475569;
+  background: rgba(51, 65, 85, 0.85);
   border: 1.5px solid #94A3B8;
   border-radius: 50%;
   width: 14px;
@@ -403,586 +240,88 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF;
+  color: #94A3B8;
   font-size: 8px;
-  font-weight: bold;
-  opacity: 0.9;
-  cursor: pointer;
+  opacity: 0.8;
 }
 
-/* =====================================================================
-   NAVIGATION TABS & ACTION BUTTONS
-   ===================================================================== */
-
-.nav-tab {
-  color: var(--text-muted);
-  font-weight: 500;
-  border-bottom: 2px solid transparent;
-  transition: all 0.18s ease;
-  white-space: nowrap;
+/* Horizontal Explainability Progress Bars */
+.xai-meter-bg {
+  background: #1A263D;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 3px;
 }
 
-.nav-tab:hover {
-  color: #F8FAFC;
-  background-color: var(--bg-secondary);
+.xai-meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #06B6D4, #3B82F6);
+  border-radius: 3px;
 }
 
+/* Navigation active tab style */
 .nav-tab.active {
-  color: #EF4444 !important;
-  border-bottom-color: #EF4444 !important;
-  background-color: rgba(239, 68, 68, 0.12);
-  font-weight: 700;
+  background: rgba(6, 182, 212, 0.15);
+  color: #38BDF8;
+  border-left: 3px solid #06B6D4;
 }
 
-/* Advance Horizon Selector Pills */
-.horizon-pill {
-  color: var(--text-muted);
-  background: #040404;
-  border: 1px solid var(--border-subtle);
-  font-weight: 500;
-  transition: all 0.15s ease;
+.nav-tab:hover:not(.active) {
+  background: rgba(30, 41, 59, 0.6);
+  color: #F1F5F9;
+}
+
+/* Horizon Pill Active Styles */
+.horizon-pill.active {
+  background: #0284C7;
+  color: #FFFFFF;
+  border-color: #38BDF8;
+  font-weight: 700;
 }
 
 .horizon-pill:hover:not(.active) {
-  background: var(--bg-secondary);
-  color: #F8FAFC;
+  background: #1A263D;
+  color: #E2E8F0;
 }
 
-.horizon-pill.active {
-  background: #EF4444 !important;
-  color: #FFFFFF !important;
-  border-color: #EF4444 !important;
-  font-weight: 700;
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
-}
-
-/* Red Emergency & Action Buttons */
-.btn-primary-red {
-  background-color: var(--accent-red);
-  color: #FFFFFF;
-  font-weight: 600;
-  border: 1px solid #DC2626;
-  border-radius: 6px;
-  transition: all 0.18s ease;
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
-}
-
-.btn-primary-red:hover {
-  background-color: var(--accent-red-hover);
-  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.5);
-}
-
-.btn-secondary-light {
-  background-color: #080808;
-  color: #CBD5E1;
-  font-weight: 500;
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  transition: all 0.18s ease;
-}
-
-.btn-secondary-light:hover {
-  background-color: #120404;
-  color: #FFFFFF;
-  border-color: var(--border-strong);
-}
-
-/* =====================================================================
-   TABLES & DATA GRIDS
-   ===================================================================== */
-
-.data-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 12px;
-}
-
-.data-table th {
-  background: #080808;
-  color: #94A3B8;
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 10px;
-  letter-spacing: 0.05em;
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--border-subtle);
-  text-align: left;
-}
-
-.data-table td {
-  padding: 10px 12px;
-  color: #F8FAFC;
-  border-bottom: 1px solid var(--border-subtle);
-  background: #040404;
-}
-
-.data-table tr:hover td {
-  background: rgba(239, 68, 68, 0.1) !important;
-}
-
-/* =====================================================================
-   MODAL DIALOGS
-   ===================================================================== */
-
+/* Modal Overlay */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(2, 6, 15, 0.86);
+  backdrop-filter: blur(8px);
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.modal-card {
-  background: #040404;
-  border: 1px solid var(--border-strong);
-  border-radius: 10px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 20px rgba(239, 68, 68, 0.25);
-  color: #F8FAFC;
-}
-
-/* Stitch Graph & Case Network */
+/* Stitch Graph & Case Network Containers */
 #case-network-container, #stitch-network-container {
   width: 100%;
   height: 520px;
-  background: #000000;
-  border: 1px solid var(--border-subtle);
+  background: #070D18;
+  border: 1px solid #1E293B;
   border-radius: 8px;
 }
 
-/* Copilot Messages */
+/* Agentic AI Copilot Chat Styles */
 .copilot-message-user {
-  background: #080808;
-  border: 1px solid #334155;
-  color: #F8FAFC;
-  border-radius: 8px 8px 2px 8px;
+  background: rgba(30, 58, 95, 0.6);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 10px 10px 2px 10px;
 }
 
 .copilot-message-agent {
-  background: #040404;
-  border: 1px solid var(--accent-red-border);
-  color: #F8FAFC;
-  border-radius: 8px 8px 8px 2px;
-  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.15);
+  background: rgba(15, 26, 46, 0.85);
+  border: 1px solid rgba(6, 182, 212, 0.35);
+  border-radius: 10px 10px 10px 2px;
 }
 
 .agentic-step {
-  border-left: 2px solid var(--accent-red);
+  border-left: 2px solid #06B6D4;
   padding-left: 8px;
   margin-top: 6px;
   margin-bottom: 6px;
-}
-
-
-/* =====================================================================
-   PURE BLACK (#000000) & VIBRANT RED TEXT OVERRIDE SYSTEM
-   High-Contrast Tactical Red-on-Black Command Architecture
-   ===================================================================== */
-
-/* Global Body & Surface */
-body {
-  background-color: #000000 !important;
-  color: #EF4444 !important;
-}
-
-/* Headings and Titles */
-h1, h2, h3, h4, h5, h6 {
-  color: #EF4444 !important;
-}
-
-/* Red Text Utilities & Tailwind Overrides */
-.text-white,
-.text-slate-100,
-.text-slate-200,
-.text-slate-300,
-.text-gray-100,
-.text-gray-200 {
-  color: #EF4444 !important;
-}
-
-.text-slate-400,
-.text-slate-500,
-.text-gray-400,
-.text-gray-500 {
-  color: #F87171 !important;
-}
-
-.text-slate-600,
-.text-gray-600 {
-  color: #DC2626 !important;
-}
-
-/* Pure Black Backgrounds */
-.bg-black,
-.bg-\[\#080C14\],
-.bg-\[\#0F172A\],
-.bg-\[\#182234\],
-.bg-\[\#131D31\],
-.bg-\[\#0A0F1D\],
-.bg-\[\#1E293B\],
-.bg-slate-900,
-.bg-slate-800,
-.bg-slate-950 {
-  background-color: #000000 !important;
-}
-
-/* Tactical Cards and Surfaces */
-.command-card,
-.modal-card {
-  background-color: #040404 !important;
-  border-color: #260808 !important;
-  color: #EF4444 !important;
-}
-
-.command-header {
-  background-color: #000000 !important;
-  border-bottom: 1px solid #2B0606 !important;
-}
-
-/* Red Border Utilities */
-.border-slate-800,
-.border-slate-700,
-.border-slate-900,
-.border-slate-600 {
-  border-color: #240808 !important;
-}
-
-/* Data Tables: Black Rows with Red Text */
-.data-table {
-  background-color: #000000 !important;
-}
-
-.data-table th {
-  background-color: #080202 !important;
-  color: #EF4444 !important;
-  border-bottom: 1px solid #2B0606 !important;
-}
-
-.data-table td {
-  background-color: #000000 !important;
-  color: #F87171 !important;
-  border-bottom: 1px solid #1A0404 !important;
-}
-
-.data-table tr:hover td {
-  background-color: rgba(239, 68, 68, 0.12) !important;
-  color: #EF4444 !important;
-}
-
-/* Form Controls & Inputs */
-input, select, textarea {
-  background-color: #050505 !important;
-  border: 1px solid #3A0A0A !important;
-  color: #EF4444 !important;
-}
-
-input:focus, select:focus, textarea:focus {
-  border-color: #EF4444 !important;
-  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4) !important;
-}
-
-input::placeholder, textarea::placeholder {
-  color: #991B1B !important;
-}
-
-/* Navigation Tabs */
-.nav-tab {
-  color: #DC2626 !important;
-}
-
-.nav-tab:hover {
-  color: #EF4444 !important;
-  background-color: #080808 !important;
-}
-
-.nav-tab.active {
-  color: #FF2E2E !important;
-  border-bottom-color: #EF4444 !important;
-  background-color: rgba(239, 68, 68, 0.15) !important;
-}
-
-/* Horizon Pills */
-.horizon-pill {
-  color: #DC2626 !important;
-  background-color: #000000 !important;
-  border-color: #260808 !important;
-}
-
-.horizon-pill:hover:not(.active) {
-  background-color: #080808 !important;
-  color: #EF4444 !important;
-}
-
-.horizon-pill.active {
-  background-color: #EF4444 !important;
-  color: #000000 !important;
-  font-weight: 800 !important;
-}
-
-/* Map & Leaflet Popups */
-#gis-map, #full-gis-map, .leaflet-container {
-  background: #000000 !important;
-}
-
-.leaflet-popup-content-wrapper {
-  background: #000000 !important;
-  color: #EF4444 !important;
-  border: 1px solid #EF4444 !important;
-}
-
-.leaflet-popup-tip {
-  background: #000000 !important;
-  border-color: #EF4444 !important;
-}
-
-/* Stitch Canvas */
-.stitch-canvas, #case-network-container, #stitch-network-container {
-  background-color: #000000 !important;
-  border-color: #2B0606 !important;
-}
-
-.stitch-canvas::before {
-  background-image: linear-gradient(rgba(239, 68, 68, 0.08) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(239, 68, 68, 0.08) 1px, transparent 1px) !important;
-}
-
-/* Copilot message bubbles */
-.copilot-message-user {
-  background: #0A0A0A !important;
-  border-color: #330A0A !important;
-  color: #F87171 !important;
-}
-
-.copilot-message-agent {
-  background: #040404 !important;
-  border-color: #EF4444 !important;
-  color: #EF4444 !important;
-}
-
-/* Scrollbars */
-::-webkit-scrollbar-track {
-  background: #000000 !important;
-}
-::-webkit-scrollbar-thumb {
-  background: #2B0606 !important;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #EF4444 !important;
-}
-
-
-/* =====================================================================
-   PURE BLACK (#000000) COMMAND CENTER ARCHITECTURE
-   Deep Jet-Black Base with Crisp White Text & Tactical Red Highlights
-   ===================================================================== */
-
-/* Global Base */
-body {
-  background-color: #000000 !important;
-  color: #F8FAFC !important;
-}
-
-/* Pure Black Cards & Containers */
-.command-card,
-.modal-card {
-  background-color: #050505 !important;
-  border-color: #1A1A1A !important;
-  color: #F8FAFC !important;
-}
-
-.command-card:hover {
-  border-color: #2D2D2D !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 0 10px rgba(239, 68, 68, 0.15) !important;
-}
-
-.command-header {
-  background-color: #000000 !important;
-  border-bottom: 1px solid #1A1A1A !important;
-}
-
-/* Force All Non-Black Backgrounds to Pure Black Surfaces */
-.bg-black,
-.bg-\[\#080C14\],
-.bg-\[\#0F172A\],
-.bg-\[\#182234\],
-.bg-\[\#131D31\],
-.bg-\[\#0A0F1D\],
-.bg-\[\#1E293B\],
-.bg-\[\#040404\],
-.bg-\[\#060606\],
-.bg-\[\#080808\],
-.bg-\[\#0D0D0D\],
-.bg-slate-900,
-.bg-slate-800,
-.bg-slate-950 {
-  background-color: #050505 !important;
-}
-
-/* Clean Dark Borders */
-.border-slate-800,
-.border-slate-700,
-.border-slate-900,
-.border-slate-600,
-.border-\[\#260808\],
-.border-\[\#330A0A\],
-.border-\[\#400E0E\] {
-  border-color: #1A1A1A !important;
-}
-
-/* High-Contrast Crisp Typography */
-.text-white,
-.text-slate-100,
-.text-slate-200 {
-  color: #F8FAFC !important;
-}
-
-.text-slate-300,
-.text-slate-400 {
-  color: #CBD5E1 !important;
-}
-
-.text-slate-500,
-.text-gray-400,
-.text-gray-500 {
-  color: #94A3B8 !important;
-}
-
-/* Red Accents & Threat Highlights */
-.text-red-500,
-.text-red-600,
-.text-red-400 {
-  color: #EF4444 !important;
-}
-
-/* Data Tables: Pure Black Surfaces with Crisp White Rows */
-.data-table {
-  background-color: #000000 !important;
-}
-
-.data-table th {
-  background-color: #0A0A0A !important;
-  color: #94A3B8 !important;
-  border-bottom: 1px solid #1A1A1A !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-}
-
-.data-table td {
-  background-color: #050505 !important;
-  color: #F8FAFC !important;
-  border-bottom: 1px solid #141414 !important;
-}
-
-.data-table tr:hover td {
-  background-color: #0E0E0E !important;
-  color: #FFFFFF !important;
-}
-
-/* Inputs & Form Controls */
-input, select, textarea {
-  background-color: #0A0A0A !important;
-  border: 1px solid #222222 !important;
-  color: #F8FAFC !important;
-}
-
-input:focus, select:focus, textarea:focus {
-  border-color: #EF4444 !important;
-  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4) !important;
-  outline: none !important;
-}
-
-input::placeholder, textarea::placeholder {
-  color: #64748B !important;
-}
-
-/* Navigation Tabs */
-.nav-tab {
-  color: #94A3B8 !important;
-}
-
-.nav-tab:hover {
-  color: #FFFFFF !important;
-  background-color: #0A0A0A !important;
-}
-
-.nav-tab.active {
-  color: #EF4444 !important;
-  border-bottom-color: #EF4444 !important;
-  background-color: rgba(239, 68, 68, 0.12) !important;
-  font-weight: 700 !important;
-}
-
-/* Horizon Pills */
-.horizon-pill {
-  color: #94A3B8 !important;
-  background-color: #000000 !important;
-  border-color: #1A1A1A !important;
-}
-
-.horizon-pill:hover:not(.active) {
-  background-color: #0D0D0D !important;
-  color: #FFFFFF !important;
-}
-
-.horizon-pill.active {
-  background-color: #EF4444 !important;
-  color: #FFFFFF !important;
-  font-weight: 800 !important;
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.4) !important;
-}
-
-/* Map Containers & Leaflet Popups */
-#gis-map, #full-gis-map, .leaflet-container {
-  background: #000000 !important;
-}
-
-.leaflet-popup-content-wrapper {
-  background: #080808 !important;
-  color: #F8FAFC !important;
-  border: 1px solid #EF4444 !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.9), 0 0 15px rgba(239, 68, 68, 0.3) !important;
-}
-
-.leaflet-popup-tip {
-  background: #080808 !important;
-  border-color: #EF4444 !important;
-}
-
-/* Google Stitch Canvas */
-.stitch-canvas, #case-network-container, #stitch-network-container {
-  background-color: #000000 !important;
-  border-color: #1A1A1A !important;
-}
-
-.stitch-canvas::before {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px) !important;
-}
-
-/* Copilot Message Bubbles */
-.copilot-message-user {
-  background: #0D0D0D !important;
-  border-color: #222222 !important;
-  color: #F8FAFC !important;
-}
-
-.copilot-message-agent {
-  background: #050505 !important;
-  border-color: rgba(239, 68, 68, 0.35) !important;
-  color: #F8FAFC !important;
-}
-
-/* Scrollbars */
-::-webkit-scrollbar-track {
-  background: #000000 !important;
-}
-::-webkit-scrollbar-thumb {
-  background: #1A1A1A !important;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #EF4444 !important;
 }

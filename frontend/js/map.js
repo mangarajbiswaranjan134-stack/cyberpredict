@@ -16,15 +16,19 @@ let fullHistoricalLayer = null;
 let fullCorridorLayer = null;
 let fullHeatLayer = null;
 
-// Base Map Providers (Google Maps Platform Default + Esri & OSM)
+// Base Map Providers (Carto Dark Zero-Purple + Google Maps Platform)
 const MAP_PROVIDERS = {
-    google_streets: {
-        url: `https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
-        options: { maxZoom: 20, attribution: '© Google Maps' }
+    esri_dark: {
+        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+        options: { maxZoom: 16, attribution: '© Esri Dark Gray Canvas' }
     },
     google_hybrid: {
         url: `https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
         options: { maxZoom: 20, attribution: '© Google Hybrid' }
+    },
+    google_streets: {
+        url: `https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
+        options: { maxZoom: 20, attribution: '© Google Maps' }
     },
     google_satellite: {
         url: `https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
@@ -33,18 +37,10 @@ const MAP_PROVIDERS = {
     google_terrain: {
         url: `https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
         options: { maxZoom: 20, attribution: '© Google Terrain' }
-    },
-    esri_gray: {
-        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
-        options: { maxZoom: 16, attribution: '© Esri Light Gray Canvas' }
-    },
-    osm: {
-        url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-        options: { maxZoom: 19, attribution: '© OpenStreetMap contributors' }
     }
 };
 
-let currentBaseLayerKey = 'google_streets';
+let currentBaseLayerKey = 'esri_dark';
 let overviewBaseLayer = null;
 let fullGisBaseLayer = null;
 
@@ -69,8 +65,7 @@ function initGisMaps() {
             attributionControl: false
         });
 
-        const defaultProvider = MAP_PROVIDERS[currentBaseLayerKey];
-        overviewBaseLayer = L.tileLayer(defaultProvider.url, defaultProvider.options).addTo(gisMap);
+        overviewBaseLayer = L.tileLayer(MAP_PROVIDERS[currentBaseLayerKey].url, MAP_PROVIDERS[currentBaseLayerKey].options).addTo(gisMap);
         predictedLayer = L.layerGroup().addTo(gisMap);
         historicalLayer = L.layerGroup().addTo(gisMap);
         corridorLayer = L.layerGroup().addTo(gisMap);
@@ -88,8 +83,7 @@ function initGisMaps() {
             attributionControl: false
         });
 
-        const defaultProvider = MAP_PROVIDERS[currentBaseLayerKey];
-        fullGisBaseLayer = L.tileLayer(defaultProvider.url, defaultProvider.options).addTo(fullGisMap);
+        fullGisBaseLayer = L.tileLayer(MAP_PROVIDERS[currentBaseLayerKey].url, MAP_PROVIDERS[currentBaseLayerKey].options).addTo(fullGisMap);
         fullPredictedLayer = L.layerGroup().addTo(fullGisMap);
         fullHistoricalLayer = L.layerGroup().addTo(fullGisMap);
         fullCorridorLayer = L.layerGroup().addTo(fullGisMap);
@@ -116,11 +110,11 @@ function setMapBaseLayer(layerKey, targetMap = 'both') {
     // Update active button state
     document.querySelectorAll('.map-tile-btn').forEach(btn => {
         if (btn.getAttribute('data-layer') === layerKey) {
-            btn.classList.add('bg-red-600', 'text-white', 'font-bold');
-            btn.classList.remove('text-slate-700', 'bg-white');
+            btn.classList.add('bg-cyan-900', 'text-cyan-200', 'font-bold');
+            btn.classList.remove('text-slate-400');
         } else {
-            btn.classList.remove('bg-red-600', 'text-white', 'font-bold');
-            btn.classList.add('text-slate-700', 'bg-white');
+            btn.classList.remove('bg-cyan-900', 'text-cyan-200', 'font-bold');
+            btn.classList.add('text-slate-400');
         }
     });
 }
@@ -159,12 +153,12 @@ function renderMapLayers(hotspotData, targetMap = 'both') {
             predicted_hotspots.forEach(hotspot => {
                 const isCritical = hotspot.risk_score >= 90;
                 const isHigh = hotspot.risk_score >= 75 && hotspot.risk_score < 90;
-                const pinColor = isCritical ? '#DC2626' : isHigh ? '#EA580C' : '#D97706';
+                const pinColor = isCritical ? '#EF4444' : isHigh ? '#F97316' : '#FBBF24';
 
                 const icon = L.divIcon({
                     className: 'custom-map-icon',
                     html: `
-                        <div class="${isCritical ? 'pulse-critical' : ''}" style="
+                        <div style="
                             background: ${pinColor}; 
                             border: 2px solid #FFFFFF; 
                             border-radius: 50%; 
@@ -172,7 +166,7 @@ function renderMapLayers(hotspotData, targetMap = 'both') {
                             height: ${isCritical ? 26 : 22}px; 
                             display: flex; align-items: center; justify-content: center; 
                             color: white; font-weight: 800; font-size: 10px; 
-                            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.45);
+                            box-shadow: 0 0 14px ${pinColor};
                             cursor: pointer;">
                             ${hotspot.risk_score}
                         </div>
@@ -184,39 +178,39 @@ function renderMapLayers(hotspotData, targetMap = 'both') {
                 const marker = L.marker([hotspot.lat, hotspot.lng], { icon: icon }).addTo(pLayer);
 
                 const popupHtml = `
-                    <div style="min-width: 260px; padding: 6px; font-family: 'Inter', sans-serif;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                            <span style="font-size: 10px; font-weight: 800; color: #EF4444; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); padding: 2px 6px; border-radius: 4px;">
-                                🔮 PREDICTED RISK: ${hotspot.risk_score}/100
+                    <div style="min-width: 260px; padding: 4px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                            <span style="font-size: 10px; font-weight: 800; color: ${pinColor}; border: 1px solid ${pinColor}; padding: 1px 6px; border-radius: 4px;">
+                                🔮 PREDICTED FUTURE RISK: ${hotspot.risk_score}/100
                             </span>
-                            <span style="font-size: 10px; color: #F87171; font-weight: 600;">Prob: ${Math.round(hotspot.prediction_probability * 100)}%</span>
+                            <span style="font-size: 10px; color: #94A3B8;">Prob: ${Math.round(hotspot.prediction_probability * 100)}%</span>
                         </div>
                         <div style="font-weight: 700; font-size: 13px; color: #F8FAFC; margin-bottom: 2px;">
                             ${hotspot.name}
                         </div>
-                        <div style="font-size: 11px; color: #F87171; margin-bottom: 8px;">
+                        <div style="font-size: 11px; color: #94A3B8; margin-bottom: 6px;">
                             📍 ${hotspot.locality}, ${hotspot.district}
                         </div>
-                        <div style="background: #111111; border: 1px solid #222222; padding: 8px; border-radius: 6px; font-size: 11px; margin-bottom: 8px;">
+                        <div style="background: rgba(30, 41, 59, 0.8); padding: 8px; border-radius: 6px; font-size: 11px; margin-bottom: 8px;">
                             <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
-                                <span style="color: #F87171;">Forecast Window:</span>
-                                <span style="color: #EF4444; font-weight: 700;">${hotspot.forecast_window}</span>
+                                <span style="color: #94A3B8;">Forecast Window:</span>
+                                <span style="color: #38BDF8; font-weight: 700;">${hotspot.forecast_window}</span>
                             </div>
                             <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
-                                <span style="color: #F87171;">Est. Cashout Txns:</span>
-                                <span style="color: #EF4444; font-weight: 600;">${hotspot.estimated_transactions || 18} attempts</span>
+                                <span style="color: #94A3B8;">Est. Cashout Txns:</span>
+                                <span style="color: #F8FAFC; font-weight: 600;">${hotspot.estimated_transactions || 18} attempts</span>
                             </div>
                             <div style="display: flex; justify-content: space-between;">
-                                <span style="color: #F87171;">Potential Exposure:</span>
-                                <span style="color: #EF4444; font-weight: 800;">₹${hotspot.estimated_exposure} Lakhs</span>
+                                <span style="color: #94A3B8;">Potential Exposure:</span>
+                                <span style="color: #EF4444; font-weight: 700;">₹${hotspot.estimated_exposure} Lakhs</span>
                             </div>
                         </div>
                         <button onclick="window.selectHotspotById('${hotspot.cluster_id}')" 
-                            style="width: 100%; background: #EF4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; margin-bottom: 5px; box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);">
+                            style="width: 100%; background: #0284C7; color: white; border: none; padding: 6px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; margin-bottom: 4px;">
                             Inspect Why This Location (XAI)
                         </button>
                         <button onclick="window.openStreetViewPanorama(${hotspot.lat}, ${hotspot.lng}, '${hotspot.name}')" 
-                            style="width: 100%; background: #111111; color: #EF4444; border: 1px solid #2A2A2A; padding: 5px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
+                            style="width: 100%; background: #0F766E; color: white; border: none; padding: 5px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
                             🛰️ Google Satellite & Street View
                         </button>
                     </div>
@@ -236,13 +230,13 @@ function renderMapLayers(hotspotData, targetMap = 'both') {
                     className: 'custom-hist-icon',
                     html: `
                         <div style="
-                            background: #334155; 
+                            background: rgba(15, 23, 42, 0.9); 
                             border: 1.5px solid #94A3B8; 
                             border-radius: 50%; 
                             width: 14px; height: 14px; 
                             display: flex; align-items: center; justify-content: center; 
-                            color: #FFFFFF; font-size: 8px; font-weight: bold;
-                            opacity: 0.9; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                            color: #94A3B8; font-size: 8px; font-weight: bold;
+                            opacity: 0.85; cursor: pointer;">
                             H
                         </div>
                     `,
@@ -252,13 +246,13 @@ function renderMapLayers(hotspotData, targetMap = 'both') {
 
                 const marker = L.marker([h.lat, h.lng], { icon: hIcon }).addTo(hLayer);
                 const hPopup = `
-                    <div style="min-width: 220px; padding: 6px; font-size: 11px; font-family: 'Inter', sans-serif;">
-                        <span style="font-size: 9px; font-weight: bold; color: #CBD5E1; background: #111111; border: 1px solid #2A2A2A; padding: 1px 4px; border-radius: 3px;">
+                    <div style="min-width: 220px; padding: 3px; font-size: 11px;">
+                        <span style="font-size: 9px; font-weight: bold; color: #94A3B8; border: 1px solid #475569; padding: 1px 4px; border-radius: 3px;">
                             📜 HISTORICAL WITHDRAWAL (PAST EVENT)
                         </span>
-                        <div style="font-weight: 700; color: #EF4444; margin-top: 4px;">${h.cluster_name}</div>
-                        <div style="color: #F87171;">Terminal: ${h.atm_id} (${h.bank})</div>
-                        <div style="color: #EF4444; font-weight: 700; margin-top: 3px;">Withdrawn: ₹${(h.amount_withdrawn_inr).toLocaleString('en-IN')}</div>
+                        <div style="font-weight: 700; color: #F1F5F9; margin-top: 4px;">${h.cluster_name}</div>
+                        <div style="color: #94A3B8;">Terminal: ${h.atm_id} (${h.bank})</div>
+                        <div style="color: #EF4444; font-weight: 600; margin-top: 3px;">Withdrawn: ₹${(h.amount_withdrawn_inr).toLocaleString('en-IN')}</div>
                         <div style="color: #64748B; font-size: 10px;">Time: ${h.timestamp}</div>
                     </div>
                 `;
@@ -270,10 +264,10 @@ function renderMapLayers(hotspotData, targetMap = 'both') {
         if (corridors && cLayer && layerVisibility.corridors) {
             corridors.forEach(corr => {
                 const polyline = L.polyline([corr.start, corr.end], {
-                    color: corr.risk === 'CRITICAL' ? '#DC2626' : '#EA580C',
+                    color: corr.risk === 'CRITICAL' ? '#EF4444' : '#F97316',
                     weight: 3,
                     dashArray: '6, 8',
-                    opacity: 0.85
+                    opacity: 0.8
                 }).addTo(cLayer);
                 polyline.bindTooltip(`<b>${corr.name}</b><br>${corr.description}`, { sticky: true });
             });

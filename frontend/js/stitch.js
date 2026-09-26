@@ -1,5 +1,4 @@
 // CYBERPREDICT: Google Stitch Entity & Cashout Flow Canvas (vis.js)
-// High-Tech Black & Red Intelligence Design System
 let stitchNetworkInstance = null;
 let currentStitchData = null;
 
@@ -27,13 +26,13 @@ function renderStitchCanvas(graphData) {
         id: n.id,
         label: n.label,
         color: {
-            background: n.color || '#EF4444',
+            background: n.color,
             border: '#F8FAFC',
-            highlight: { background: '#EF4444', border: '#FFFFFF' }
+            highlight: { background: '#FFFFFF', border: n.color }
         },
         shape: n.shape || 'box',
         size: n.size || 24,
-        font: { color: '#F8FAFC', size: 11, face: 'Inter', strokeWidth: 2, strokeColor: '#000000' },
+        font: { color: '#F8FAFC', size: 11, face: 'Inter', strokeWidth: 2, strokeColor: '#060B13' },
         rawDetails: n.details,
         stitchRole: n.stitch_role
     }));
@@ -42,11 +41,11 @@ function renderStitchCanvas(graphData) {
         from: e.from,
         to: e.to,
         label: e.label || '',
-        color: { color: e.color || '#EF4444', highlight: '#F87171' },
+        color: { color: e.color || '#64748B', highlight: '#00E5FF' },
         width: e.width || 2,
         dashes: e.dashes || false,
         arrows: e.arrows ? { to: { enabled: true, scaleFactor: 0.8 } } : undefined,
-        font: { color: '#CBD5E1', size: 9, face: 'JetBrains Mono', background: '#000000' }
+        font: { color: '#94A3B8', size: 9, face: 'JetBrains Mono', background: '#070D18' }
     }));
 
     const options = {
@@ -102,9 +101,9 @@ function showStitchNodeDetails(node) {
     if (!detailPanel) return;
 
     let detailsHtml = `
-        <div class="p-3 bg-[#0F172A] rounded border border-slate-800 shadow-md text-slate-100">
+        <div class="p-3 bg-slate-900/90 rounded border border-cyan-500/40">
             <div class="flex items-center justify-between mb-2">
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-950 text-red-400 border border-red-800">${node.stitchRole || 'Entity'}</span>
+                <span class="stitch-badge stitch-badge-cyan">${node.stitchRole || 'Entity'}</span>
                 <span class="text-[10px] text-slate-400 font-mono">${node.id}</span>
             </div>
             <div class="text-sm font-bold text-white mb-2 whitespace-pre-line">${node.label}</div>
@@ -113,9 +112,9 @@ function showStitchNodeDetails(node) {
 
     if (node.rawDetails) {
         for (const [k, v] of Object.entries(node.rawDetails)) {
-            detailsHtml += `<div class="flex justify-between border-b border-slate-800 pb-1">
+            detailsHtml += `<div class="flex justify-between border-b border-slate-800/60 pb-1">
                 <span class="text-slate-400 uppercase text-[10px]">${k.replace(/_/g, ' ')}:</span>
-                <span class="font-mono text-white font-semibold">${v}</span>
+                <span class="font-mono text-cyan-300 font-semibold">${v}</span>
             </div>`;
         }
     }
@@ -123,10 +122,10 @@ function showStitchNodeDetails(node) {
     detailsHtml += `
             </div>
             <div class="mt-3 flex gap-2">
-                <button onclick="copilotQuickAction('freeze_node', '${node.id}')" class="flex-1 py-1.5 px-2 bg-red-600 hover:bg-red-500 text-white rounded text-[11px] font-bold transition-all shadow-xs">
+                <button onclick="copilotQuickAction('freeze_node', '${node.id}')" class="flex-1 py-1 px-2 bg-red-600 hover:bg-red-500 text-white rounded text-[11px] font-bold transition-all">
                     🛑 Section 102 Freeze
                 </button>
-                <button onclick="copilotQuickAction('patrol_node', '${node.id}')" class="flex-1 py-1.5 px-2 bg-slate-800 hover:bg-slate-700 text-white rounded text-[11px] font-bold transition-all shadow-xs border border-slate-700">
+                <button onclick="copilotQuickAction('patrol_node', '${node.id}')" class="flex-1 py-1 px-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-[11px] font-bold transition-all">
                     🚓 Dispatch 112 Patrol
                 </button>
             </div>
@@ -138,4 +137,3 @@ function showStitchNodeDetails(node) {
 
 window.loadStitchGraph = loadStitchGraph;
 window.renderStitchCanvas = renderStitchCanvas;
-window.showStitchNodeDetails = showStitchNodeDetails;
