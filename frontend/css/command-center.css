@@ -1,29 +1,29 @@
 /* =====================================================================
    CYBERPREDICT: High-Tech Black & Red Intelligence Design System
    Government / Defense-Grade Cybercrime Tactical Command Architecture
-   Strict Color Identity: Deep Stealth Black (#080C14) + Laser Red (#DC2626 / #EF4444) + Crisp White Text
+   Strict Color Identity: Deep Stealth Black (#000000) + Laser Red (#DC2626 / #EF4444) + Crisp White Text
    ===================================================================== */
 
 :root {
   /* Primary Stealth Surface & Backgrounds */
-  --bg-primary: #080C14;
-  --bg-surface: #0F172A;
-  --bg-secondary: #182234;
-  --bg-tertiary: #1E293B;
+  --bg-primary: #000000;
+  --bg-surface: #040404;
+  --bg-secondary: #080808;
+  --bg-tertiary: #0F0F0F;
   
   /* Card System */
-  --bg-card: #0F172A;
-  --bg-card-hover: #182234;
-  --border-subtle: #1E293B;
-  --border-strong: #334155;
+  --bg-card: #040404;
+  --bg-card-hover: #0C0C0C;
+  --border-subtle: #240808;
+  --border-strong: #3F0E0E;
   --border-focus: #EF4444;
 
   /* High-Contrast Light & Crisp White Text */
-  --text-main: #F8FAFC;
-  --text-secondary: #CBD5E1;
-  --text-muted: #94A3B8;
-  --text-dim: #64748B;
-  --text-light: #FFFFFF;
+  --text-main: #EF4444;
+  --text-secondary: #F87171;
+  --text-muted: #DC2626;
+  --text-dim: #991B1B;
+  --text-light: #FCA5A5;
 
   /* Laser Cyber Red Accents (Threats, Risk, Predictions, Actions) */
   --accent-red: #EF4444;
@@ -81,7 +81,7 @@ body {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1E293B;
+  background: #120404;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -135,7 +135,7 @@ body {
 }
 
 .skeleton-loading {
-  background: linear-gradient(90deg, #0F172A 25%, #1E293B 50%, #0F172A 75%);
+  background: linear-gradient(90deg, #040404 25%, #120404 50%, #040404 75%);
   background-size: 200% 100%;
   animation: skeletonPulse 1.6s infinite ease-in-out;
   border-radius: 4px;
@@ -215,7 +215,7 @@ body {
 
 /* Stitch Dark Canvas */
 .stitch-canvas {
-  background: #0A0F1D;
+  background: #000000;
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
   position: relative;
@@ -255,7 +255,7 @@ body {
    ===================================================================== */
 
 .xai-meter-bg {
-  background: #182234;
+  background: #080808;
   height: 6px;
   border-radius: 9999px;
   overflow: hidden;
@@ -286,7 +286,7 @@ body {
   left: 0;
   right: 0;
   height: 2px;
-  background: #1E293B;
+  background: #120404;
   transform: translateY(-50%);
   z-index: 1;
 }
@@ -310,7 +310,7 @@ body {
   font-size: 10px;
   font-weight: 800;
   transition: all 0.25s ease;
-  background: #0F172A;
+  background: #040404;
   border: 2px solid #334155;
   color: #94A3B8;
 }
@@ -336,18 +336,18 @@ body {
   width: 100%;
   height: 100%;
   min-height: 480px;
-  background: #080C14;
+  background: #000000;
   border-radius: 6px;
   z-index: 10;
 }
 
 .leaflet-container {
-  background-color: #080C14 !important;
+  background-color: #000000 !important;
   font-family: inherit !important;
 }
 
 .leaflet-popup-content-wrapper {
-  background: #0F172A !important;
+  background: #040404 !important;
   color: #F8FAFC !important;
   border: 1px solid #DC2626 !important;
   border-radius: 8px !important;
@@ -356,7 +356,7 @@ body {
 }
 
 .leaflet-popup-tip {
-  background: #0F172A !important;
+  background: #040404 !important;
   border-color: #DC2626 !important;
 }
 
@@ -437,7 +437,7 @@ body {
 /* Advance Horizon Selector Pills */
 .horizon-pill {
   color: var(--text-muted);
-  background: #0F172A;
+  background: #040404;
   border: 1px solid var(--border-subtle);
   font-weight: 500;
   transition: all 0.15s ease;
@@ -473,7 +473,7 @@ body {
 }
 
 .btn-secondary-light {
-  background-color: #182234;
+  background-color: #080808;
   color: #CBD5E1;
   font-weight: 500;
   border: 1px solid var(--border-subtle);
@@ -482,7 +482,7 @@ body {
 }
 
 .btn-secondary-light:hover {
-  background-color: #1E293B;
+  background-color: #120404;
   color: #FFFFFF;
   border-color: var(--border-strong);
 }
@@ -499,7 +499,7 @@ body {
 }
 
 .data-table th {
-  background: #182234;
+  background: #080808;
   color: #94A3B8;
   font-weight: 600;
   text-transform: uppercase;
@@ -514,7 +514,7 @@ body {
   padding: 10px 12px;
   color: #F8FAFC;
   border-bottom: 1px solid var(--border-subtle);
-  background: #0F172A;
+  background: #040404;
 }
 
 .data-table tr:hover td {
@@ -538,7 +538,7 @@ body {
 }
 
 .modal-card {
-  background: #0F172A;
+  background: #040404;
   border: 1px solid var(--border-strong);
   border-radius: 10px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 20px rgba(239, 68, 68, 0.25);
@@ -549,21 +549,21 @@ body {
 #case-network-container, #stitch-network-container {
   width: 100%;
   height: 520px;
-  background: #0A0F1D;
+  background: #000000;
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
 }
 
 /* Copilot Messages */
 .copilot-message-user {
-  background: #182234;
+  background: #080808;
   border: 1px solid #334155;
   color: #F8FAFC;
   border-radius: 8px 8px 2px 8px;
 }
 
 .copilot-message-agent {
-  background: #0F172A;
+  background: #040404;
   border: 1px solid var(--accent-red-border);
   color: #F8FAFC;
   border-radius: 8px 8px 8px 2px;
@@ -575,4 +575,201 @@ body {
   padding-left: 8px;
   margin-top: 6px;
   margin-bottom: 6px;
+}
+
+
+/* =====================================================================
+   PURE BLACK (#000000) & VIBRANT RED TEXT OVERRIDE SYSTEM
+   High-Contrast Tactical Red-on-Black Command Architecture
+   ===================================================================== */
+
+/* Global Body & Surface */
+body {
+  background-color: #000000 !important;
+  color: #EF4444 !important;
+}
+
+/* Headings and Titles */
+h1, h2, h3, h4, h5, h6 {
+  color: #EF4444 !important;
+}
+
+/* Red Text Utilities & Tailwind Overrides */
+.text-white,
+.text-slate-100,
+.text-slate-200,
+.text-slate-300,
+.text-gray-100,
+.text-gray-200 {
+  color: #EF4444 !important;
+}
+
+.text-slate-400,
+.text-slate-500,
+.text-gray-400,
+.text-gray-500 {
+  color: #F87171 !important;
+}
+
+.text-slate-600,
+.text-gray-600 {
+  color: #DC2626 !important;
+}
+
+/* Pure Black Backgrounds */
+.bg-black,
+.bg-\[\#080C14\],
+.bg-\[\#0F172A\],
+.bg-\[\#182234\],
+.bg-\[\#131D31\],
+.bg-\[\#0A0F1D\],
+.bg-\[\#1E293B\],
+.bg-slate-900,
+.bg-slate-800,
+.bg-slate-950 {
+  background-color: #000000 !important;
+}
+
+/* Tactical Cards and Surfaces */
+.command-card,
+.modal-card {
+  background-color: #040404 !important;
+  border-color: #260808 !important;
+  color: #EF4444 !important;
+}
+
+.command-header {
+  background-color: #000000 !important;
+  border-bottom: 1px solid #2B0606 !important;
+}
+
+/* Red Border Utilities */
+.border-slate-800,
+.border-slate-700,
+.border-slate-900,
+.border-slate-600 {
+  border-color: #240808 !important;
+}
+
+/* Data Tables: Black Rows with Red Text */
+.data-table {
+  background-color: #000000 !important;
+}
+
+.data-table th {
+  background-color: #080202 !important;
+  color: #EF4444 !important;
+  border-bottom: 1px solid #2B0606 !important;
+}
+
+.data-table td {
+  background-color: #000000 !important;
+  color: #F87171 !important;
+  border-bottom: 1px solid #1A0404 !important;
+}
+
+.data-table tr:hover td {
+  background-color: rgba(239, 68, 68, 0.12) !important;
+  color: #EF4444 !important;
+}
+
+/* Form Controls & Inputs */
+input, select, textarea {
+  background-color: #050505 !important;
+  border: 1px solid #3A0A0A !important;
+  color: #EF4444 !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #EF4444 !important;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4) !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #991B1B !important;
+}
+
+/* Navigation Tabs */
+.nav-tab {
+  color: #DC2626 !important;
+}
+
+.nav-tab:hover {
+  color: #EF4444 !important;
+  background-color: #080808 !important;
+}
+
+.nav-tab.active {
+  color: #FF2E2E !important;
+  border-bottom-color: #EF4444 !important;
+  background-color: rgba(239, 68, 68, 0.15) !important;
+}
+
+/* Horizon Pills */
+.horizon-pill {
+  color: #DC2626 !important;
+  background-color: #000000 !important;
+  border-color: #260808 !important;
+}
+
+.horizon-pill:hover:not(.active) {
+  background-color: #080808 !important;
+  color: #EF4444 !important;
+}
+
+.horizon-pill.active {
+  background-color: #EF4444 !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+/* Map & Leaflet Popups */
+#gis-map, #full-gis-map, .leaflet-container {
+  background: #000000 !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #000000 !important;
+  color: #EF4444 !important;
+  border: 1px solid #EF4444 !important;
+}
+
+.leaflet-popup-tip {
+  background: #000000 !important;
+  border-color: #EF4444 !important;
+}
+
+/* Stitch Canvas */
+.stitch-canvas, #case-network-container, #stitch-network-container {
+  background-color: #000000 !important;
+  border-color: #2B0606 !important;
+}
+
+.stitch-canvas::before {
+  background-image: linear-gradient(rgba(239, 68, 68, 0.08) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(239, 68, 68, 0.08) 1px, transparent 1px) !important;
+}
+
+/* Copilot message bubbles */
+.copilot-message-user {
+  background: #0A0A0A !important;
+  border-color: #330A0A !important;
+  color: #F87171 !important;
+}
+
+.copilot-message-agent {
+  background: #040404 !important;
+  border-color: #EF4444 !important;
+  color: #EF4444 !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar-track {
+  background: #000000 !important;
+}
+::-webkit-scrollbar-thumb {
+  background: #2B0606 !important;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #EF4444 !important;
 }
