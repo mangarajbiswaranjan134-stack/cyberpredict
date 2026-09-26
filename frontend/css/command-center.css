@@ -1,60 +1,60 @@
 /* =====================================================================
-   CYBERPREDICT: White + Red + Dark Text Intelligence Design System
-   Government / Intelligence-Grade Operational Command Architecture
-   Strict Color Identity: Clean White/Off-White + Professional Red + Charcoal
+   CYBERPREDICT: High-Tech Black & Red Intelligence Design System
+   Government / Defense-Grade Cybercrime Tactical Command Architecture
+   Strict Color Identity: Deep Stealth Black (#080C14) + Laser Red (#DC2626 / #EF4444) + Crisp White Text
    ===================================================================== */
 
 :root {
-  /* Primary Surface & Backgrounds */
-  --bg-primary: #F8FAFC;
-  --bg-surface: #FFFFFF;
-  --bg-secondary: #F1F5F9;
-  --bg-tertiary: #E2E8F0;
+  /* Primary Stealth Surface & Backgrounds */
+  --bg-primary: #080C14;
+  --bg-surface: #0F172A;
+  --bg-secondary: #182234;
+  --bg-tertiary: #1E293B;
   
   /* Card System */
-  --bg-card: #FFFFFF;
-  --bg-card-hover: #FAFAFA;
-  --border-subtle: #E2E8F0;
-  --border-strong: #CBD5E1;
-  --border-focus: #DC2626;
+  --bg-card: #0F172A;
+  --bg-card-hover: #182234;
+  --border-subtle: #1E293B;
+  --border-strong: #334155;
+  --border-focus: #EF4444;
 
-  /* High-Contrast Charcoal & Dark Text */
-  --text-main: #0F172A;
-  --text-secondary: #334155;
-  --text-muted: #64748B;
-  --text-dim: #94A3B8;
+  /* High-Contrast Light & Crisp White Text */
+  --text-main: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --text-dim: #64748B;
   --text-light: #FFFFFF;
 
-  /* Strategic Professional Red Accents (Threats, Risk, Predictions, Actions) */
-  --accent-red: #DC2626;
-  --accent-red-hover: #B91C1C;
-  --accent-red-dark: #991B1B;
-  --accent-red-light: #FEF2F2;
-  --accent-red-border: #FECACA;
-  --accent-red-glow: rgba(220, 38, 38, 0.15);
+  /* Laser Cyber Red Accents (Threats, Risk, Predictions, Actions) */
+  --accent-red: #EF4444;
+  --accent-red-hover: #DC2626;
+  --accent-red-dark: #B91C1C;
+  --accent-red-light: rgba(239, 68, 68, 0.15);
+  --accent-red-border: rgba(239, 68, 68, 0.35);
+  --accent-red-glow: 0 0 15px rgba(239, 68, 68, 0.4);
 
   /* Tactical Operational Risk Badges */
-  --risk-critical: #DC2626;
-  --risk-critical-bg: #FEF2F2;
-  --risk-critical-border: #FECACA;
+  --risk-critical: #EF4444;
+  --risk-critical-bg: rgba(239, 68, 68, 0.2);
+  --risk-critical-border: rgba(239, 68, 68, 0.5);
 
-  --risk-high: #EA580C;
-  --risk-high-bg: #FFF7ED;
-  --risk-high-border: #FFEDD5;
+  --risk-high: #F97316;
+  --risk-high-bg: rgba(249, 115, 22, 0.2);
+  --risk-high-border: rgba(249, 115, 22, 0.5);
 
-  --risk-medium: #D97706;
-  --risk-medium-bg: #FFFBEB;
-  --risk-medium-border: #FEF3C7;
+  --risk-medium: #F59E0B;
+  --risk-medium-bg: rgba(245, 158, 11, 0.2);
+  --risk-medium-border: rgba(245, 158, 11, 0.5);
 
-  --risk-low: #059669;
-  --risk-low-bg: #ECFDF5;
-  --risk-low-border: #D1FAE5;
+  --risk-low: #10B981;
+  --risk-low-bg: rgba(16, 185, 129, 0.2);
+  --risk-low-border: rgba(16, 185, 129, 0.5);
 
-  /* Elevation Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
-  --shadow-hover: 0 4px 14px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -2px rgba(220, 38, 38, 0.06);
-  --shadow-popup: 0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.08);
+  /* Elevation Shadows with Red Ambience */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 2px 8px 0 rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --shadow-hover: 0 6px 20px -2px rgba(0, 0, 0, 0.8), 0 0 12px rgba(239, 68, 68, 0.25);
+  --shadow-popup: 0 20px 30px -10px rgba(0, 0, 0, 0.9), 0 0 15px rgba(239, 68, 68, 0.35);
 }
 
 * {
@@ -72,7 +72,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Light Slate Custom Scrollbars */
+/* Dark Stealth Scrollbars with Red Accent */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -81,16 +81,15 @@ body {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #1E293B;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: var(--accent-red);
 }
 
 /* =====================================================================
    ENTERPRISE MOTION & ANIMATION SYSTEM
-   Purposeful, subtle transitions (200-350ms)
    ===================================================================== */
 
 @keyframes fadeInSlideUp {
@@ -104,28 +103,28 @@ body {
   }
 }
 
-.fade-in-up {
-  animation: fadeInSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.animate-fade-in {
+  animation: fadeInSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Hotspot Subtle Red Pulse (No blinding neon, government precision) */
-@keyframes pulseRedSubtle {
+/* Radar Threat Red Pulse */
+@keyframes pulseRedGlow {
   0% {
-    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.45);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
   }
   70% {
-    box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+    box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
   }
 }
 
 .pulse-critical {
-  animation: pulseRedSubtle 2.2s infinite ease-out;
+  animation: pulseRedGlow 2.2s infinite ease-out;
 }
 
-/* Contextual Skeleton Loader Pulse */
+/* Stealth Skeleton Loader Pulse */
 @keyframes skeletonPulse {
   0% {
     background-position: 200% 0;
@@ -136,13 +135,13 @@ body {
 }
 
 .skeleton-loading {
-  background: linear-gradient(90deg, #F1F5F9 25%, #E2E8F0 50%, #F1F5F9 75%);
+  background: linear-gradient(90deg, #0F172A 25%, #1E293B 50%, #0F172A 75%);
   background-size: 200% 100%;
   animation: skeletonPulse 1.6s infinite ease-in-out;
   border-radius: 4px;
 }
 
-/* Respect Accessibility Preferences */
+/* Accessibility Preferences */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -155,7 +154,7 @@ body {
 }
 
 /* =====================================================================
-   WHITE CARDS & COMPONENT CONTAINERS
+   DARK CARDS & COMPONENT CONTAINERS
    ===================================================================== */
 
 .command-card {
@@ -178,11 +177,11 @@ body {
 
 /* Top Intelligence Command Header */
 .command-header {
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(10, 14, 23, 0.96);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-subtle);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
 }
 
 /* Red Threat & Status Badges */
@@ -214,9 +213,9 @@ body {
   font-weight: 700;
 }
 
-/* Stitch White & Red Canvas */
+/* Stitch Dark Canvas */
 .stitch-canvas {
-  background: #FFFFFF;
+  background: #0A0F1D;
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
   position: relative;
@@ -227,8 +226,8 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(226, 232, 240, 0.6) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(226, 232, 240, 0.6) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(30, 41, 59, 0.4) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(30, 41, 59, 0.4) 1px, transparent 1px);
   background-size: 28px 28px;
   pointer-events: none;
 }
@@ -251,104 +250,121 @@ body {
   border: 1px solid var(--accent-red-border);
 }
 
-.stitch-badge-charcoal {
-  background: #F1F5F9;
-  color: #1E293B;
-  border: 1px solid #CBD5E1;
-}
-
 /* =====================================================================
-   HOTSPOT FACTOR METERS (EXPLAINABLE AI)
-   Smooth animated factor bars (Complaint Density, Recent Activity, etc.)
+   EXPLAINABLE AI (XAI) FACTOR METERS
    ===================================================================== */
 
 .xai-meter-bg {
-  background: #F1F5F9;
+  background: #182234;
   height: 6px;
-  border-radius: 3px;
+  border-radius: 9999px;
   overflow: hidden;
-  margin-top: 4px;
+  position: relative;
 }
 
 .xai-meter-fill {
-  height: 100%;
   background: linear-gradient(90deg, #DC2626, #EF4444);
-  border-radius: 3px;
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
 }
 
-/* Step-by-Step AI Prediction Workflow Widget */
+/* 5-Step Prediction Sequence */
+.ai-step-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin: 1rem 0;
+}
+
+.ai-step-track::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #1E293B;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
 .ai-step-item {
   position: relative;
-  padding-left: 1.75rem;
-  padding-bottom: 0.75rem;
-  border-left: 2px solid #E2E8F0;
-}
-
-.ai-step-item:last-child {
-  border-left: 2px solid transparent;
-  padding-bottom: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .ai-step-dot {
-  position: absolute;
-  left: -7px;
-  top: 0;
-  width: 12px;
-  height: 12px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  background: #FFFFFF;
-  border: 2px solid #CBD5E1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+  transition: all 0.25s ease;
+  background: #0F172A;
+  border: 2px solid #334155;
+  color: #94A3B8;
 }
 
 .ai-step-item.active .ai-step-dot {
-  background: #DC2626;
-  border-color: #FECACA;
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+  background: #EF4444;
+  border-color: #F87171;
+  color: #FFFFFF;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
 }
 
 .ai-step-item.completed .ai-step-dot {
-  background: #059669;
-  border-color: #D1FAE5;
+  background: #10B981;
+  border-color: #6EE7B7;
+  color: #FFFFFF;
 }
 
 /* =====================================================================
-   CLEAN LIGHT MAP & PIN STYLES (GOOGLE MAPS & LEAFLET)
+   GIS MAP & PIN STYLES (LEAFLET & GOOGLE MAPS)
    ===================================================================== */
 
 #gis-map, #full-gis-map {
   width: 100%;
   height: 100%;
   min-height: 480px;
-  background: #F1F5F9;
+  background: #080C14;
   border-radius: 6px;
   z-index: 10;
 }
 
 .leaflet-container {
-  background-color: #F8FAFC !important;
+  background-color: #080C14 !important;
   font-family: inherit !important;
 }
 
 .leaflet-popup-content-wrapper {
-  background: #FFFFFF !important;
-  color: var(--text-main) !important;
-  border: 1px solid var(--border-subtle) !important;
+  background: #0F172A !important;
+  color: #F8FAFC !important;
+  border: 1px solid #DC2626 !important;
   border-radius: 8px !important;
   box-shadow: var(--shadow-popup) !important;
   padding: 2px !important;
 }
 
 .leaflet-popup-tip {
-  background: #FFFFFF !important;
-  border-color: var(--border-subtle) !important;
+  background: #0F172A !important;
+  border-color: #DC2626 !important;
 }
 
 /* Map Markers */
 .custom-pin-critical {
-  background: #DC2626;
+  background: #EF4444;
   border: 2px solid #FFFFFF;
-  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.45);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.8);
   border-radius: 50%;
   width: 26px;
   height: 26px;
@@ -358,14 +374,14 @@ body {
   color: white;
   font-size: 11px;
   font-weight: 800;
-  animation: pulseRedSubtle 2.2s infinite ease-out;
+  animation: pulseRedGlow 2.2s infinite ease-out;
   cursor: pointer;
 }
 
 .custom-pin-high {
-  background: #EA580C;
+  background: #F97316;
   border: 2px solid #FFFFFF;
-  box-shadow: 0 2px 6px rgba(234, 88, 12, 0.4);
+  box-shadow: 0 0 10px rgba(249, 115, 22, 0.6);
   border-radius: 50%;
   width: 22px;
   height: 22px;
@@ -380,7 +396,7 @@ body {
 
 .custom-pin-historical {
   background: #475569;
-  border: 1.5px solid #FFFFFF;
+  border: 1.5px solid #94A3B8;
   border-radius: 50%;
   width: 14px;
   height: 14px;
@@ -399,7 +415,7 @@ body {
    ===================================================================== */
 
 .nav-tab {
-  color: var(--text-secondary);
+  color: var(--text-muted);
   font-weight: 500;
   border-bottom: 2px solid transparent;
   transition: all 0.18s ease;
@@ -407,21 +423,21 @@ body {
 }
 
 .nav-tab:hover {
-  color: var(--accent-red);
+  color: #F8FAFC;
   background-color: var(--bg-secondary);
 }
 
 .nav-tab.active {
-  color: var(--accent-red) !important;
-  border-bottom-color: var(--accent-red) !important;
-  background-color: var(--accent-red-light);
+  color: #EF4444 !important;
+  border-bottom-color: #EF4444 !important;
+  background-color: rgba(239, 68, 68, 0.12);
   font-weight: 700;
 }
 
 /* Advance Horizon Selector Pills */
 .horizon-pill {
-  color: var(--text-secondary);
-  background: #FFFFFF;
+  color: var(--text-muted);
+  background: #0F172A;
   border: 1px solid var(--border-subtle);
   font-weight: 500;
   transition: all 0.15s ease;
@@ -429,15 +445,15 @@ body {
 
 .horizon-pill:hover:not(.active) {
   background: var(--bg-secondary);
-  color: var(--text-main);
+  color: #F8FAFC;
 }
 
 .horizon-pill.active {
-  background: var(--accent-red) !important;
+  background: #EF4444 !important;
   color: #FFFFFF !important;
-  border-color: var(--accent-red) !important;
+  border-color: #EF4444 !important;
   font-weight: 700;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
 }
 
 /* Red Emergency & Action Buttons */
@@ -445,20 +461,20 @@ body {
   background-color: var(--accent-red);
   color: #FFFFFF;
   font-weight: 600;
-  border: 1px solid #B91C1C;
+  border: 1px solid #DC2626;
   border-radius: 6px;
   transition: all 0.18s ease;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
 }
 
 .btn-primary-red:hover {
   background-color: var(--accent-red-hover);
-  box-shadow: 0 4px 10px -1px rgba(220, 38, 38, 0.25);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.5);
 }
 
 .btn-secondary-light {
-  background-color: #FFFFFF;
-  color: var(--text-secondary);
+  background-color: #182234;
+  color: #CBD5E1;
   font-weight: 500;
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
@@ -466,13 +482,13 @@ body {
 }
 
 .btn-secondary-light:hover {
-  background-color: var(--bg-secondary);
-  color: var(--text-main);
+  background-color: #1E293B;
+  color: #FFFFFF;
   border-color: var(--border-strong);
 }
 
 /* =====================================================================
-   TABLES & DATA GRIDS (CLEAR CONTRAST)
+   TABLES & DATA GRIDS
    ===================================================================== */
 
 .data-table {
@@ -483,8 +499,8 @@ body {
 }
 
 .data-table th {
-  background: var(--bg-secondary);
-  color: var(--text-secondary);
+  background: #182234;
+  color: #94A3B8;
   font-weight: 600;
   text-transform: uppercase;
   font-size: 10px;
@@ -496,25 +512,25 @@ body {
 
 .data-table td {
   padding: 10px 12px;
-  color: var(--text-main);
+  color: #F8FAFC;
   border-bottom: 1px solid var(--border-subtle);
-  background: #FFFFFF;
+  background: #0F172A;
 }
 
 .data-table tr:hover td {
-  background: #FEF2F2 !important;
+  background: rgba(239, 68, 68, 0.1) !important;
 }
 
 /* =====================================================================
-   MODAL DIALOGS (CLEAN WHITE INTERFACE)
+   MODAL DIALOGS
    ===================================================================== */
 
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.45);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -522,35 +538,36 @@ body {
 }
 
 .modal-card {
-  background: #FFFFFF;
-  border: 1px solid var(--border-subtle);
+  background: #0F172A;
+  border: 1px solid var(--border-strong);
   border-radius: 10px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 20px rgba(239, 68, 68, 0.25);
+  color: #F8FAFC;
 }
 
 /* Stitch Graph & Case Network */
 #case-network-container, #stitch-network-container {
   width: 100%;
   height: 520px;
-  background: #FFFFFF;
+  background: #0A0F1D;
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
 }
 
-/* Copilot Messages in White Theme */
+/* Copilot Messages */
 .copilot-message-user {
-  background: #F1F5F9;
-  border: 1px solid #CBD5E1;
-  color: #0F172A;
+  background: #182234;
+  border: 1px solid #334155;
+  color: #F8FAFC;
   border-radius: 8px 8px 2px 8px;
 }
 
 .copilot-message-agent {
-  background: #FFFFFF;
+  background: #0F172A;
   border: 1px solid var(--accent-red-border);
-  color: #0F172A;
+  color: #F8FAFC;
   border-radius: 8px 8px 8px 2px;
-  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.04);
+  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.15);
 }
 
 .agentic-step {

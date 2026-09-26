@@ -81,10 +81,10 @@ function showNotificationToast(message, type = 'info') {
 
     const toast = document.createElement('div');
     const borderColors = {
-        critical: 'border-slate-200 bg-white text-slate-900 shadow-lg border-l-4 border-l-red-600',
-        warning: 'border-slate-200 bg-white text-slate-900 shadow-lg border-l-4 border-l-amber-500',
-        info: 'border-slate-200 bg-white text-slate-900 shadow-lg border-l-4 border-l-slate-800',
-        success: 'border-slate-200 bg-white text-slate-900 shadow-lg border-l-4 border-l-emerald-600'
+        critical: 'border-slate-800 bg-[#0F172A] text-white shadow-xl border-l-4 border-l-red-500',
+        warning: 'border-slate-800 bg-[#0F172A] text-white shadow-xl border-l-4 border-l-amber-500',
+        info: 'border-slate-800 bg-[#0F172A] text-white shadow-xl border-l-4 border-l-red-500',
+        success: 'border-slate-800 bg-[#0F172A] text-white shadow-xl border-l-4 border-l-emerald-500'
     };
 
     toast.className = `p-3 mb-2 rounded-lg border text-xs shadow-lg flex items-start space-x-2 transition-all duration-300 transform translate-y-2 opacity-0 ${borderColors[type] || borderColors.info}`;

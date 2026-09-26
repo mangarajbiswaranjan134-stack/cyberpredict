@@ -186,37 +186,37 @@ function renderMapLayers(hotspotData, targetMap = 'both') {
                 const popupHtml = `
                     <div style="min-width: 260px; padding: 6px; font-family: 'Inter', sans-serif;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                            <span style="font-size: 10px; font-weight: 800; color: ${pinColor}; background: ${isCritical ? '#FEF2F2' : '#FFF7ED'}; border: 1px solid ${isCritical ? '#FECACA' : '#FFEDD5'}; padding: 2px 6px; border-radius: 4px;">
+                            <span style="font-size: 10px; font-weight: 800; color: #EF4444; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); padding: 2px 6px; border-radius: 4px;">
                                 🔮 PREDICTED RISK: ${hotspot.risk_score}/100
                             </span>
-                            <span style="font-size: 10px; color: #64748B; font-weight: 600;">Prob: ${Math.round(hotspot.prediction_probability * 100)}%</span>
+                            <span style="font-size: 10px; color: #94A3B8; font-weight: 600;">Prob: ${Math.round(hotspot.prediction_probability * 100)}%</span>
                         </div>
-                        <div style="font-weight: 700; font-size: 13px; color: #0F172A; margin-bottom: 2px;">
+                        <div style="font-weight: 700; font-size: 13px; color: #F8FAFC; margin-bottom: 2px;">
                             ${hotspot.name}
                         </div>
-                        <div style="font-size: 11px; color: #475569; margin-bottom: 8px;">
+                        <div style="font-size: 11px; color: #94A3B8; margin-bottom: 8px;">
                             📍 ${hotspot.locality}, ${hotspot.district}
                         </div>
-                        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 8px; border-radius: 6px; font-size: 11px; margin-bottom: 8px;">
+                        <div style="background: #182234; border: 1px solid #334155; padding: 8px; border-radius: 6px; font-size: 11px; margin-bottom: 8px;">
                             <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
-                                <span style="color: #64748B;">Forecast Window:</span>
-                                <span style="color: #0F172A; font-weight: 700;">${hotspot.forecast_window}</span>
+                                <span style="color: #94A3B8;">Forecast Window:</span>
+                                <span style="color: #F8FAFC; font-weight: 700;">${hotspot.forecast_window}</span>
                             </div>
                             <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
-                                <span style="color: #64748B;">Est. Cashout Txns:</span>
-                                <span style="color: #0F172A; font-weight: 600;">${hotspot.estimated_transactions || 18} attempts</span>
+                                <span style="color: #94A3B8;">Est. Cashout Txns:</span>
+                                <span style="color: #F8FAFC; font-weight: 600;">${hotspot.estimated_transactions || 18} attempts</span>
                             </div>
                             <div style="display: flex; justify-content: space-between;">
-                                <span style="color: #64748B;">Potential Exposure:</span>
-                                <span style="color: #DC2626; font-weight: 800;">₹${hotspot.estimated_exposure} Lakhs</span>
+                                <span style="color: #94A3B8;">Potential Exposure:</span>
+                                <span style="color: #EF4444; font-weight: 800;">₹${hotspot.estimated_exposure} Lakhs</span>
                             </div>
                         </div>
                         <button onclick="window.selectHotspotById('${hotspot.cluster_id}')" 
-                            style="width: 100%; background: #DC2626; color: white; border: none; padding: 6px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; margin-bottom: 5px; box-shadow: 0 1px 2px rgba(220, 38, 38, 0.2);">
+                            style="width: 100%; background: #EF4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; margin-bottom: 5px; box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);">
                             Inspect Why This Location (XAI)
                         </button>
                         <button onclick="window.openStreetViewPanorama(${hotspot.lat}, ${hotspot.lng}, '${hotspot.name}')" 
-                            style="width: 100%; background: #FFFFFF; color: #1E293B; border: 1px solid #CBD5E1; padding: 5px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
+                            style="width: 100%; background: #1E293B; color: #F8FAFC; border: 1px solid #475569; padding: 5px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
                             🛰️ Google Satellite & Street View
                         </button>
                     </div>
@@ -236,13 +236,13 @@ function renderMapLayers(hotspotData, targetMap = 'both') {
                     className: 'custom-hist-icon',
                     html: `
                         <div style="
-                            background: #475569; 
-                            border: 1.5px solid #FFFFFF; 
+                            background: #334155; 
+                            border: 1.5px solid #94A3B8; 
                             border-radius: 50%; 
                             width: 14px; height: 14px; 
                             display: flex; align-items: center; justify-content: center; 
                             color: #FFFFFF; font-size: 8px; font-weight: bold;
-                            opacity: 0.9; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
+                            opacity: 0.9; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
                             H
                         </div>
                     `,
@@ -253,13 +253,13 @@ function renderMapLayers(hotspotData, targetMap = 'both') {
                 const marker = L.marker([h.lat, h.lng], { icon: hIcon }).addTo(hLayer);
                 const hPopup = `
                     <div style="min-width: 220px; padding: 6px; font-size: 11px; font-family: 'Inter', sans-serif;">
-                        <span style="font-size: 9px; font-weight: bold; color: #475569; background: #F1F5F9; border: 1px solid #CBD5E1; padding: 1px 4px; border-radius: 3px;">
+                        <span style="font-size: 9px; font-weight: bold; color: #CBD5E1; background: #1E293B; border: 1px solid #475569; padding: 1px 4px; border-radius: 3px;">
                             📜 HISTORICAL WITHDRAWAL (PAST EVENT)
                         </span>
-                        <div style="font-weight: 700; color: #0F172A; margin-top: 4px;">${h.cluster_name}</div>
-                        <div style="color: #64748B;">Terminal: ${h.atm_id} (${h.bank})</div>
-                        <div style="color: #DC2626; font-weight: 700; margin-top: 3px;">Withdrawn: ₹${(h.amount_withdrawn_inr).toLocaleString('en-IN')}</div>
-                        <div style="color: #94A3B8; font-size: 10px;">Time: ${h.timestamp}</div>
+                        <div style="font-weight: 700; color: #F8FAFC; margin-top: 4px;">${h.cluster_name}</div>
+                        <div style="color: #94A3B8;">Terminal: ${h.atm_id} (${h.bank})</div>
+                        <div style="color: #EF4444; font-weight: 700; margin-top: 3px;">Withdrawn: ₹${(h.amount_withdrawn_inr).toLocaleString('en-IN')}</div>
+                        <div style="color: #64748B; font-size: 10px;">Time: ${h.timestamp}</div>
                     </div>
                 `;
                 marker.bindPopup(hPopup);

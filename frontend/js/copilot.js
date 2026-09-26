@@ -1,5 +1,5 @@
 // CYBERPREDICT: Agentic AI (AAI) Copilot Controller
-// White + Red + Dark Text Government & Intelligence Grade Design System
+// High-Tech Black & Red Intelligence Design System
 
 async function sendCopilotMessage(explicitQuery = null) {
     const inputEl = document.getElementById('copilot-chat-input');
@@ -13,28 +13,28 @@ async function sendCopilotMessage(explicitQuery = null) {
 
     // Append User Message
     const userMsgDiv = document.createElement('div');
-    userMsgDiv.className = 'copilot-message-user p-3 max-w-[85%] self-end ml-auto text-xs shadow-xs mb-3';
+    userMsgDiv.className = 'copilot-message-user p-3 max-w-[85%] self-end ml-auto text-xs shadow-md mb-3';
     userMsgDiv.innerHTML = `
-        <div class="flex items-center space-x-1.5 mb-1 text-slate-600 font-mono text-[10px]">
+        <div class="flex items-center space-x-1.5 mb-1 text-slate-400 font-mono text-[10px]">
             <span>👮</span>
             <span class="font-bold">INVESTIGATING OFFICER</span>
         </div>
-        <div class="whitespace-pre-line text-slate-800">${escapeHtml(query)}</div>
+        <div class="whitespace-pre-line text-slate-100">${escapeHtml(query)}</div>
     `;
     feedEl.appendChild(userMsgDiv);
     feedEl.scrollTop = feedEl.scrollHeight;
 
     // Append Thinking Indicator
     const agentMsgDiv = document.createElement('div');
-    agentMsgDiv.className = 'copilot-message-agent p-3.5 max-w-[92%] text-xs shadow-sm mb-3';
+    agentMsgDiv.className = 'copilot-message-agent p-3.5 max-w-[92%] text-xs shadow-md mb-3';
     agentMsgDiv.innerHTML = `
-        <div class="flex items-center space-x-2 text-red-600 font-mono text-[10px] mb-2">
-            <span class="w-2 h-2 rounded-full bg-red-600 animate-ping"></span>
-            <span class="font-bold tracking-wider text-slate-900">CYBERPREDICT AAI COPILOT</span>
-            <span class="text-slate-400">•</span>
-            <span class="text-slate-500">Multi-Agent Autonomous Pipeline Active...</span>
+        <div class="flex items-center space-x-2 text-red-500 font-mono text-[10px] mb-2">
+            <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+            <span class="font-bold tracking-wider text-white">CYBERPREDICT AAI COPILOT</span>
+            <span class="text-slate-500">•</span>
+            <span class="text-slate-400">Multi-Agent Autonomous Pipeline Active...</span>
         </div>
-        <div id="copilot-streaming-content" class="text-slate-500 italic text-[11px]">
+        <div id="copilot-streaming-content" class="text-slate-400 italic text-[11px]">
             Synthesizing spatio-temporal telemetry and graph resolution...
         </div>
     `;
@@ -59,14 +59,14 @@ async function sendCopilotMessage(explicitQuery = null) {
         // Render Reasoning Steps
         let stepsHtml = '';
         if (data.reasoning_steps && data.reasoning_steps.length > 0) {
-            stepsHtml = `<div class="mb-3 space-y-1.5 bg-slate-50 p-2.5 rounded border border-slate-200">
-                <div class="text-[10px] font-mono text-red-600 font-bold uppercase tracking-wider">⚡ Multi-Agent Reasoning Chain:</div>`;
+            stepsHtml = `<div class="mb-3 space-y-1.5 bg-[#0B101D] p-2.5 rounded border border-slate-800">
+                <div class="text-[10px] font-mono text-red-400 font-bold uppercase tracking-wider">⚡ Multi-Agent Reasoning Chain:</div>`;
             data.reasoning_steps.forEach(s => {
                 stepsHtml += `
-                    <div class="agentic-step text-[11px] text-slate-700">
-                        <span class="font-mono text-red-700 font-bold">[${s.agent}]</span>
-                        <span class="text-slate-900 font-semibold">${s.title}:</span>
-                        <span class="text-slate-600">${s.detail}</span>
+                    <div class="agentic-step text-[11px] text-slate-300">
+                        <span class="font-mono text-red-400 font-bold">[${s.agent}]</span>
+                        <span class="text-white font-semibold">${s.title}:</span>
+                        <span class="text-slate-400">${s.detail}</span>
                     </div>
                 `;
             });
@@ -79,11 +79,11 @@ async function sendCopilotMessage(explicitQuery = null) {
         // Render Suggested Action Buttons
         let actionsHtml = '';
         if (data.suggested_actions && data.suggested_actions.length > 0) {
-            actionsHtml = `<div class="mt-3 pt-2 border-t border-slate-200 flex flex-wrap gap-2">`;
+            actionsHtml = `<div class="mt-3 pt-2 border-t border-slate-800 flex flex-wrap gap-2">`;
             data.suggested_actions.forEach(a => {
                 actionsHtml += `
                     <button onclick="handleCopilotAction('${a.action}', '${a.target}')" 
-                        class="px-2.5 py-1 bg-white hover:bg-red-50 hover:border-red-400 border border-slate-300 rounded text-[11px] font-bold text-red-700 transition-all shadow-xs">
+                        class="px-2.5 py-1 bg-[#182234] hover:bg-red-950/60 hover:border-red-500 border border-slate-700 rounded text-[11px] font-bold text-red-400 transition-all shadow-xs">
                         ${a.label}
                     </button>
                 `;
@@ -92,22 +92,22 @@ async function sendCopilotMessage(explicitQuery = null) {
         }
 
         agentMsgDiv.innerHTML = `
-            <div class="flex items-center justify-between text-red-600 font-mono text-[10px] mb-2 pb-1 border-b border-slate-100">
+            <div class="flex items-center justify-between text-red-500 font-mono text-[10px] mb-2 pb-1 border-b border-slate-800">
                 <div class="flex items-center space-x-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-red-600"></span>
-                    <span class="font-bold tracking-wider text-slate-900">CYBERPREDICT AAI COPILOT</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                    <span class="font-bold tracking-wider text-white">CYBERPREDICT AAI COPILOT</span>
                 </div>
                 <span class="text-slate-400 font-mono">${new Date().toLocaleTimeString()}</span>
             </div>
             ${stepsHtml}
-            <div class="prose prose-xs text-slate-800 leading-relaxed">${bodyHtml}</div>
+            <div class="prose prose-xs text-slate-200 leading-relaxed">${bodyHtml}</div>
             ${actionsHtml}
         `;
         feedEl.scrollTop = feedEl.scrollHeight;
 
     } catch (err) {
         agentMsgDiv.innerHTML = `
-            <div class="text-red-600 font-mono text-xs">⚠️ Error retrieving intelligence: ${err.message}</div>
+            <div class="text-red-400 font-mono text-xs">⚠️ Error retrieving intelligence: ${err.message}</div>
         `;
     }
 }
@@ -152,12 +152,12 @@ async function executeBankFreezeAdvisory(accountId) {
 function formatMarkdown(text) {
     if (!text) return '';
     return text
-        .replace(/^### (.*$)/gim, '<h4 class="text-slate-900 font-bold text-sm my-1">$1</h4>')
-        .replace(/\*\*(.*?)\*\*/gim, '<strong class="text-slate-900 font-bold">$1</strong>')
-        .replace(/\*(.*?)\*/gim, '<em class="text-slate-700">$1</em>')
-        .replace(/`([^`]+)`/gim, '<code class="bg-slate-100 border border-slate-200 text-red-700 px-1 py-0.5 rounded font-mono text-[10px]">$1</code>')
+        .replace(/^### (.*$)/gim, '<h4 class="text-red-400 font-bold text-sm my-1">$1</h4>')
+        .replace(/\*\*(.*?)\*\*/gim, '<strong class="text-white font-bold">$1</strong>')
+        .replace(/\*(.*?)\*/gim, '<em class="text-slate-300">$1</em>')
+        .replace(/`([^`]+)`/gim, '<code class="bg-[#182234] border border-slate-700 text-red-300 px-1 py-0.5 rounded font-mono text-[10px]">$1</code>')
         .replace(/\n\n/gim, '<br><br>')
-        .replace(/^\- (.*$)/gim, '<li class="ml-3 list-disc text-slate-700">$1</li>');
+        .replace(/^\- (.*$)/gim, '<li class="ml-3 list-disc text-slate-300">$1</li>');
 }
 
 function escapeHtml(text) {

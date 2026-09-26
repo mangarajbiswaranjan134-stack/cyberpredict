@@ -70,10 +70,10 @@ function switchTab(tabId) {
     document.querySelectorAll('.nav-tab').forEach(t => {
         if (t.getAttribute('data-tab') === tabId) {
             t.classList.add('active', 'text-red-600', 'font-bold');
-            t.classList.remove('text-slate-600');
+            t.classList.remove('text-slate-400');
         } else {
             t.classList.remove('active', 'text-red-600', 'font-bold');
-            t.classList.add('text-slate-600');
+            t.classList.add('text-slate-400');
         }
     });
 
@@ -342,20 +342,20 @@ function renderTopHotspotsList(hotspots) {
     hotspots.slice(0, 6).forEach((h) => {
         const item = document.createElement('div');
         const isCritical = h.risk_score >= 90;
-        item.className = `p-3 mb-2 rounded-lg border cursor-pointer transition-all bg-white hover:bg-slate-50 border-slate-200 hover:border-red-400 shadow-sm`;
+        item.className = `p-3 mb-2 rounded-lg border cursor-pointer transition-all bg-[#0F172A] hover:bg-[#131D31] border-slate-800 hover:border-red-400 shadow-sm`;
         item.innerHTML = `
             <div class="flex items-center justify-between mb-1">
-                <span class="font-bold text-xs ${isCritical ? 'text-red-700 bg-red-50 border border-red-200' : 'text-amber-800 bg-amber-50 border border-amber-200'} font-mono px-1.5 py-0.5 rounded">
+                <span class="font-bold text-xs ${isCritical ? 'text-red-400 bg-red-950/40 border border-red-800/80' : 'text-amber-300 bg-amber-950/40 border border-amber-800/80'} font-mono px-1.5 py-0.5 rounded">
                     🔮 ${h.risk_level} (${h.risk_score}/100)
                 </span>
                 <span class="text-[10px] text-red-600 font-mono font-bold">🕒 ${h.forecast_window}</span>
             </div>
-            <div class="text-sm font-bold text-slate-900">${h.name}</div>
+            <div class="text-sm font-bold text-white">${h.name}</div>
             <div class="text-xs text-slate-500 mb-1.5">📍 ${h.locality}, ${h.district}</div>
-            <div class="flex justify-between items-center text-[11px] text-slate-600 bg-slate-50 p-1.5 rounded border border-slate-100">
+            <div class="flex justify-between items-center text-[11px] text-slate-400 bg-[#131D31] p-1.5 rounded border border-slate-100">
                 <span>Exposure: <b class="text-red-600 font-bold">₹${h.estimated_exposure}L</b></span>
-                <span>Txns: <b class="text-slate-900 font-semibold">${h.estimated_transactions || 18}</b></span>
-                <span>Prob: <b class="text-slate-900 font-semibold">${Math.round(h.prediction_probability * 100)}%</b></span>
+                <span>Txns: <b class="text-white font-semibold">${h.estimated_transactions || 18}</b></span>
+                <span>Prob: <b class="text-white font-semibold">${Math.round(h.prediction_probability * 100)}%</b></span>
             </div>
         `;
         item.addEventListener('click', () => {
@@ -374,22 +374,22 @@ function renderOverviewAlertsList(alerts) {
     alerts.slice(0, 5).forEach(a => {
         const item = document.createElement('div');
         const isCrit = a.risk_level === 'CRITICAL';
-        item.className = 'p-2.5 mb-2 rounded border border-slate-200 bg-white hover:bg-slate-50 text-xs shadow-sm';
+        item.className = 'p-2.5 mb-2 rounded border border-slate-800 bg-[#0F172A] hover:bg-[#131D31] text-xs shadow-sm';
         item.innerHTML = `
             <div class="flex justify-between items-center mb-1">
-                <span class="font-mono text-[10px] ${isCrit ? 'text-red-700 font-bold bg-red-50 border border-red-200' : 'text-orange-700 font-semibold bg-orange-50 border border-orange-200'} px-1.5 py-0.5 rounded">${a.id} • ${a.risk_level}</span>
+                <span class="font-mono text-[10px] ${isCrit ? 'text-red-400 font-bold bg-red-950/40 border border-red-800/80' : 'text-orange-700 font-semibold bg-orange-50 border border-orange-200'} px-1.5 py-0.5 rounded">${a.id} • ${a.risk_level}</span>
                 <span class="text-[10px] text-slate-400">${a.timestamp.split(' ')[1]}</span>
             </div>
-            <div class="font-bold text-slate-900 mb-0.5">${a.title}</div>
+            <div class="font-bold text-white mb-0.5">${a.title}</div>
             <div class="text-[11px] text-slate-500 line-clamp-1 mb-2">${a.predicted_event}</div>
             <div class="flex justify-between items-center">
                 <span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${
-                    a.status === 'NEW' ? 'bg-red-50 text-red-700 border border-red-200' :
-                    a.status === 'INTERVENTION ACTIVE' ? 'bg-amber-50 text-amber-700 border border-amber-200' :
-                    a.status === 'RESOLVED' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-700 border border-slate-200'
+                    a.status === 'NEW' ? 'bg-red-950/40 text-red-400 border border-red-800/80' :
+                    a.status === 'INTERVENTION ACTIVE' ? 'bg-amber-950/40 text-amber-700 border border-amber-800/80' :
+                    a.status === 'RESOLVED' ? 'bg-emerald-950/40 text-emerald-700 border border-emerald-800/80' : 'bg-slate-100 text-slate-300 border border-slate-800'
                 }">${a.status}</span>
                 <div class="space-x-1">
-                    <button onclick="window.openFeedbackModal('${a.id}')" class="text-[10px] bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 px-2 py-0.5 rounded">
+                    <button onclick="window.openFeedbackModal('${a.id}')" class="text-[10px] bg-[#0F172A] hover:bg-slate-100 text-slate-300 border border-slate-700 px-2 py-0.5 rounded">
                         Log Outcome
                     </button>
                     <button onclick="window.openInterventionModal('${a.id}')" class="text-[10px] bg-red-600 hover:bg-red-700 text-white px-2 py-0.5 rounded font-medium shadow-sm">
@@ -446,10 +446,10 @@ function renderExplainabilityPanel(data) {
         evidenceContainer.innerHTML = '';
         data.evidence_signals.forEach(sig => {
             const chip = document.createElement('div');
-            chip.className = 'bg-slate-50 p-1.5 rounded border border-slate-200 text-[11px]';
+            chip.className = 'bg-[#131D31] p-1.5 rounded border border-slate-800 text-[11px]';
             chip.innerHTML = `
                 <div class="text-[9px] text-slate-500 font-semibold">${sig.label}</div>
-                <div class="font-bold text-slate-900 font-mono">${sig.value}</div>
+                <div class="font-bold text-white font-mono">${sig.value}</div>
             `;
             evidenceContainer.appendChild(chip);
         });
@@ -460,18 +460,18 @@ function renderExplainabilityPanel(data) {
         factorsContainer.innerHTML = '';
         data.factors.forEach(f => {
             const row = document.createElement('div');
-            row.className = 'p-2 rounded bg-slate-50 border border-slate-200 mb-1.5';
+            row.className = 'p-2 rounded bg-[#131D31] border border-slate-800 mb-1.5';
             row.innerHTML = `
                 <div class="flex justify-between items-center mb-0.5">
-                    <span class="text-xs font-bold text-slate-900">${f.factor_name}</span>
+                    <span class="text-xs font-bold text-white">${f.factor_name}</span>
                     <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
-                        f.impact_level === 'CRITICAL' ? 'bg-red-50 text-red-700 border border-red-200' : 
-                        f.impact_level === 'HIGH' ? 'bg-orange-50 text-orange-700 border border-orange-200' : 'bg-amber-50 text-amber-700 border border-amber-200'
+                        f.impact_level === 'CRITICAL' ? 'bg-red-950/40 text-red-400 border border-red-800/80' : 
+                        f.impact_level === 'HIGH' ? 'bg-orange-50 text-orange-700 border border-orange-200' : 'bg-amber-950/40 text-amber-700 border border-amber-800/80'
                     }">
                         Weight: ${Math.round(f.contribution_weight * 100)}% • ${f.impact_level}
                     </span>
                 </div>
-                <div class="text-[11px] text-slate-600 mb-1 leading-tight">${f.description}</div>
+                <div class="text-[11px] text-slate-400 mb-1 leading-tight">${f.description}</div>
                 <div class="xai-meter-bg">
                     <div class="xai-meter-fill" style="width: ${Math.min(100, Math.round(f.contribution_weight * 380))}%;"></div>
                 </div>
@@ -485,7 +485,7 @@ function renderExplainabilityPanel(data) {
         interventionsContainer.innerHTML = '';
         data.recommended_interventions.forEach(rec => {
             const li = document.createElement('li');
-            li.className = 'text-xs text-slate-700 flex items-start space-x-1.5 mb-1';
+            li.className = 'text-xs text-slate-300 flex items-start space-x-1.5 mb-1';
             li.innerHTML = `<span class="text-red-600 font-bold">✓</span><span>${rec}</span>`;
             interventionsContainer.appendChild(li);
         });
@@ -592,15 +592,15 @@ async function loadBankTab() {
                 banksContainer.innerHTML = '';
                 data.partner_banks.forEach(b => {
                     const card = document.createElement('div');
-                    card.className = 'p-3.5 bg-white border border-slate-200 rounded-lg text-xs shadow-xs';
+                    card.className = 'p-3.5 bg-[#0F172A] border border-slate-800 rounded-lg text-xs shadow-xs';
                     card.innerHTML = `
                         <div class="flex justify-between items-center mb-1">
-                            <span class="font-bold text-sm text-slate-900">${b.bank_name}</span>
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">${b.status}</span>
+                            <span class="font-bold text-sm text-white">${b.bank_name}</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950/40 text-amber-300 border border-amber-800/80">${b.status}</span>
                         </div>
-                        <div class="text-slate-600 mb-2">Nodal Contact: ${b.nodal_officer}</div>
-                        <div class="grid grid-cols-2 gap-2 bg-slate-50 p-2 rounded text-[11px] mb-2 font-mono border border-slate-200">
-                            <div>Hotspot ATMs: <b class="text-slate-900">${b.monitored_atms}</b></div>
+                        <div class="text-slate-400 mb-2">Nodal Contact: ${b.nodal_officer}</div>
+                        <div class="grid grid-cols-2 gap-2 bg-[#131D31] p-2 rounded text-[11px] mb-2 font-mono border border-slate-800">
+                            <div>Hotspot ATMs: <b class="text-white">${b.monitored_atms}</b></div>
                             <div>Risk Exposure: <b class="text-red-600">₹${b.estimated_cashout_risk_lakhs}L</b></div>
                         </div>
                         <button onclick="window.triggerSimulatedBankFreeze('${b.bank_name}')" 
@@ -618,14 +618,14 @@ async function loadBankTab() {
                 tbody.innerHTML = '';
                 data.flagged_accounts.forEach(acc => {
                     const tr = document.createElement('tr');
-                    tr.className = 'border-b border-slate-200 text-xs hover:bg-slate-50';
+                    tr.className = 'border-b border-slate-800 text-xs hover:bg-[#131D31]';
                     tr.innerHTML = `
-                        <td class="p-2.5 font-mono text-slate-900 font-bold">${acc.account}</td>
-                        <td class="p-2.5 text-slate-800 font-medium">${acc.bank}</td>
+                        <td class="p-2.5 font-mono text-white font-bold">${acc.account}</td>
+                        <td class="p-2.5 text-slate-100 font-medium">${acc.bank}</td>
                         <td class="p-2.5 text-orange-700 font-semibold">${acc.mule_layer}</td>
-                        <td class="p-2.5 text-slate-600">${acc.cluster}</td>
+                        <td class="p-2.5 text-slate-400">${acc.cluster}</td>
                         <td class="p-2.5 font-mono text-red-600 font-semibold">₹${(acc.inflow).toLocaleString('en-IN')}</td>
-                        <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-red-50 text-red-700 text-[10px] font-semibold border border-red-200">${acc.status}</span></td>
+                        <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-red-950/40 text-red-400 text-[10px] font-semibold border border-red-800/80">${acc.status}</span></td>
                     `;
                     tbody.appendChild(tr);
                 });
@@ -671,14 +671,14 @@ async function loadAuditTab() {
         tbody.innerHTML = '';
         data.logs.forEach(log => {
             const tr = document.createElement('tr');
-            tr.className = 'border-b border-slate-200 hover:bg-slate-50 text-xs';
+            tr.className = 'border-b border-slate-800 hover:bg-[#131D31] text-xs';
             tr.innerHTML = `
-                <td class="p-2.5 font-mono text-slate-900 font-bold">${log.id}</td>
+                <td class="p-2.5 font-mono text-white font-bold">${log.id}</td>
                 <td class="p-2.5 text-slate-500 font-mono">${log.timestamp}</td>
-                <td class="p-2.5 text-slate-800 font-semibold">${log.actor}</td>
-                <td class="p-2.5 font-mono text-red-700 font-semibold">${log.action}</td>
-                <td class="p-2.5 font-mono text-slate-700">${log.target_id}</td>
-                <td class="p-2.5 text-slate-600 leading-tight">${log.details}</td>
+                <td class="p-2.5 text-slate-100 font-semibold">${log.actor}</td>
+                <td class="p-2.5 font-mono text-red-400 font-semibold">${log.action}</td>
+                <td class="p-2.5 font-mono text-slate-300">${log.target_id}</td>
+                <td class="p-2.5 text-slate-400 leading-tight">${log.details}</td>
             `;
             tbody.appendChild(tr);
         });
@@ -698,16 +698,16 @@ async function loadPredictionsTab() {
         tbody.innerHTML = '';
         data.predictions.forEach(p => {
             const tr = document.createElement('tr');
-            tr.className = 'border-b border-slate-200 hover:bg-red-50/50 text-xs';
+            tr.className = 'border-b border-slate-800 hover:bg-red-950/40/50 text-xs';
             tr.innerHTML = `
-                <td class="p-3 font-semibold text-slate-900">${p.name}</td>
-                <td class="p-3 text-slate-600">${p.district}, ${p.state}</td>
+                <td class="p-3 font-semibold text-white">${p.name}</td>
+                <td class="p-3 text-slate-400">${p.district}, ${p.state}</td>
                 <td class="p-3 font-mono font-bold ${p.risk_score >= 90 ? 'text-red-600' : 'text-orange-600'}">
                     ${p.risk_score}/100 (${p.risk_level})
                 </td>
-                <td class="p-3 font-mono text-red-700 font-semibold">${p.forecast_window}</td>
-                <td class="p-3 font-mono text-slate-900 font-semibold">₹${p.estimated_exposure} Lakhs</td>
-                <td class="p-3 font-mono text-slate-700">${Math.round(p.prediction_probability * 100)}%</td>
+                <td class="p-3 font-mono text-red-400 font-semibold">${p.forecast_window}</td>
+                <td class="p-3 font-mono text-white font-semibold">₹${p.estimated_exposure} Lakhs</td>
+                <td class="p-3 font-mono text-slate-300">${Math.round(p.prediction_probability * 100)}%</td>
                 <td class="p-3 text-slate-300">${p.primary_crime_category}</td>
                 <td class="p-3">
                     <button onclick="window.selectHotspotById('${p.cluster_id}'); window.switchTab('overview');" 
@@ -751,19 +751,19 @@ async function loadAlertsTab() {
         tbody.innerHTML = '';
         data.alerts.forEach(a => {
             const tr = document.createElement('tr');
-            tr.className = 'border-b border-slate-200 hover:bg-slate-50 text-xs';
+            tr.className = 'border-b border-slate-800 hover:bg-[#131D31] text-xs';
             tr.innerHTML = `
-                <td class="p-3 font-mono text-slate-900 font-semibold">${a.id}</td>
+                <td class="p-3 font-mono text-white font-semibold">${a.id}</td>
                 <td class="p-3 text-slate-500">${a.timestamp}</td>
-                <td class="p-3 font-bold ${a.risk_level === 'CRITICAL' ? 'text-red-700' : 'text-orange-700'}">${a.risk_level}</td>
-                <td class="p-3 text-slate-900 font-medium">${a.title}</td>
-                <td class="p-3 text-slate-700">${a.location}</td>
+                <td class="p-3 font-bold ${a.risk_level === 'CRITICAL' ? 'text-red-400' : 'text-orange-700'}">${a.risk_level}</td>
+                <td class="p-3 text-white font-medium">${a.title}</td>
+                <td class="p-3 text-slate-300">${a.location}</td>
                 <td class="p-3 font-mono text-red-600 font-semibold">₹${(a.estimated_exposure_inr / 100000).toFixed(1)}L</td>
                 <td class="p-3">
                     <span class="px-2 py-0.5 rounded text-[10px] font-bold ${
                         a.status === 'NEW' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
-                        a.status === 'INTERVENTION ACTIVE' ? 'bg-amber-50 text-amber-800 border border-amber-200' :
-                        a.status === 'RESOLVED' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-slate-700 border border-slate-200'
+                        a.status === 'INTERVENTION ACTIVE' ? 'bg-amber-950/40 text-amber-300 border border-amber-800/80' :
+                        a.status === 'RESOLVED' ? 'bg-emerald-950/40 text-emerald-300 border border-emerald-800/80' : 'bg-slate-100 text-slate-300 border border-slate-800'
                     }">${a.status}</span>
                 </td>
                 <td class="p-3 space-x-1">
@@ -806,8 +806,8 @@ async function loadInvestigationsTab() {
                     const item = document.createElement('div');
                     item.className = 'flex items-start space-x-2 text-xs border-l-2 border-red-600 pl-3 py-1 mb-2';
                     item.innerHTML = `
-                        <span class="font-mono text-red-700 font-semibold">${t.time}</span>
-                        <span class="text-slate-700">${t.event}</span>
+                        <span class="font-mono text-red-400 font-semibold">${t.time}</span>
+                        <span class="text-slate-300">${t.event}</span>
                     `;
                     timelineContainer.appendChild(item);
                 });
@@ -830,13 +830,13 @@ function showNodeInspector(node) {
 
     container.classList.remove('hidden');
     container.innerHTML = `
-        <div class="p-3 bg-white border border-slate-200 shadow-sm rounded-lg text-xs">
+        <div class="p-3 bg-[#0F172A] border border-slate-800 shadow-sm rounded-lg text-xs">
             <div class="flex justify-between items-center mb-1">
-                <span class="font-bold text-red-700 uppercase">${node.rawType} NODE</span>
-                <button onclick="document.getElementById('node-inspector-panel').classList.add('hidden')" class="text-slate-400 hover:text-slate-700 font-bold">✕</button>
+                <span class="font-bold text-red-400 uppercase">${node.rawType} NODE</span>
+                <button onclick="document.getElementById('node-inspector-panel').classList.add('hidden')" class="text-slate-400 hover:text-slate-300 font-bold">✕</button>
             </div>
-            <div class="font-semibold text-slate-900 text-sm mb-2">${node.label}</div>
-            <pre class="bg-slate-50 border border-slate-200 p-2 rounded text-[11px] text-slate-800 font-mono overflow-x-auto">${JSON.stringify(node.rawDetails, null, 2)}</pre>
+            <div class="font-semibold text-white text-sm mb-2">${node.label}</div>
+            <pre class="bg-[#131D31] border border-slate-800 p-2 rounded text-[11px] text-slate-100 font-mono overflow-x-auto">${JSON.stringify(node.rawDetails, null, 2)}</pre>
         </div>
     `;
 }
@@ -889,15 +889,15 @@ async function loadEmergencyTab() {
             dirContainer.innerHTML = '';
             contactsData.directory.forEach(d => {
                 const item = document.createElement('div');
-                item.className = 'p-3 bg-white border border-slate-200 rounded-lg text-xs shadow-xs';
+                item.className = 'p-3 bg-[#0F172A] border border-slate-800 rounded-lg text-xs shadow-xs';
                 item.innerHTML = `
                     <div class="text-[10px] text-red-600 font-bold uppercase mb-0.5">${d.category}</div>
-                    <div class="font-semibold text-slate-900 text-sm mb-1">${d.name}</div>
-                    <div class="flex justify-between items-center text-slate-600 mb-1">
+                    <div class="font-semibold text-white text-sm mb-1">${d.name}</div>
+                    <div class="flex justify-between items-center text-slate-400 mb-1">
                         <span>Jurisdiction: ${d.jurisdiction}</span>
                         <span class="text-emerald-700 font-mono font-semibold">SLA: ${d.response_time_sla}</span>
                     </div>
-                    <div class="font-mono text-slate-900 font-bold text-sm">📞 ${d.contact}</div>
+                    <div class="font-mono text-white font-bold text-sm">📞 ${d.contact}</div>
                 `;
                 dirContainer.appendChild(item);
             });
@@ -908,13 +908,13 @@ async function loadEmergencyTab() {
             tbody.innerHTML = '';
             (incidentsData.incidents || []).forEach(inc => {
                 const tr = document.createElement('tr');
-                tr.className = 'border-b border-slate-200 text-xs hover:bg-slate-50';
+                tr.className = 'border-b border-slate-800 text-xs hover:bg-[#131D31]';
                 tr.innerHTML = `
-                    <td class="p-2.5 font-mono text-red-700 font-bold">${inc.incident_id}</td>
-                    <td class="p-2.5 text-slate-600">${inc.timestamp}</td>
-                    <td class="p-2.5 text-slate-900 font-medium">${inc.location}</td>
-                    <td class="p-2.5 text-slate-700">${inc.jurisdiction_lea}</td>
-                    <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-red-50 text-red-700 text-[10px] border border-red-200 font-semibold">${inc.status}</span></td>
+                    <td class="p-2.5 font-mono text-red-400 font-bold">${inc.incident_id}</td>
+                    <td class="p-2.5 text-slate-400">${inc.timestamp}</td>
+                    <td class="p-2.5 text-white font-medium">${inc.location}</td>
+                    <td class="p-2.5 text-slate-300">${inc.jurisdiction_lea}</td>
+                    <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-red-950/40 text-red-400 text-[10px] border border-red-800/80 font-semibold">${inc.status}</span></td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -939,7 +939,7 @@ async function loadReportsTab() {
                 actionsList.innerHTML = '';
                 report.recommended_strategic_actions.forEach(act => {
                     const li = document.createElement('li');
-                    li.className = 'text-xs text-slate-700 mb-1.5 flex items-start space-x-2';
+                    li.className = 'text-xs text-slate-300 mb-1.5 flex items-start space-x-2';
                     li.innerHTML = `<span class="text-red-600 font-bold">▶</span><span>${act}</span>`;
                     actionsList.appendChild(li);
                 });
@@ -964,7 +964,7 @@ async function loadSystemTab() {
                     card.className = 'p-3 bg-slate-900 border border-slate-800 rounded-lg flex items-center justify-between text-xs';
                     card.innerHTML = `
                         <div class="flex items-center space-x-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-950/400 animate-pulse"></span>
                             <span class="font-semibold text-slate-200">${s.service}</span>
                         </div>
                         <div class="flex items-center space-x-3 font-mono">
@@ -1122,16 +1122,16 @@ function prependLiveAlert(alert) {
 
     const item = document.createElement('div');
     const isCrit = alert.risk_level === 'CRITICAL';
-    item.className = 'p-3 mb-2 rounded border border-slate-200 bg-white hover:border-red-400 text-xs shadow-xs transition-all border-l-4 border-l-red-600';
+    item.className = 'p-3 mb-2 rounded border border-slate-800 bg-[#0F172A] hover:border-red-400 text-xs shadow-xs transition-all border-l-4 border-l-red-600';
     item.innerHTML = `
         <div class="flex justify-between items-center mb-1">
-            <span class="font-mono text-[10px] ${isCrit ? 'text-red-700 font-bold' : 'text-orange-700 font-bold'}">${alert.id} • ${alert.risk_level}</span>
+            <span class="font-mono text-[10px] ${isCrit ? 'text-red-400 font-bold' : 'text-orange-700 font-bold'}">${alert.id} • ${alert.risk_level}</span>
             <span class="text-[10px] text-red-600 font-semibold font-mono">JUST NOW</span>
         </div>
-        <div class="font-bold text-slate-900 mb-0.5">${alert.title}</div>
-        <div class="text-[11px] text-slate-600 line-clamp-1 mb-2">${alert.predicted_event || ''}</div>
+        <div class="font-bold text-white mb-0.5">${alert.title}</div>
+        <div class="text-[11px] text-slate-400 line-clamp-1 mb-2">${alert.predicted_event || ''}</div>
         <div class="flex justify-between items-center">
-            <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-slate-100 text-slate-800 border border-slate-200">${alert.status || 'NEW'}</span>
+            <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-slate-100 text-slate-100 border border-slate-800">${alert.status || 'NEW'}</span>
             <div class="space-x-1">
                 <button onclick="window.openFeedbackModal('${alert.id}')" class="btn-secondary-light text-[10px] px-2 py-0.5 rounded">
                     Log Outcome
@@ -1453,24 +1453,24 @@ async function loadComplaintsTab(page = 1) {
 
         (data.data || []).forEach(c => {
             const tr = document.createElement('tr');
-            tr.className = 'border-b border-slate-200 hover:bg-slate-50 text-xs';
+            tr.className = 'border-b border-slate-800 hover:bg-[#131D31] text-xs';
             const isCrit = c.risk_score >= 90;
             const isHigh = c.risk_score >= 70 && c.risk_score < 90;
-            const badgeColor = isCrit ? 'bg-red-50 text-red-700 border-red-200' :
+            const badgeColor = isCrit ? 'bg-red-950/40 text-red-400 border-red-800/80' :
                                isHigh ? 'bg-orange-50 text-orange-700 border-orange-200' :
-                               'bg-slate-100 text-slate-700 border-slate-200';
+                               'bg-slate-100 text-slate-300 border-slate-800';
 
             tr.innerHTML = `
-                <td class="p-2.5 font-mono text-slate-900 font-bold">${c.id}</td>
+                <td class="p-2.5 font-mono text-white font-bold">${c.id}</td>
                 <td class="p-2.5 text-slate-500 font-mono text-[11px]">${c.timestamp || '2026-03-15'}</td>
-                <td class="p-2.5 font-semibold text-slate-900">${c.category}</td>
+                <td class="p-2.5 font-semibold text-white">${c.category}</td>
                 <td class="p-2.5">
-                    <div class="text-slate-900 font-medium">${c.victim_name}</div>
+                    <div class="text-white font-medium">${c.victim_name}</div>
                     <div class="text-[10px] text-slate-500">${c.victim_city} • ${c.phone_redacted}</div>
                 </td>
                 <td class="p-2.5 font-mono font-bold text-red-600">₹${(c.amount || 0).toLocaleString('en-IN')}</td>
                 <td class="p-2.5">
-                    <div class="font-mono text-slate-800 text-[11px]">${c.beneficiary_account || 'N/A'}</div>
+                    <div class="font-mono text-slate-100 text-[11px]">${c.beneficiary_account || 'N/A'}</div>
                     <div class="text-[10px] text-slate-500 font-mono">${c.beneficiary_ifsc || 'N/A'}</div>
                 </td>
                 <td class="p-2.5">
@@ -1479,7 +1479,7 @@ async function loadComplaintsTab(page = 1) {
                     </span>
                 </td>
                 <td class="p-2.5">
-                    <span class="px-1.5 py-0.5 rounded text-[9px] font-mono ${c.is_synthetic ? 'bg-amber-50 text-amber-800 border border-amber-200' : 'bg-emerald-50 text-emerald-800 border border-emerald-200'}">
+                    <span class="px-1.5 py-0.5 rounded text-[9px] font-mono ${c.is_synthetic ? 'bg-amber-950/40 text-amber-300 border border-amber-800/80' : 'bg-emerald-950/40 text-emerald-300 border border-emerald-800/80'}">
                         ${c.is_synthetic ? 'DEMO' : 'CITIZEN'}
                     </span>
                 </td>
@@ -1520,23 +1520,23 @@ async function loadUsersTab() {
 
         users.forEach(u => {
             const tr = document.createElement('tr');
-            tr.className = 'border-b border-slate-200 hover:bg-slate-50 text-xs';
+            tr.className = 'border-b border-slate-800 hover:bg-[#131D31] text-xs';
 
             tr.innerHTML = `
-                <td class="p-2.5 font-mono text-slate-900 font-bold">${u.role_id}</td>
+                <td class="p-2.5 font-mono text-white font-bold">${u.role_id}</td>
                 <td class="p-2.5">
-                    <div class="font-semibold text-slate-900">${u.name}</div>
+                    <div class="font-semibold text-white">${u.name}</div>
                     <div class="text-[10px] text-slate-500">${u.username || u.email}</div>
                 </td>
-                <td class="p-2.5 text-slate-700">${u.jurisdiction}</td>
-                <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">PERMITTED</span></td>
+                <td class="p-2.5 text-slate-300">${u.jurisdiction}</td>
+                <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950/40 text-emerald-300 border border-emerald-800/80">PERMITTED</span></td>
                 <td class="p-2.5">
-                    <span class="px-2 py-0.5 rounded text-[10px] font-bold ${u.role_id === 'BANK_NODAL' || u.role_id === 'SYSTEM_ADMIN' || u.role_id === 'I4C_ADMIN' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-slate-600 border border-slate-200'}">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold ${u.role_id === 'BANK_NODAL' || u.role_id === 'SYSTEM_ADMIN' || u.role_id === 'I4C_ADMIN' ? 'bg-emerald-950/40 text-emerald-300 border border-emerald-800/80' : 'bg-slate-100 text-slate-400 border border-slate-800'}">
                         ${u.role_id === 'BANK_NODAL' || u.role_id === 'SYSTEM_ADMIN' || u.role_id === 'I4C_ADMIN' ? 'PERMITTED' : 'RESTRICTED'}
                     </span>
                 </td>
                 <td class="p-2.5">
-                    <span class="px-2 py-0.5 rounded text-[10px] font-bold ${u.role_id !== 'AUDITOR' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-slate-600 border border-slate-200'}">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold ${u.role_id !== 'AUDITOR' ? 'bg-emerald-950/40 text-emerald-300 border border-emerald-800/80' : 'bg-slate-100 text-slate-400 border border-slate-800'}">
                         ${u.role_id !== 'AUDITOR' ? 'PERMITTED' : 'READ-ONLY'}
                     </span>
                 </td>
@@ -1572,10 +1572,10 @@ async function loadSettingsTab() {
             tablesContainer.innerHTML = '';
             counts.forEach(c => {
                 const box = document.createElement('div');
-                box.className = 'bg-white p-2.5 rounded border border-slate-200 shadow-xs';
+                box.className = 'bg-[#0F172A] p-2.5 rounded border border-slate-800 shadow-xs';
                 box.innerHTML = `
                     <div class="text-[9px] text-slate-500 font-mono uppercase">${c.name}</div>
-                    <div class="font-bold text-slate-900 text-sm font-mono">${c.count.toLocaleString('en-IN')}</div>
+                    <div class="font-bold text-white text-sm font-mono">${c.count.toLocaleString('en-IN')}</div>
                 `;
                 tablesContainer.appendChild(box);
             });
@@ -1601,13 +1601,13 @@ async function openLoginModal() {
             picker.innerHTML = '';
             users.forEach(u => {
                 const card = document.createElement('div');
-                card.className = 'p-2.5 bg-slate-50 border border-slate-200 hover:border-red-400 rounded-lg cursor-pointer transition-all flex items-center justify-between text-xs';
+                card.className = 'p-2.5 bg-[#131D31] border border-slate-800 hover:border-red-400 rounded-lg cursor-pointer transition-all flex items-center justify-between text-xs';
                 card.innerHTML = `
                     <div>
-                        <div class="font-bold text-slate-900">${u.name}</div>
+                        <div class="font-bold text-white">${u.name}</div>
                         <div class="text-[10px] text-slate-500">${u.role_id} • ${u.jurisdiction}</div>
                     </div>
-                    <button class="px-2.5 py-1 bg-white hover:bg-red-50 text-red-700 border border-slate-300 hover:border-red-300 rounded text-[10px] font-bold shadow-xs">Select</button>
+                    <button class="px-2.5 py-1 bg-[#0F172A] hover:bg-red-950/40 text-red-400 border border-slate-700 hover:border-red-300 rounded text-[10px] font-bold shadow-xs">Select</button>
                 `;
                 card.addEventListener('click', () => {
                     document.getElementById('login-username').value = u.username || u.email;
